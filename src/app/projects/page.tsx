@@ -9,22 +9,22 @@ export default function Projetos() {
   const projetos = [
     {
       titulo: "E-commerce Platform",
-      descricao: "Plataforma completa de e-commerce com carrinho de compras, pagamentos e painel administrativo.",
-      imagem: "/placeholder.svg?height=200&width=400",
+      descricao: "Plataforma de e-commerce com carrinho de compras.",
+      imagem: "/e-commerce.png?height=200&width=400",
       categoria: "web",
-      tecnologias: ["React", "Node.js", "MongoDB", "Stripe"],
+      tecnologias: ["TypeScript", "Vite", "Tailwind CSS"],
       links: {
-        demo: "https://exemplo.com/demo",
-        github: "https://github.com/username/projeto",
+        demo: "#",
+        github: "https://github.com/gui1416/econverse",
       },
-      data: "2023",
+      data: "2024",
     },
     {
       titulo: "Task Management App",
       descricao: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
       imagem: "/placeholder.svg?height=200&width=400",
       categoria: "web",
-      tecnologias: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
+      tecnologias: ["Next.js", "TypeScript", "Tailwind CSS"],
       links: {
         demo: "https://exemplo.com/demo",
         github: "https://github.com/username/projeto",
@@ -46,7 +46,7 @@ export default function Projetos() {
     {
       titulo: "Weather Dashboard",
       descricao: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
-      imagem: "/placeholder.svg?height=200&width=400",
+      imagem: "/weather-dashboard.png?height=200&width=400",
       categoria: "web",
       tecnologias: ["React", "D3.js", "OpenWeather API"],
       links: {
@@ -58,14 +58,14 @@ export default function Projetos() {
     {
       titulo: "Portfolio Template",
       descricao: "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
-      imagem: "/placeholder.svg?height=200&width=400",
+      imagem: "/portfolio-template.png?height=200&width=400",
       categoria: "web",
       tecnologias: ["HTML", "CSS", "JavaScript"],
       links: {
-        demo: "https://exemplo.com/demo",
-        github: "https://github.com/username/projeto",
+        demo: "https://gui1416.github.io/Web-Portifolio/",
+        github: "https://github.com/gui1416/Web-Portifolio",
       },
-      data: "2021",
+      data: "2024",
     },
     {
       titulo: "Delivery App",

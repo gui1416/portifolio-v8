@@ -5,49 +5,49 @@ import { Calendar, MapPin, Briefcase } from "lucide-react"
 export default function Experiencia() {
   const experiencias = [
     {
-      cargo: "Desenvolvedor Frontend Sênior",
-      empresa: "Tech Solutions",
-      periodo: "2021 - Presente",
+      cargo: "Auxiliar de Desenvolvimento",
+      empresa: "Soluções Serviços Terceirizados - LTDA",
+      periodo: "2025 - Presente",
       local: "São Paulo, SP",
       descricao:
-        "Desenvolvimento de aplicações web modernas utilizando React, Next.js e TypeScript. Liderança técnica de equipe e implementação de melhores práticas de desenvolvimento.",
+        "Desenvolvimento de aplicações web modernas utilizando React, Next.js e TypeScript.",
       responsabilidades: [
-        "Desenvolvimento de interfaces responsivas e acessíveis",
-        "Implementação de arquitetura de componentes reutilizáveis",
-        "Otimização de performance e SEO",
-        "Mentoria de desenvolvedores júnior",
+        "Documentação Técnica",
+        "Implantação de Sistemas",
+        "Aprendizado Contínuo",
+        "Colaboração com Outras Áreas",
       ],
       tecnologias: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux"],
     },
     {
-      cargo: "Desenvolvedor Fullstack",
-      empresa: "Digital Innovations",
-      periodo: "2019 - 2021",
+      cargo: "Auxiliar de Contratos",
+      empresa: "Soluções Serviços Terceirizados - LTDA",
+      periodo: "2024 - 2025",
       local: "São Paulo, SP",
       descricao:
-        "Atuação no desenvolvimento completo de aplicações web, desde o frontend até o backend, com foco em soluções escaláveis e de alta performance.",
+        "Atuação no auxilio de todos o ciclo de vida contratual, desde a elaboração até o arquivamento.",
       responsabilidades: [
-        "Desenvolvimento de APIs RESTful",
-        "Implementação de autenticação e autorização",
-        "Integração com serviços de terceiros",
-        "Desenvolvimento de interfaces de usuário",
+        "Organização e Arquivamento de Documentos",
+        "Controle de Prazos e Vencimentos",
+        "Cadastro e Atualização de Informações",
+        "Manutenção do equilibrio finânceiro",
       ],
-      tecnologias: ["JavaScript", "Node.js", "Express", "MongoDB", "React"],
+      tecnologias: ["Teknisa", "Google Shet", "Excel"],
     },
     {
-      cargo: "Desenvolvedor Web Júnior",
-      empresa: "Startup Creative",
-      periodo: "2018 - 2019",
-      local: "São Paulo, SP",
+      cargo: "Operador de Cobranças",
+      empresa: "Roveri Associados",
+      periodo: "2023 - 2023",
+      local: "São Caetano do Sul, SP",
       descricao:
-        "Início da carreira profissional com foco em desenvolvimento frontend e implementação de designs responsivos para diversos clientes.",
+        "Atuação na realização de cobranças de valores devidos por clientes, buscando a regularização de débitos de forma eficiente.",
       responsabilidades: [
-        "Desenvolvimento de websites responsivos",
-        "Implementação de designs a partir de mockups",
-        "Otimização para dispositivos móveis",
-        "Manutenção de sites existentes",
+        "Contato com Clientes Devedores",
+        "Negociação de Pagamentos",
+        "Esclarecimento de Dúvidas",
+        "Emissão de Boletos e Outros Documentos",
       ],
-      tecnologias: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap"],
+      tecnologias: [null],
     },
   ]
 
@@ -115,8 +115,7 @@ export default function Experiencia() {
                 <h3 className="text-lg font-medium">E-commerce Platform</h3>
               </div>
               <p className="text-muted-foreground mb-3">
-                Desenvolvimento completo de uma plataforma de e-commerce com integração de pagamentos, gestão de estoque
-                e painel administrativo.
+                Desenvolvimento de uma plataforma de e-commerce com integração de pagamentos.
               </p>
               <div className="flex flex-wrap gap-1">
                 <Badge variant="outline">React</Badge>

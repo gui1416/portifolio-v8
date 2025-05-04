@@ -6,63 +6,62 @@ import { Button } from "@/components/ui/button"
 export default function Educacao() {
   const educacaoItems = [
     {
-      instituicao: "Universidade Federal",
+      instituicao: "Faculdade das Americas - FAM",
       curso: "Bacharelado em Ciência da Computação",
-      periodo: "2018 - 2022",
+      periodo: "2023 - 2027",
       local: "São Paulo, SP",
       descricao:
         "Formação completa em Ciência da Computação com foco em desenvolvimento de software e sistemas distribuídos.",
       certificacoes: ["Programação Avançada", "Inteligência Artificial", "Desenvolvimento Web"],
-      link: "https://drive.google.com/file/d/17CMBXGeC5yJLQuPmN6iFuSCLePmPEHZV/view?usp=drive_link",
+      link: "#",
     },
     {
-      instituicao: "Instituto Técnico",
-      curso: "Técnico em Desenvolvimento de Sistemas",
-      periodo: "2016 - 2018",
-      local: "São Paulo, SP",
-      descricao: "Curso técnico com ênfase em programação e desenvolvimento de aplicações web e mobile.",
-      certificacoes: ["Desenvolvimento Frontend", "Banco de Dados"],
-      link: "https://drive.google.com/file/d/1on_Qu1wlEA40ko26wib39d_F8VpqOcMh/view?usp=drive_link",
-    },
-    {
-      instituicao: "Plataforma Online",
-      curso: "Especialização em React e Next.js",
-      periodo: "2022",
+      instituicao: "CISCO - Networking Academy",
+      curso: "Introdução à Cibersegurança",
+      periodo: "2025 - 2025",
       local: "Online",
-      descricao:
-        "Curso intensivo focado em desenvolvimento frontend com React e Next.js, incluindo práticas modernas e otimização de performance.",
-      certificacoes: ["React Avançado", "Next.js", "TypeScript"],
-      link: "https://drive.google.com/file/d/17CMBXGeC5yJLQuPmN6iFuSCLePmPEHZV/view?usp=drive_link",
+      descricao: "Curso técnico com ênfase em introduzir conhecimentos gerais a cibersegurança.",
+      certificacoes: ["Métodos de infiltração", "Manutenção de Dados"],
+      link: "https://drive.google.com/file/d/1OAV7pVmYka5x0WBxnhclRB00uzuMjWpK/view?usp=sharing",
+    },
+    {
+      instituicao: "Udemy",
+      curso: "Certificação Amazon AWS Cloud Practitioner (CLF-C01)",
+      periodo: "2024 - 2025",
+      local: "Online",
+      descricao: "Certificação introdutória aos serviços e conceitos da nuvem AWS.",
+      certificacoes: ["Conhecimento fundamental dos serviços AWS", "Conformidade AWS", "Arquitetura em nuvem"],
+      link: "https://drive.google.com/file/d/1g8N48aMPfEkkXDXtZP1BI_J71655ZUrm/view?usp=sharing",
     },
   ]
 
   const cursosList = [
     {
-      nome: "Desenvolvimento Web Fullstack - Udemy",
-      link: "https://www.udemy.com/certificate/example1/",
+      nome: "Versionamento de Código com Git e GitHub - DIO",
+      link: "https://drive.google.com/file/d/1hyY-XrEShTdTHjoiBQFLqSHSCXWAaTWx/view?usp=sharing",
     },
     {
-      nome: "UI/UX Design Fundamentals - Coursera",
-      link: "https://www.coursera.org/certificate/example2/",
+      nome: "Intrudução ao Desenvolvimento Web - DIO",
+      link: "https://drive.google.com/file/d/1UnxXivPktr3eiPqn6Ypbuk7Crypr0HZb/view?usp=sharing",
     },
     {
-      nome: "DevOps e CI/CD - Alura",
-      link: "https://www.alura.com.br/certificate/example3/",
+      nome: "Introdução à IoT e à Transformação Digital - CISCO",
+      link: "https://drive.google.com/file/d/17CMBXGeC5yJLQuPmN6iFuSCLePmPEHZV/view?usp=sharing",
     },
   ]
 
   const workshopsList = [
     {
-      nome: "Web Summit 2022",
-      link: "https://websummit.com/certificate/example1/",
+      nome: "Visita a Oracle",
+      link: "#",
     },
     {
-      nome: "Hackathon de Inovação Digital",
-      link: "https://hackathon.example.com/certificate/",
+      nome: "Palestra sobre IA",
+      link: "#",
     },
     {
       nome: "Workshop de Acessibilidade Web",
-      link: "https://accessibility.workshop.com/certificate/",
+      link: "#",
     },
   ]
 
