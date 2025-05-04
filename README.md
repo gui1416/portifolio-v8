@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Meu Portfólio
 
-## Getting Started
+![Imagem do Portfólio](/public/screenshot.png)
 
-First, run the development server:
+Bem-vindo(a) ao meu portfólio! Este site foi desenvolvido para apresentar minha jornada como Desenvolvedor Web, destacando minhas habilidades, experiência e os projetos em que trabalhei.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Este portfólio foi construído utilizando as seguintes tecnologias:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js:** Um framework React para desenvolvimento web com recursos como renderização do lado do servidor (SSR) e geração de sites estáticos (SSG).
+- **React:** Uma biblioteca JavaScript para construir interfaces de usuário dinâmicas e interativas.
+- **@radix-ui/react-\***: Uma coleção de componentes de interface do usuário acessíveis e não estilizados, fornecendo os blocos de construção para criar interfaces personalizadas.
+- **Tailwind CSS:** Um framework CSS utilitário de baixo nível que permite estilizar rapidamente elementos diretamente no HTML com classes pré-definidas.
+- **class-variance-authority:** Uma biblioteca para criar variações de classe condicionais com Tailwind CSS.
+- **clsx:** Uma pequena e útil biblioteca para construir strings de classe dinamicamente.
+- **cmdk:** Um componente de linha de comando para interfaces de usuário.
+- **date-fns:** Uma biblioteca moderna de utilitários de data e hora.
+- **embla-carousel-react:** Uma biblioteca de carrossel responsiva para React.
+- **input-otp:** Um componente para campos de entrada de código de verificação (OTP).
+- **lucide-react:** Uma biblioteca de ícones bonitos e consistentes para React.
+- **next-themes:** Uma maneira fácil de adicionar e alternar temas escuros e claros em aplicativos Next.js.
+- **react-day-picker:** Um componente de calendário acessível e personalizável para React.
+- **react-hook-form:** Uma biblioteca para gerenciamento de formulários em React.
+- **react-resizable-panels:** Uma biblioteca para criar layouts de painéis redimensionáveis.
+- **recharts:** Uma biblioteca de gráficos declarativa para React construída com SVG.
+- **sonner:** Uma biblioteca para notificações e toasts elegantes.
+- **tailwind-merge:** Uma função para mesclar classes Tailwind CSS sem conflitos.
+- **tailwindcss-animate:** Um plugin Tailwind CSS para adicionar animações pré-configuradas.
+- **vaul:** Uma biblioteca para criar diálogos e menus acessíveis.
+- **zod:** Uma biblioteca de declaração e validação de esquemas TypeScript com inferência.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## O Que Você Pode Encontrar Aqui
 
-## Learn More
+Ao navegar pelo meu portfólio, você poderá explorar as seguintes seções:
 
-To learn more about Next.js, take a look at the following resources:
+- **Sobre Mim:** Conheça um pouco mais sobre minha trajetória, paixões e objetivos como Desenvolvedor Web.
+- **Educação:** Veja minha formação acadêmica e cursos relevantes para minha carreira.
+- **Habilidades:** Descubra minhas competências técnicas e conhecimentos em diversas tecnologias e áreas do desenvolvimento.
+- **Experiência:** Saiba mais sobre minha experiência profissional, incluindo cargos e responsabilidades em projetos anteriores.
+- **Projetos:** Visualize os projetos em que trabalhei, com descrições detalhadas e links para demonstrações e/ou repositórios de código.
+- **Atualizações:** Fique por dentro das minhas contribuições mais recentes em projetos de código aberto no GitHub.
+- **Contato:** Encontre minhas informações de contato para que você possa me enviar mensagens ou propostas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Espero que você goste de explorar meu trabalho! Se tiver alguma dúvida ou feedback, sinta-se à vontade para entrar em contato.
