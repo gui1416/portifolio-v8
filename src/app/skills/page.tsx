@@ -30,6 +30,10 @@ export default function Skills() {
     { name: "Gestão de Tempo", level: 80 },
     { name: "Adaptabilidade", level: 90 },
     { name: "Pensamento Crítico", level: 85 },
+    { name: "Aprendizado contínuo", level: 95 },
+    { name: "Autogerenciamento", level: 80 },
+    { name: "Criatividade", level: 75 },
+    { name: "Liderança", level: 70 },
   ]
 
   const languages = [
