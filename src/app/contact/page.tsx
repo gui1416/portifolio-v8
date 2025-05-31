@@ -27,6 +27,9 @@ export default function Contato() {
     e.preventDefault()
     setIsSubmitting(true)
 
+    // Logando os dados do formulário no console
+    console.log("Dados do formulário:", formData)
+
     // Simulando envio do formulário
     setTimeout(() => {
       toast.success("Mensagem enviada!", {

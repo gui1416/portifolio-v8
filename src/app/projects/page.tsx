@@ -26,8 +26,8 @@ export default function Projetos() {
       categoria: "web",
       tecnologias: ["Next.js", "TypeScript", "Tailwind CSS"],
       links: {
-        demo: "https://exemplo.com/demo",
-        github: "https://github.com/username/projeto",
+        demo: "#",
+        github: "#",
       },
       data: "2022",
     },
@@ -38,8 +38,8 @@ export default function Projetos() {
       categoria: "mobile",
       tecnologias: ["React Native", "Redux", "Firebase"],
       links: {
-        demo: "https://exemplo.com/demo",
-        github: "https://github.com/username/projeto",
+        demo: "#",
+        github: "#",
       },
       data: "2022",
     },
@@ -50,10 +50,10 @@ export default function Projetos() {
       categoria: "web",
       tecnologias: ["React", "D3.js", "OpenWeather API"],
       links: {
-        demo: "https://exemplo.com/demo",
-        github: "https://github.com/username/projeto",
+        demo: "#",
+        github: "#",
       },
-      data: "2021",
+      data: "2024",
     },
     {
       titulo: "Portfolio Template",
@@ -65,19 +65,19 @@ export default function Projetos() {
         demo: "https://gui1416.github.io/Web-Portifolio/",
         github: "https://github.com/gui1416/Web-Portifolio",
       },
-      data: "2024",
+      data: "2022",
     },
     {
-      titulo: "Delivery App",
-      descricao: "Aplicativo de entrega de comida com rastreamento em tempo real e sistema de avaliações.",
-      imagem: "/placeholder.svg?height=200&width=400",
+      titulo: "Linktree Clone",
+      descricao: "Clone do linktree feito como treino e para uso pessoal.",
+      imagem: "/linktree.png?height=200&width=400",
       categoria: "mobile",
-      tecnologias: ["React Native", "Node.js", "MongoDB", "Google Maps API"],
+      tecnologias: ["Next.js 14", "TypeScript", "Tailwind CSS", "Componentes Reutilizáveis"],
       links: {
-        demo: "https://exemplo.com/demo",
-        github: "https://github.com/username/projeto",
+        demo: "https://linktree-guilherme-machado.vercel.app/",
+        github: "https://github.com/gui1416",
       },
-      data: "2020",
+      data: "2025",
     },
   ]
 
