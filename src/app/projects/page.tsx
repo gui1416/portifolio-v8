@@ -22,14 +22,14 @@ export default function Projetos() {
     {
       titulo: "Task Management App",
       descricao: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
-      imagem: "/placeholder.svg?height=200&width=400",
+      imagem: "/task-management.png?height=200&width=400",
       categoria: "web",
       tecnologias: ["Next.js", "TypeScript", "Tailwind CSS"],
       links: {
-        demo: "#",
-        github: "#",
+        demo: "https://task-management-three-orpin.vercel.app/",
+        github: "https://github.com/gui1416/task-management",
       },
-      data: "2022",
+      data: "2025",
     },
     {
       titulo: "Fitness Tracker",
