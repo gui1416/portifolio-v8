@@ -56,7 +56,7 @@ export function Sidebar() {
             {isOpen && (
               <div className="text-center">
                 <h3 className="font-semibold">Guilherme</h3>
-                <p className="text-sm text-muted-foreground">Desenvolvedor Web</p>
+                <p className="text-sm text-muted-foreground">Desenvolvedor Full-Stack</p>
               </div>
             )}
           </div>
