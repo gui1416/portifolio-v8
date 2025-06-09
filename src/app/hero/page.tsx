@@ -28,7 +28,7 @@ export default function SobreMim() {
         {/* Profile Info */}
         <div className="md:col-span-2 flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-2">Guilherme Machado</h2>
-          <p className="text-xl text-primary mb-4">Desenvolvedor Web</p>
+          <p className="text-xl text-primary mb-4">Desenvolvedor Full-Stack</p>
           <p className="text-muted-foreground mb-6">
             Sou um desenvolvedor web apaixonado por criar soluções digitais inovadoras e funcionais. Com experiência em
             diversas tecnologias, busco sempre aprender e aplicar as melhores práticas para entregar projetos de alta
@@ -36,7 +36,7 @@ export default function SobreMim() {
           </p>
 
           <div className="flex flex-wrap gap-3">
-          <Button className="gap-2" asChild>
+            <Button className="gap-2" asChild>
               <a
                 href="https://drive.google.com/file/d/17Zl6Th_r_KCQN9z0tagauV2Ch9y7JDdO/view?usp=sharing"
                 target="_blank"

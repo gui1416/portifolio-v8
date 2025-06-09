@@ -17,7 +17,7 @@ export default function Experiencia() {
         "Aprendizado Contínuo",
         "Colaboração com Outras Áreas",
       ],
-      tecnologias: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux"],
+      tecnologias: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux", "Gemini API", "Node.js", "Express", "MongoDB", "PostgreSQL", "Git", "GitHub"],
     },
     {
       cargo: "Auxiliar de Contratos",
@@ -112,15 +112,15 @@ export default function Experiencia() {
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-3">
                 <Briefcase className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-medium">E-commerce Platform</h3>
+                <h3 className="text-lg font-medium">Sistema de capitação</h3>
               </div>
               <p className="text-muted-foreground mb-3">
-                Desenvolvimento de uma plataforma de e-commerce com integração de pagamentos.
+                Desenvolvimento de um sistema para capitação de licitações publicas.
               </p>
               <div className="flex flex-wrap gap-1">
-                <Badge variant="outline">React</Badge>
                 <Badge variant="outline">Node.js</Badge>
-                <Badge variant="outline">MongoDB</Badge>
+                <Badge variant="outline">ConLicitação API</Badge>
+                <Badge variant="outline">Gemini API</Badge>
               </div>
             </CardContent>
           </Card>
@@ -129,16 +129,15 @@ export default function Experiencia() {
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-3">
                 <Briefcase className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-medium">Dashboard Analytics</h3>
+                <h3 className="text-lg font-medium">Linktree Clone</h3>
               </div>
               <p className="text-muted-foreground mb-3">
-                Criação de um dashboard de análise de dados em tempo real com visualizações interativas e relatórios
-                personalizados.
+                Clone do linktree feito como treino e para uso pessoal.
               </p>
               <div className="flex flex-wrap gap-1">
-                <Badge variant="outline">Next.js</Badge>
-                <Badge variant="outline">D3.js</Badge>
-                <Badge variant="outline">Firebase</Badge>
+                <Badge variant="outline">Next.js 14</Badge>
+                <Badge variant="outline">TypeScript</Badge>
+                <Badge variant="outline">Shadcn-ui</Badge>
               </div>
             </CardContent>
           </Card>
