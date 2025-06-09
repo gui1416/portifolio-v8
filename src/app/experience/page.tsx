@@ -32,7 +32,7 @@ export default function Experiencia() {
         "Cadastro e Atualização de Informações",
         "Manutenção do equilibrio finânceiro",
       ],
-      tecnologias: ["Teknisa", "Google Shet", "Excel"],
+      tecnologias: ["Teknisa", "Google Shet", "Excel", "Google Drive", "Google Docs", "Google Forms", "Google Calendar", "Google Meet", "Microsoft Office", "AnyDesk"],
     },
     {
       cargo: "Operador de Cobranças",
