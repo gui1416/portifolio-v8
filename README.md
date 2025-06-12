@@ -1,6 +1,6 @@
 # Meu Portfólio
 
-![Imagem do Portfólio](/public/screenshot.png)
+[![Imagem do Portfólio](/public/screenshot.png)](https://portifolio-v8.vercel.app/hero)
 
 Bem-vindo(a) ao meu portfólio! Este site foi desenvolvido para apresentar minha jornada como Desenvolvedor Web, destacando minhas habilidades, experiência e os projetos em que trabalhei.
 
