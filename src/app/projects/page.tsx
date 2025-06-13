@@ -8,6 +8,30 @@ import { ExternalLink, Github, Calendar } from "lucide-react"
 export default function Projetos() {
   const projetos = [
     {
+      titulo: "Gerador de QR Code & Encurtador de Links",
+      descricao: "Site simple para geração de QR codes & Encurtar links.",
+      imagem: "/QRcode-links.png?height=200&width=400",
+      categoria: "web",
+      tecnologias: ["Next.js", "qrcode.react", "clsx"],
+      links: {
+        demo: "https://q-rcode-generator-phi.vercel.app/",
+        github: "https://github.com/gui1416/QRcode-generator",
+      },
+      data: "2025",
+    },
+    {
+      titulo: "Linktree Clone",
+      descricao: "Clone do linktree feito como treino e para uso pessoal.",
+      imagem: "/linktree.png?height=200&width=400",
+      categoria: "mobile",
+      tecnologias: ["Next.js 14", "TypeScript", "Shadcn-ui"],
+      links: {
+        demo: "https://linktree-guilherme-machado.vercel.app/",
+        github: "https://github.com/gui1416",
+      },
+      data: "2025",
+    },
+    {
       titulo: "E-commerce Platform",
       descricao: "Plataforma de e-commerce com carrinho de compras.",
       imagem: "/e-commerce.png?height=200&width=400",
@@ -28,18 +52,6 @@ export default function Projetos() {
       links: {
         demo: "https://task-management-three-orpin.vercel.app/",
         github: "https://github.com/gui1416/task-management",
-      },
-      data: "2025",
-    },
-    {
-      titulo: "Gerador de QR Code & Encurtador de Links",
-      descricao: "Site simple para geração de QR codes & Encurtar links.",
-      imagem: "/QRcode-links.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["Next.js", "qrcode.react", "clsx"],
-      links: {
-        demo: "https://q-rcode-generator-phi.vercel.app/",
-        github: "https://github.com/gui1416/QRcode-generator",
       },
       data: "2025",
     },
@@ -66,18 +78,6 @@ export default function Projetos() {
         github: "https://github.com/gui1416/Web-Portifolio",
       },
       data: "2022",
-    },
-    {
-      titulo: "Linktree Clone",
-      descricao: "Clone do linktree feito como treino e para uso pessoal.",
-      imagem: "/linktree.png?height=200&width=400",
-      categoria: "mobile",
-      tecnologias: ["Next.js 14", "TypeScript", "Tailwind CSS", "Componentes Reutilizáveis"],
-      links: {
-        demo: "https://linktree-guilherme-machado.vercel.app/",
-        github: "https://github.com/gui1416",
-      },
-      data: "2025",
     },
   ]
 
