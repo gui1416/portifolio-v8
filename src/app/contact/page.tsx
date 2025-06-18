@@ -6,10 +6,24 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Mail, Phone, MapPin, Github, Linkedin, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Github, Linkedin, Send, LucideIcon } from "lucide-react" // Importa LucideIcon
 import { toast } from "sonner"
+import { getPersonalInfo } from "@/lib/data" // Importa getPersonalInfo
+
+// Mapeamento de nomes de ícones (string) para componentes LucideIcon
+// Necessário para renderizar dinamicamente os ícones a partir de strings
+const iconMap: { [key: string]: LucideIcon } = {
+  Mail: Mail,
+  Phone: Phone,
+  MapPin: MapPin,
+  Github: Github,
+  Linkedin: Linkedin,
+  // Adicione outros ícones que possam ser usados nos dados de contato, se houver
+};
 
 export default function Contato() {
+  const personalInfo = getPersonalInfo(); // Obtém informações pessoais de forma centralizada
+
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -18,19 +32,19 @@ export default function Contato() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Logando os dados do formulário no console
+    // Logando os dados do formulário no console (para fins de demonstração)
     console.log("Dados do formulário:", formData)
 
-    // Simulando envio do formulário
+    // Simula o envio do formulário com um timeout
     setTimeout(() => {
       toast.success("Mensagem enviada!", {
         description: "Obrigado pelo contato. Responderei em breve.",
@@ -45,38 +59,44 @@ export default function Contato() {
     }, 1500)
   }
 
-  const contatoInfo = [
+  // Prepara os detalhes de contato usando os dados de personalInfo
+  const contatoDetails = [
     {
-      icon: Mail,
+      key: "email",
+      icon: personalInfo.contact.email.icon,
       label: "Email",
-      value: "guirmdev@gmail.com",
-      link: "mailto:guirmdev@gmail.com",
+      value: personalInfo.contact.email.info,
+      link: personalInfo.contact.email.url,
     },
     {
-      icon: Phone,
+      key: "phone",
+      icon: personalInfo.contact.phone.icon,
       label: "Telefone",
-      value: "+55 (11) 96995-4587",
-      link: "https://wa.me/5511969954587?text=Olá%2C%20vim%20pelo%20seu%20site!",
+      value: personalInfo.contact.phone.info,
+      link: personalInfo.contact.phone.url,
     },
     {
-      icon: MapPin,
+      key: "location",
+      icon: personalInfo.contact.location.icon,
       label: "Localização",
-      value: "Mauá, SP - Brasil",
-      link: null,
+      value: personalInfo.contact.location.info,
+      link: personalInfo.contact.location.url,
     },
     {
-      icon: Github,
+      key: "github",
+      icon: personalInfo.contact.github.icon,
       label: "GitHub",
-      value: "github.com/gui1416",
-      link: "https://github.com/gui1416",
+      value: personalInfo.contact.github.info,
+      link: personalInfo.contact.github.url,
     },
     {
-      icon: Linkedin,
+      key: "linkedin",
+      icon: personalInfo.contact.linkedin.icon,
       label: "LinkedIn",
-      value: "linkedin.com/in/guilherme-rabelo",
-      link: "https://www.linkedin.com/in/guilherme-rabelo-3aa160294/",
+      value: personalInfo.contact.linkedin.info,
+      link: personalInfo.contact.linkedin.url,
     },
-  ]
+  ];
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
@@ -161,28 +181,31 @@ export default function Contato() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {contatoInfo.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="bg-primary/10 p-2 rounded-md">
-                      <item.icon className="h-5 w-5 text-primary" />
+                {contatoDetails.map((item) => {
+                  const IconComponent = iconMap[item.icon]; // Obtém o componente do ícone do mapeamento
+                  return (
+                    <div key={item.key} className="flex items-start gap-3">
+                      <div className="bg-primary/10 p-2 rounded-md">
+                        {IconComponent && <IconComponent className="h-5 w-5 text-primary" />}
+                      </div>
+                      <div>
+                        <h3 className="font-medium">{item.label}</h3>
+                        {item.link && item.link !== "#" ? (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            {item.value}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">{item.value}</p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium">{item.label}</h3>
-                      {item.link ? (
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          {item.value}
-                        </a>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">{item.value}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
@@ -191,15 +214,14 @@ export default function Contato() {
             <CardContent className="pt-6">
               <h3 className="font-medium mb-2">Horário de Disponibilidade</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Segunda a Sexta: 9h às 18h
+                {personalInfo.contact.availability.days}: {personalInfo.contact.availability.hours}
                 <br />
-                Respondo emails e mensagens em até 24 horas.
+                Respondo emails e mensagens {personalInfo.contact.availability.response_time}.
               </p>
 
               <h3 className="font-medium mb-2">Preferência de Contato</h3>
               <p className="text-sm text-muted-foreground">
-                Para assuntos profissionais, prefiro contato por email ou LinkedIn. Para conversas rápidas, pode me
-                chamar no WhatsApp.
+                {personalInfo.contact.preference}
               </p>
             </CardContent>
           </Card>

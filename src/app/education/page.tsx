@@ -2,68 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GraduationCap, Calendar, MapPin, Award, ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { getEducationItems, getComplementaryCourses, getWorkshops } from "@/lib/data" // Importa funções de dados
 
 export default function Educacao() {
-  const educacaoItems = [
-    {
-      instituicao: "Faculdade das Americas - FAM",
-      curso: "Bacharelado em Ciência da Computação",
-      periodo: "2023 - 2027",
-      local: "São Paulo, SP",
-      descricao:
-        "Formação completa em Ciência da Computação com foco em desenvolvimento de software e sistemas distribuídos.",
-      certificacoes: ["Programação Avançada", "Inteligência Artificial", "Desenvolvimento Web"],
-      link: "#",
-    },
-    {
-      instituicao: "CISCO - Networking Academy",
-      curso: "Introdução à Cibersegurança",
-      periodo: "2025 - 2025",
-      local: "Online",
-      descricao: "Curso técnico com ênfase em introduzir conhecimentos gerais a cibersegurança.",
-      certificacoes: ["Métodos de infiltração", "Manutenção de Dados"],
-      link: "https://drive.google.com/file/d/1OAV7pVmYka5x0WBxnhclRB00uzuMjWpK/view?usp=sharing",
-    },
-    {
-      instituicao: "Udemy",
-      curso: "Certificação Amazon AWS Cloud Practitioner (CLF-C01)",
-      periodo: "2024 - 2025",
-      local: "Online",
-      descricao: "Certificação introdutória aos serviços e conceitos da nuvem AWS.",
-      certificacoes: ["Conhecimento fundamental dos serviços AWS", "Conformidade AWS", "Arquitetura em nuvem"],
-      link: "https://drive.google.com/file/d/1g8N48aMPfEkkXDXtZP1BI_J71655ZUrm/view?usp=sharing",
-    },
-  ]
-
-  const cursosList = [
-    {
-      nome: "Versionamento de Código com Git e GitHub - DIO",
-      link: "https://drive.google.com/file/d/1hyY-XrEShTdTHjoiBQFLqSHSCXWAaTWx/view?usp=sharing",
-    },
-    {
-      nome: "Intrudução ao Desenvolvimento Web - DIO",
-      link: "https://drive.google.com/file/d/1UnxXivPktr3eiPqn6Ypbuk7Crypr0HZb/view?usp=sharing",
-    },
-    {
-      nome: "Introdução à IoT e à Transformação Digital - CISCO",
-      link: "https://drive.google.com/file/d/17CMBXGeC5yJLQuPmN6iFuSCLePmPEHZV/view?usp=sharing",
-    },
-  ]
-
-  const workshopsList = [
-    {
-      nome: "Visita a Oracle",
-      link: "#",
-    },
-    {
-      nome: "Palestra sobre IA",
-      link: "#",
-    },
-    {
-      nome: "Workshop de Acessibilidade Web",
-      link: "#",
-    },
-  ]
+  const educacaoItems = getEducationItems(); // Obtém itens de educação
+  const cursosList = getComplementaryCourses(); // Obtém cursos complementares
+  const workshopsList = getWorkshops(); // Obtém workshops
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
@@ -99,7 +43,7 @@ export default function Educacao() {
                   Certificações
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {item.certificacoes.map((cert, i) => (
+                  {item.certifications.map((cert, i) => (
                     <Badge key={i} variant="secondary">
                       {cert}
                     </Badge>
@@ -107,12 +51,14 @@ export default function Educacao() {
                 </div>
               </div>
 
-              <Button size="sm" className="mt-2" asChild>
-                <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                  <ExternalLink className="h-4 w-4" />
-                  Ver Certificado
-                </a>
-              </Button>
+              {item.link && item.link !== "#" && ( // Mostra o botão apenas se o link for válido
+                <Button size="sm" className="mt-2" asChild>
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                    <ExternalLink className="h-4 w-4" />
+                    Ver Certificado
+                  </a>
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}
@@ -137,7 +83,7 @@ export default function Educacao() {
                       rel="noopener noreferrer"
                       className="hover:text-primary hover:underline transition-colors"
                     >
-                      {curso.nome}
+                      {curso.name}
                     </a>
                   </li>
                 ))}
@@ -161,7 +107,7 @@ export default function Educacao() {
                       rel="noopener noreferrer"
                       className="hover:text-primary hover:underline transition-colors"
                     >
-                      {workshop.nome}
+                      {workshop.name}
                     </a>
                   </li>
                 ))}

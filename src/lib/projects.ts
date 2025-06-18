@@ -1,37 +1,4 @@
-export interface ProjectGalleryImage {
- url: string;
- alt?: string;
-}
-
-export interface RelatedProject {
- slug: string;
- title: string;
- description: string;
- category: "web" | "mobile" | "backend";
- image?: ProjectGalleryImage;
- links?: {
-  demo?: string;
-  github?: string;
- };
-}
-
-export interface Project {
- id: string;
- slug: string;
- title: string;
- description: string;
- category: "web" | "mobile" | "backend" | "all";
- technologies: string[];
- images: ProjectGalleryImage[];
- timeline: string;
- role: string;
- links: {
-  demo?: string;
-  github?: string;
- };
- featured?: boolean;
- related?: RelatedProject[];
-}
+import { Project } from "./types"; // Importa a interface Project de types.ts
 
 const projects: Project[] = [
  {
@@ -42,14 +9,15 @@ const projects: Project[] = [
   category: "web",
   technologies: ["Next.js", "qrcode.react", "clsx"],
   images: [
-   { url: "/QRcode-links.png?height=200&width=400", alt: "QR Code Generator" }
+   { src: "/QRcode-links.png", alt: "QR Code Generator" } // Usando 'src' conforme a interface
   ],
   timeline: "2025",
   role: "Desenvolvedor Frontend",
   links: {
    demo: "https://q-rcode-generator-phi.vercel.app/",
    github: "https://github.com/gui1416/QRcode-generator"
-  }
+  },
+  featured: true // Exemplo de projeto destacado
  },
  {
   id: "2",
@@ -59,14 +27,15 @@ const projects: Project[] = [
   category: "mobile",
   technologies: ["Next.js 14", "TypeScript", "Shadcn-ui"],
   images: [
-   { url: "/linktree.png?height=200&width=400", alt: "Linktree Clone" }
+   { src: "/linktree.png", alt: "Linktree Clone" } // Usando 'src' conforme a interface
   ],
   timeline: "2025",
   role: "Desenvolvedor Full Stack",
   links: {
    demo: "https://linktree-guilherme-machado.vercel.app/",
    github: "https://github.com/gui1416"
-  }
+  },
+  featured: true // Exemplo de projeto destacado
  },
  {
   id: "3",
@@ -76,7 +45,7 @@ const projects: Project[] = [
   category: "web",
   technologies: ["TypeScript", "Vite", "Tailwind CSS"],
   images: [
-   { url: "/e-commerce.png?height=200&width=400", alt: "E-commerce Platform" }
+   { src: "/e-commerce.png", alt: "E-commerce Platform" } // Usando 'src' conforme a interface
   ],
   timeline: "2024",
   role: "Desenvolvedor Backend",
@@ -93,14 +62,15 @@ const projects: Project[] = [
   category: "web",
   technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
   images: [
-   { url: "/task-management.png?height=200&width=400", alt: "Task Management App" }
+   { src: "/task-management.png", alt: "Task Management App" } // Usando 'src' conforme a interface
   ],
   timeline: "2025",
   role: "Desenvolvedor Full Stack",
   links: {
    demo: "https://task-management-three-orpin.vercel.app/",
    github: "https://github.com/gui1416/task-management"
-  }
+  },
+  featured: true // Exemplo de projeto destacado
  },
  {
   id: "5",
@@ -110,7 +80,7 @@ const projects: Project[] = [
   category: "web",
   technologies: ["React", "D3.js", "OpenWeather API"],
   images: [
-   { url: "/weather-dashboard.png?height=200&width=400", alt: "Weather Dashboard" }
+   { src: "/weather-dashboard.png", alt: "Weather Dashboard" } // Usando 'src' conforme a interface
   ],
   timeline: "2024",
   role: "Desenvolvedor Frontend",
@@ -127,7 +97,7 @@ const projects: Project[] = [
   category: "web",
   technologies: ["HTML", "CSS", "JavaScript"],
   images: [
-   { url: "/portfolio-template.png?height=200&width=400", alt: "Portfolio Template" }
+   { src: "/portfolio-template.png", alt: "Portfolio Template" } // Usando 'src' conforme a interface
   ],
   timeline: "2022",
   role: "Desenvolvedor Frontend",
@@ -136,17 +106,6 @@ const projects: Project[] = [
    github: "https://github.com/gui1416/Web-Portifolio"
   }
  }
-]
+];
 
-export { projects }
-
-// Add these functions after the projects array export
-
-export function getAllProjects(): Project[] {
- return projects
-}
-
-export function getProjectBySlug(slug: string): Project | undefined {
- return projects.find((project) => project.slug === slug)
-}
-
+export { projects };

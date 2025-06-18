@@ -4,82 +4,62 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ExternalLink, Github, Calendar } from "lucide-react"
+import { getAllProjects } from "@/lib/data" // Importa a função e o tipo Project
+import { Project } from "@/lib/types" // Importa o tipo Project
+
+// Componente para exibir um card de projeto
+function ProjetoCard({ projeto }: { projeto: Project }) {
+  return (
+    <Card className="overflow-hidden flex flex-col h-full">
+      <div className="relative h-48 w-full">
+        {/* Usa o primeiro src da array de imagens ou um placeholder */}
+        <Image src={projeto.images[0]?.src || "/placeholder.svg"} alt={projeto.images[0]?.alt || projeto.title} fill className="object-cover" />
+      </div>
+      <CardHeader>
+        <div className="flex justify-between items-start">
+          <CardTitle>{projeto.title}</CardTitle>
+          <Badge variant="outline" className="flex items-center gap-1">
+            <Calendar className="h-3 w-3" />
+            {projeto.timeline}
+          </Badge>
+        </div>
+        <CardDescription>{projeto.description}</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className="flex flex-wrap gap-2">
+          {projeto.technologies.map((tech) => (
+            <Badge key={tech} variant="secondary">
+              {tech}
+            </Badge>
+          ))}
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        {/* Botão para GitHub, visível apenas se o link existir e não for '#' */}
+        {projeto.links?.github && projeto.links.github !== "#" && (
+          <Button variant="outline" size="sm" asChild>
+            <a href={projeto.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+              <Github className="h-4 w-4" />
+              Código
+            </a>
+          </Button>
+        )}
+        {/* Botão para Demo, visível apenas se o link existir e não for '#' */}
+        {projeto.links?.demo && projeto.links.demo !== "#" && (
+          <Button size="sm" asChild>
+            <a href={projeto.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+              <ExternalLink className="h-4 w-4" />
+              Demo
+            </a>
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
+  )
+}
 
 export default function Projetos() {
-  const projetos = [
-    {
-      titulo: "Gerador de QR Code & Encurtador de Links",
-      descricao: "Site simple para geração de QR codes & Encurtar links.",
-      imagem: "/QRcode-links.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["Next.js", "qrcode.react", "clsx"],
-      links: {
-        demo: "https://q-rcode-generator-phi.vercel.app/",
-        github: "https://github.com/gui1416/QRcode-generator",
-      },
-      data: "2025",
-    },
-    {
-      titulo: "Linktree Clone",
-      descricao: "Clone do linktree feito como treino e para uso pessoal.",
-      imagem: "/linktree.png?height=200&width=400",
-      categoria: "mobile",
-      tecnologias: ["Next.js 14", "TypeScript", "Shadcn-ui"],
-      links: {
-        demo: "https://linktree-guilherme-machado.vercel.app/",
-        github: "https://github.com/gui1416",
-      },
-      data: "2025",
-    },
-    {
-      titulo: "E-commerce Platform",
-      descricao: "Plataforma de e-commerce com carrinho de compras.",
-      imagem: "/e-commerce.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["TypeScript", "Vite", "Tailwind CSS"],
-      links: {
-        demo: "#",
-        github: "https://github.com/gui1416/econverse",
-      },
-      data: "2024",
-    },
-    {
-      titulo: "Task Management App",
-      descricao: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
-      imagem: "/task-management.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["Next.js", "TypeScript", "Tailwind CSS"],
-      links: {
-        demo: "https://task-management-three-orpin.vercel.app/",
-        github: "https://github.com/gui1416/task-management",
-      },
-      data: "2025",
-    },
-    {
-      titulo: "Weather Dashboard",
-      descricao: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
-      imagem: "/weather-dashboard.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["React", "D3.js", "OpenWeather API"],
-      links: {
-        demo: "#",
-        github: "#",
-      },
-      data: "2024",
-    },
-    {
-      titulo: "Portfolio Template",
-      descricao: "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
-      imagem: "/portfolio-template.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["HTML", "CSS", "JavaScript"],
-      links: {
-        demo: "https://gui1416.github.io/Web-Portifolio/",
-        github: "https://github.com/gui1416/Web-Portifolio",
-      },
-      data: "2022",
-    },
-  ]
+  const projetos = getAllProjects(); // Obtém todos os projetos de forma centralizada
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
@@ -95,7 +75,7 @@ export default function Projetos() {
         <TabsContent value="all" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projetos.map((projeto) => (
-              <ProjetoCard key={projeto.titulo} projeto={projeto} />
+              <ProjetoCard key={projeto.id} projeto={projeto} /> // Usa 'projeto.id' como chave
             ))}
           </div>
         </TabsContent>
@@ -103,9 +83,9 @@ export default function Projetos() {
         <TabsContent value="web" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projetos
-              .filter((projeto) => projeto.categoria === "web")
+              .filter((projeto) => projeto.category === "web")
               .map((projeto) => (
-                <ProjetoCard key={projeto.titulo} projeto={projeto} />
+                <ProjetoCard key={projeto.id} projeto={projeto} />
               ))}
           </div>
         </TabsContent>
@@ -113,9 +93,9 @@ export default function Projetos() {
         <TabsContent value="mobile" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projetos
-              .filter((projeto) => projeto.categoria === "mobile")
+              .filter((projeto) => projeto.category === "mobile")
               .map((projeto) => (
-                <ProjetoCard key={projeto.titulo} projeto={projeto} />
+                <ProjetoCard key={projeto.id} projeto={projeto} />
               ))}
           </div>
         </TabsContent>
@@ -134,48 +114,5 @@ export default function Projetos() {
         </Button>
       </div>
     </div>
-  )
-}
-
-function ProjetoCard({ projeto }) {
-  return (
-    <Card className="overflow-hidden flex flex-col h-full">
-      <div className="relative h-48 w-full">
-        <Image src={projeto.imagem || "/placeholder.svg"} alt={projeto.titulo} fill className="object-cover" />
-      </div>
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <CardTitle>{projeto.titulo}</CardTitle>
-          <Badge variant="outline" className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            {projeto.data}
-          </Badge>
-        </div>
-        <CardDescription>{projeto.descricao}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <div className="flex flex-wrap gap-2">
-          {projeto.tecnologias.map((tech) => (
-            <Badge key={tech} variant="secondary">
-              {tech}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline" size="sm" asChild>
-          <a href={projeto.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-            <Github className="h-4 w-4" />
-            Código
-          </a>
-        </Button>
-        <Button size="sm" asChild>
-          <a href={projeto.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-            <ExternalLink className="h-4 w-4" />
-            Demo
-          </a>
-        </Button>
-      </CardFooter>
-    </Card>
   )
 }

@@ -2,45 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getTechnicalSkills, getSoftSkills, getLanguages, getSkillsData } from "@/lib/data" // Importa funções de dados
 
 export default function Skills() {
-  const technicalSkills = [
-    { name: "HTML/CSS", level: 95, category: "frontend" },
-    { name: "JavaScript", level: 90, category: "frontend" },
-    { name: "TypeScript", level: 85, category: "frontend" },
-    { name: "React", level: 90, category: "frontend" },
-    { name: "Next.js", level: 85, category: "frontend" },
-    { name: "Tailwind CSS", level: 90, category: "frontend" },
-    { name: "Node.js", level: 80, category: "backend" },
-    { name: "Express", level: 75, category: "backend" },
-    { name: "MongoDB", level: 70, category: "backend" },
-    { name: "PostgreSQL", level: 65, category: "backend" },
-    { name: "REST APIs", level: 85, category: "backend" },
-    { name: "GraphQL", level: 60, category: "backend" },
-    { name: "Git/GitHub", level: 90, category: "tools" },
-    { name: "Docker", level: 65, category: "tools" },
-    { name: "CI/CD", level: 60, category: "tools" },
-    { name: "Jest/Testing", level: 70, category: "tools" },
-  ]
-
-  const softSkills = [
-    { name: "Comunicação", level: 90 },
-    { name: "Trabalho em Equipe", level: 95 },
-    { name: "Resolução de Problemas", level: 85 },
-    { name: "Gestão de Tempo", level: 80 },
-    { name: "Adaptabilidade", level: 90 },
-    { name: "Pensamento Crítico", level: 85 },
-    { name: "Aprendizado contínuo", level: 95 },
-    { name: "Autogerenciamento", level: 80 },
-    { name: "Criatividade", level: 75 },
-    { name: "Liderança", level: 70 },
-  ]
-
-  const languages = [
-    { name: "Português", level: "Nativo", badge: "Fluente" },
-    { name: "Inglês", level: "Avançado", badge: "Proficiente" },
-    { name: "Espanhol", level: "Intermediário", badge: "Conversacional" },
-  ]
+  const technicalSkills = getTechnicalSkills(); // Obtém habilidades técnicas
+  const softSkills = getSoftSkills(); // Obtém habilidades interpessoais
+  const languages = getLanguages(); // Obtém idiomas
+  const skillsData = getSkillsData(); // Obtém dados completos de habilidades para especializações
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
@@ -100,56 +68,23 @@ export default function Skills() {
 
       <h2 className="text-2xl font-semibold mb-6">Áreas de Especialização</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Desenvolvimento Frontend</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Especializado em criar interfaces modernas, responsivas e acessíveis com as tecnologias mais recentes.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary">React</Badge>
-              <Badge variant="secondary">Next.js</Badge>
-              <Badge variant="secondary">Tailwind</Badge>
-              <Badge variant="secondary">TypeScript</Badge>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Desenvolvimento Backend</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Experiência na criação de APIs robustas e escaláveis, com foco em performance e segurança.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary">Node.js</Badge>
-              <Badge variant="secondary">Express</Badge>
-              <Badge variant="secondary">MongoDB</Badge>
-              <Badge variant="secondary">REST</Badge>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">DevOps & Ferramentas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Conhecimento em práticas modernas de desenvolvimento, testes e implantação contínua.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary">Git</Badge>
-              <Badge variant="secondary">Docker</Badge>
-              <Badge variant="secondary">CI/CD</Badge>
-              <Badge variant="secondary">Testing</Badge>
-            </div>
-          </CardContent>
-        </Card>
+        {skillsData.specialties.map((specialty) => (
+          <Card key={specialty.title}>
+            <CardHeader>
+              <CardTitle className="text-lg">{specialty.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                {specialty.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {specialty.badges.map((badge, i) => (
+                  <Badge key={i} variant="secondary">{badge}</Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   )

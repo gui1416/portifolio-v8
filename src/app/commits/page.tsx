@@ -6,72 +6,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { GitCommit, GitBranch, ExternalLink, Github, Clock } from "lucide-react"
-
-// Função para buscar os commits do GitHub
-async function getGithubCommits() {
-  // Substitua "username" pelo nome de usuário real do GitHub
-  const username = "gui1416"
-
-  try {
-    // Primeiro, buscamos os repositórios públicos do usuário
-    const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`, {
-      next: { revalidate: 3600 }, // Revalidar a cada hora
-    })
-
-    if (!reposResponse.ok) {
-      throw new Error(`Erro ao buscar repositórios: ${reposResponse.status}`)
-    }
-
-    const repos = await reposResponse.json()
-
-    // Para cada repositório, buscamos os commits mais recentes
-    const commitsPromises = repos.map(async (repo) => {
-      const commitsResponse = await fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=5`, {
-        next: { revalidate: 3600 },
-      })
-
-      if (!commitsResponse.ok) {
-        console.error(`Erro ao buscar commits para ${repo.name}: ${commitsResponse.status}`)
-        return []
-      }
-
-      const commits = await commitsResponse.json()
-
-      return commits.map((commit) => ({
-        repo: {
-          name: repo.name,
-          url: repo.html_url,
-          description: repo.description,
-          stars: repo.stargazers_count,
-          language: repo.language,
-        },
-        sha: commit.sha,
-        message: commit.commit.message,
-        author: commit.commit.author.name,
-        date: commit.commit.author.date,
-        url: commit.html_url,
-        branch: "main", // A API não retorna a branch diretamente, então assumimos main/master
-      }))
-    })
-
-    const commitsArrays = await Promise.all(commitsPromises)
-
-    // Flatten e ordena os commits por data (mais recentes primeiro)
-    const allCommits = commitsArrays.flat().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-
-    return allCommits
-  } catch (error) {
-    console.error("Erro ao buscar dados do GitHub:", error)
-    return []
-  }
-}
+import { getGithubCommits } from "@/lib/data" // Importa a função e o tipo
+import { GithubCommit } from "@/lib/types" // Importa o tipo GithubCommit
 
 // Componente para exibir um commit
-function CommitCard({ commit }) {
+function CommitCard({ commit }: { commit: GithubCommit }) {
   const commitDate = new Date(commit.date)
   const timeAgo = formatDistanceToNow(commitDate, { addSuffix: true, locale: ptBR })
 
-  // Limita o tamanho da mensagem do commit
+  // Limita o tamanho da mensagem do commit para melhor visualização
   const shortMessage = commit.message.length > 100 ? commit.message.substring(0, 97) + "..." : commit.message
 
   // Pega apenas os primeiros 7 caracteres do SHA (padrão do GitHub)
@@ -131,7 +74,7 @@ function CommitCard({ commit }) {
   )
 }
 
-// Componente de carregamento
+// Componente de carregamento (esqueleto)
 function CommitSkeleton() {
   return (
     <Card className="mb-4">
@@ -160,9 +103,9 @@ function CommitSkeleton() {
   )
 }
 
-// Componente que busca e exibe os commits
+// Componente que busca e exibe os commits, com Suspense para carregamento
 async function CommitsList() {
-  const commits = await getGithubCommits()
+  const commits = await getGithubCommits() // Busca os commits
 
   if (commits.length === 0) {
     return (
@@ -195,6 +138,7 @@ export default function Atualizacoes() {
         Acompanhe minhas contribuições mais recentes em projetos de código aberto no GitHub.
       </p>
 
+      {/* Usa Suspense para exibir um esqueleto enquanto os commits estão sendo carregados */}
       <Suspense
         fallback={
           <>

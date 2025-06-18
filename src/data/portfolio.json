@@ -7,6 +7,16 @@
   "name": "Guilherme Machado",
   "title": "Desenvolvedor Full-Stack",
   "bio": "Sou um desenvolvedor web apaixonado por criar soluções digitais inovadoras e funcionais. Com experiência em diversas tecnologias, busco sempre aprender e aplicar as melhores práticas para entregar projetos de alta qualidade.",
+  "resume_tech": {
+   "frontend": {
+    "title": "Desenvolvimento Frontend",
+    "description": "Experiência com React, Next.js, HTML5, CSS3, Tailwind CSS e outras tecnologias modernas para criar interfaces responsivas e atraentes."
+   },
+   "backend": {
+    "title": "Desenvolvimento Backend",
+    "description": "Conhecimento em Node.js, Express, APIs RESTful e integração com bancos de dados para criar aplicações robustas e escaláveis."
+   }
+  },
   "avatar": "https://github.com/gui1416.png",
   "contact": {
    "email": {

@@ -1,6 +1,6 @@
-// src/lib/data.ts (NOVO)
-import portfolioData from '@/data/portfolio.json';
-import { projects } from '@/lib/projects';
+// src/lib/data.ts
+import portfolioData from '@/data/portfolio.json'; // Importa os dados do portfólio em JSON
+import { projects } from '@/lib/projects'; // Importa o array de projetos
 import {
  PersonalInfo,
  Experience,
@@ -12,58 +12,74 @@ import {
  Project,
  MetaInfo,
  GithubCommit,
-} from './types';
-import { personalInfoSchema, experienceSchema, educationSchema, projectSchema, skillSchema, languageSchema } from '@/lib/validation'; // Importa os schemas de validação
-import { z } from 'zod'; // Importa Zod
+} from './types'; // Importa todas as interfaces
+import {
+ personalInfoSchema,
+ experienceSchema,
+ educationSchema,
+ skillSchema,
+ languageSchema,
+ complementaryCourseSchema,
+ metaInfoSchema,
+ githubCommitSchema,
+ projectSchema,
+} from '@/lib/validation'; // Importa todos os schemas de validação
+import { z } from 'zod'; // Importa Zod para validação
 
-// Funções para acessar os dados do portfolio.json
-export const getMetaInfo = (): MetaInfo => z.object({
- title: z.string(),
- description: z.string(),
-}).parse(portfolioData.meta);
+// Função para obter as meta informações do portfólio
+export const getMetaInfo = (): MetaInfo => metaInfoSchema.parse(portfolioData.meta);
 
-export const getPersonalInfo = (): PersonalInfo =>
- personalInfoSchema.parse({
-  ...portfolioData.personal,
-  // Não precisa de cast, schema já valida
-  social: portfolioData.personal.social,
- });
+// Função para obter as informações pessoais
+export const getPersonalInfo = (): PersonalInfo => personalInfoSchema.parse(portfolioData.personal);
 
-export const getExperiences = (): Experience[] => z.array(experienceSchema).parse(portfolioData.experiences);
+// Função para obter as experiências profissionais
+export const getExperiences = (): Experience[] => {
+ // Transforma `null` em array vazio para `technologies` para evitar erros de tipagem/validação
+ return z.array(experienceSchema).parse(
+  portfolioData.experiences.map((exp: any) => ({
+   ...exp,
+   technologies: exp.technologies === null ? [] : exp.technologies,
+  }))
+ );
+};
 
+// Função para obter os itens de educação
 export const getEducationItems = (): EducationItem[] => z.array(educationSchema).parse(portfolioData.education);
 
-export const getComplementaryCourses = (): ComplementaryCourse[] => z.array(z.object({
- name: z.string(),
- link: z.string().url().or(z.literal("#")),
-})).parse(portfolioData.complementary_education.courses);
+// Função para obter os cursos complementares
+export const getComplementaryCourses = (): ComplementaryCourse[] =>
+ z.array(complementaryCourseSchema).parse(portfolioData.complementary_education.courses);
 
-export const getWorkshops = (): ComplementaryCourse[] => z.array(z.object({
- name: z.string(),
- link: z.string().url().or(z.literal("#")),
-})).parse(portfolioData.complementary_education.workshops);
+// Função para obter os workshops
+export const getWorkshops = (): ComplementaryCourse[] =>
+ z.array(complementaryCourseSchema).parse(portfolioData.complementary_education.workshops);
 
+// Função para obter as habilidades técnicas
 export const getTechnicalSkills = (): Skill[] =>
  z.array(skillSchema).parse(
   portfolioData.skills.technical.map((skill: any) => ({
    ...skill,
-   category: skill.category ?? "",
+   category: skill.category ?? "", // Garante que a categoria seja uma string, mesmo que vazia
   }))
  );
 
+// Função para obter as habilidades interpessoais (soft skills)
 export const getSoftSkills = (): Skill[] =>
  z.array(skillSchema).parse(
   portfolioData.skills.soft.map((skill: any) => ({
    ...skill,
-   category: skill.category ?? "",
+   category: skill.category ?? "", // Garante que a categoria seja uma string, mesmo que vazia
   }))
  );
 
+// Função para obter os idiomas
 export const getLanguages = (): Language[] => z.array(languageSchema).parse(portfolioData.skills.languages);
+
+// Função para obter todos os dados de habilidades (incluindo áreas técnicas e especializações)
 export const getSkillsData = (): Skills => ({
  technical_areas: portfolioData.skills.technical_areas.map((area: any) => ({
   ...area,
-  icon: area.icon ?? "Layout",
+  icon: area.icon ?? "Layout", // Garante que o ícone seja uma string
  })),
  technical: portfolioData.skills.technical.map((skill: any) => ({
   ...skill,
@@ -77,46 +93,38 @@ export const getSkillsData = (): Skills => ({
  specialties: portfolioData.skills.specialties,
 });
 
+// Funções para projetos (usando o array importado de projects.ts)
+// Retorna todos os projetos, validando-os com o schema Project
+export const getAllProjects = (): Project[] => z.array(projectSchema).parse(projects);
 
-// Funções para projetos (de projects.json)
-export const getAllProjects = (): Project[] =>
- projects.map((project: any) => ({
-  ...project,
-  images: project.images.map((img: any) => ({
-   src: img.src ?? img.url ?? "",
-   alt: img.alt ?? "",
-  })),
- }));
-
+// Retorna um projeto pelo seu slug
 export const getProjectBySlug = (slug: string): Project | null => {
  const project = projects.find((p) => p.slug === slug);
  if (!project) return null;
- return {
-  ...project,
-  images: project.images.map((img: any) => ({
-   src: img.src ?? img.url ?? "",
-   alt: img.alt ?? "",
-  })),
- };
+ return projectSchema.parse(project); // Valida o projeto encontrado
 };
 
+// Retorna projetos destacados, com um limite opcional
 export const getFeaturedProjects = (limit = 3): Project[] => {
  const featured = projects.filter((project) => project.featured);
- return featured.slice(0, limit);
+ return z.array(projectSchema).parse(featured.slice(0, limit)); // Valida e limita os projetos destacados
 };
 
-// Função para buscar commits do GitHub (mantida, mas com tipagem)
+// Função assíncrona para buscar commits do GitHub
 export async function getGithubCommits(): Promise<GithubCommit[]> {
- const username = "gui1416";
+ const username = "gui1416"; // Nome de usuário do GitHub
  try {
+  // Busca os repositórios públicos do usuário
   const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`, {
-   next: { revalidate: 3600 },
+   next: { revalidate: 3600 }, // Revalida a cada hora
   });
+
   if (!reposResponse.ok) {
    throw new Error(`Erro ao buscar repositórios: ${reposResponse.status}`);
   }
   const repos = await reposResponse.json();
 
+  // Para cada repositório, busca os commits mais recentes
   const commitsPromises = repos.map(async (repo: any) => {
    const commitsResponse = await fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=5`, {
     next: { revalidate: 3600 },
@@ -130,7 +138,7 @@ export async function getGithubCommits(): Promise<GithubCommit[]> {
     repo: {
      name: repo.name,
      url: repo.html_url,
-     description: repo.description ?? "",
+     description: repo.description ?? "", // Garante que a descrição seja uma string
      stars: repo.stargazers_count,
      language: repo.language ?? "",
     },
@@ -139,30 +147,14 @@ export async function getGithubCommits(): Promise<GithubCommit[]> {
     author: commit.commit.author.name,
     date: commit.commit.author.date,
     url: commit.html_url,
-    branch: "main",
+    branch: "main", // A API não retorna a branch diretamente, assumimos main/master
    }));
   });
 
   const commitsArrays = await Promise.all(commitsPromises);
   const allCommits = commitsArrays.flat().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Ajusta o schema para aceitar description como string
-  const githubCommitSchema = z.object({
-   repo: z.object({
-    name: z.string(),
-    url: z.string().url(),
-    description: z.string(),
-    stars: z.number().int().min(0),
-    language: z.string(),
-   }),
-   sha: z.string(),
-   message: z.string(),
-   author: z.string(),
-   date: z.string(),
-   url: z.string().url(),
-   branch: z.string(),
-  });
-
+  // Valida e retorna os commits usando o schema Zod
   return z.array(githubCommitSchema).parse(allCommits);
 
  } catch (error) {
