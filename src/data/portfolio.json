@@ -9,12 +9,34 @@
   "bio": "Sou um desenvolvedor web apaixonado por criar soluções digitais inovadoras e funcionais. Com experiência em diversas tecnologias, busco sempre aprender e aplicar as melhores práticas para entregar projetos de alta qualidade.",
   "avatar": "https://github.com/gui1416.png",
   "contact": {
-   "email": "guirmdev@gmail.com",
-   "phone": "+55 (11) 96995-4587",
-   "location": "Mauá, SP - Brasil",
+   "email": {
+    "icon": "Mail",
+    "info": "guirmdev@gmail.com",
+    "url": "mailto:guirmdev@gmail.com"
+   },
+   "phone": {
+    "icon": "Phone",
+    "info": "+55 (11) 96995-4587",
+    "url": "https://wa.me/5511969954587?text=Olá%2C%20vim%20pelo%20seu%20site!"
+   },
+   "location": {
+    "icon": "MapPin",
+    "info": "Mauá, SP - Brasil",
+    "url": "#"
+   },
+   "github": {
+    "icon": "Github",
+    "info": "github.com/gui1416",
+    "url": "https://github.com/gui1416"
+   },
+   "linkedin": {
+    "icon": "Linkedin",
+    "info": "linkedin.com/in/guilherme-rabelo",
+    "url": "https://www.linkedin.com/in/guilherme-rabelo-3aa160294/"
+   },
    "availability": {
     "days": "Segunda a Sexta",
-    "hours": "9h às 18h",
+    "hours": "8h às 18h",
     "response_time": "em até 24 horas"
    },
    "preference": "Para assuntos profissionais, prefiro contato por email ou LinkedIn. Para conversas rápidas, pode me chamar no WhatsApp."
@@ -22,16 +44,19 @@
   "social": [
    {
     "platform": "GitHub",
+    "info": "github.com/gui1416",
     "url": "https://github.com/gui1416",
     "icon": "Github"
    },
    {
     "platform": "LinkedIn",
+    "info": "linkedin.com/in/guilherme-rabelo",
     "url": "https://www.linkedin.com/in/guilherme-rabelo-3aa160294/",
     "icon": "Linkedin"
    },
    {
     "platform": "WhatsApp",
+    "info": "+55 (11) 96995-4587",
     "url": "https://wa.me/5511969954587?text=Olá%2C%20vim%20pelo%20seu%20site!",
     "icon": "MessageSquare"
    }
@@ -346,7 +371,7 @@
     "badge": "Conversacional"
    }
   ],
-  "summaries": [
+  "specialties": [
    {
     "title": "Desenvolvimento Frontend",
     "description": "Especializado em criar interfaces modernas, responsivas e acessíveis com as tecnologias mais recentes.",

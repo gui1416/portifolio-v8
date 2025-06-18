@@ -86,7 +86,7 @@ export interface Skills {
  technical: Skill[];
  soft: Skill[];
  languages: Language[];
- summaries: SkillsSummary[];
+ specialties: SkillsSummary[];
 }
 
 export interface ProjectImage {

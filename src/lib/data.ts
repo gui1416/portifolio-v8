@@ -74,7 +74,7 @@ export const getSkillsData = (): Skills => ({
   category: skill.category ?? "",
  })),
  languages: portfolioData.skills.languages,
- summaries: portfolioData.skills.summaries,
+ specialties: portfolioData.skills.specialties,
 });
 
 
