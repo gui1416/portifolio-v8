@@ -1,6 +1,6 @@
 // src/lib/data.ts (NOVO)
 import portfolioData from '@/data/portfolio.json';
-import projectsData from '@/data/projects.json';
+import { projects } from '@/lib/projects';
 import {
  PersonalInfo,
  Experience,
@@ -79,16 +79,30 @@ export const getSkillsData = (): Skills => ({
 
 
 // Funções para projetos (de projects.json)
-export const getAllProjects = (): Project[] => z.array(projectSchema).parse(projectsData);
+export const getAllProjects = (): Project[] =>
+ projects.map((project: any) => ({
+  ...project,
+  images: project.images.map((img: any) => ({
+   src: img.src ?? img.url ?? "",
+   alt: img.alt ?? "",
+  })),
+ }));
 
 export const getProjectBySlug = (slug: string): Project | null => {
- const project = projectsData.find((p) => p.slug === slug);
- return project ? projectSchema.parse(project) : null;
+ const project = projects.find((p) => p.slug === slug);
+ if (!project) return null;
+ return {
+  ...project,
+  images: project.images.map((img: any) => ({
+   src: img.src ?? img.url ?? "",
+   alt: img.alt ?? "",
+  })),
+ };
 };
 
 export const getFeaturedProjects = (limit = 3): Project[] => {
- const featured = projectsData.filter((project) => project.featured);
- return z.array(projectSchema).parse(featured.slice(0, limit));
+ const featured = projects.filter((project) => project.featured);
+ return featured.slice(0, limit);
 };
 
 // Função para buscar commits do GitHub (mantida, mas com tipagem)

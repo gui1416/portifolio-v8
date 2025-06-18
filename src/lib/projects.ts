@@ -137,3 +137,16 @@ const projects: Project[] = [
   }
  }
 ]
+
+export { projects }
+
+// Add these functions after the projects array export
+
+export function getAllProjects(): Project[] {
+ return projects
+}
+
+export function getProjectBySlug(slug: string): Project | undefined {
+ return projects.find((project) => project.slug === slug)
+}
+
