@@ -1,146 +1,205 @@
 export interface ProjectGalleryImage {
- url: string;
- alt?: string;
+ url: string
+ caption?: string
 }
 
 export interface RelatedProject {
- slug: string;
- title: string;
- description: string;
- category: "web" | "mobile" | "backend";
- image?: ProjectGalleryImage;
- links?: {
-  demo?: string;
-  github?: string;
- };
+ slug: string
+ title: string
+ category: string
+ shortDescription?: string
+ technologies?: string[]
+ liveUrl?: string
+ githubUrl?: string
+ image: string
 }
 
 export interface Project {
- id: string;
- slug: string;
- title: string;
- description: string;
- category: "web" | "mobile" | "backend" | "all";
- technologies: string[];
- images: ProjectGalleryImage[];
- timeline: string;
- role: string;
- links: {
-  demo?: string;
-  github?: string;
- };
- featured?: boolean;
- related?: RelatedProject[];
+ id: number
+ slug: string
+ title: string
+ category: string
+ shortDescription: string
+ description: string[]
+ features: string[]
+ technologies: string[]
+ coverImage: string
+ thumbnailImage: string
+ gallery?: ProjectGalleryImage[]
+ client?: string
+ timeline: string
+ role: string
+ liveUrl?: string
+ githubUrl?: string
+ relatedProjects?: RelatedProject[]
 }
 
 const projects: Project[] = [
  {
-  id: "1",
+  id: 1,
   slug: "qr-code-encurtador-links",
   title: "Gerador de QR Code e Encurtador de Links",
-  description: "Site simples para geração de QR codes e encurtamento de links.",
-  category: "web",
+  category: "Web Application",
+  shortDescription: "Site simples para geração de QR codes e encurtamento de links.",
+  description: [
+   "Site simples para geração de QR codes e encurtamento de links.",
+   "Permite criar QR codes personalizados e encurtar URLs para fácil compartilhamento."
+  ],
+  features: [
+   "Geração de QR Code",
+   "Encurtamento de links",
+   "Interface simples e intuitiva"
+  ],
   technologies: ["Next.js", "qrcode.react", "clsx"],
-  images: [
-   { url: "/QRcode-links.png?height=200&width=400", alt: "QR Code Generator" }
+  coverImage: "/QRcode-links.png",
+  thumbnailImage: "/QRcode-links.png",
+  gallery: [
+   { url: "/QRcode-links.png", caption: "QR Code Generator" }
   ],
   timeline: "2025",
   role: "Desenvolvedor Frontend",
-  links: {
-   demo: "https://q-rcode-generator-phi.vercel.app/",
-   github: "https://github.com/gui1416/QRcode-generator"
-  }
+  liveUrl: "https://q-rcode-generator-phi.vercel.app/",
+  githubUrl: "https://github.com/gui1416/QRcode-generator",
+  relatedProjects: []
  },
  {
-  id: "2",
+  id: 2,
   slug: "linktree-clone",
   title: "Linktree Clone",
-  description: "Clone do Linktree feito como treino e para uso pessoal.",
-  category: "mobile",
+  category: "Mobile App",
+  shortDescription: "Clone do Linktree feito como treino e para uso pessoal.",
+  description: [
+   "Clone do Linktree feito como treino e para uso pessoal.",
+   "Permite criar uma página de links personalizada para redes sociais e contatos."
+  ],
+  features: [
+   "Página de links personalizada",
+   "Design responsivo",
+   "Fácil de usar"
+  ],
   technologies: ["Next.js 14", "TypeScript", "Shadcn-ui"],
-  images: [
-   { url: "/linktree.png?height=200&width=400", alt: "Linktree Clone" }
+  coverImage: "/linktree.png",
+  thumbnailImage: "/linktree.png",
+  gallery: [
+   { url: "/linktree.png", caption: "Linktree Clone" }
   ],
   timeline: "2025",
   role: "Desenvolvedor Full Stack",
-  links: {
-   demo: "https://linktree-guilherme-machado.vercel.app/",
-   github: "https://github.com/gui1416"
-  }
+  liveUrl: "https://linktree-guilherme-machado.vercel.app/",
+  githubUrl: "https://github.com/gui1416",
+  relatedProjects: []
  },
  {
-  id: "3",
+  id: 3,
   slug: "e-commerce-platform",
   title: "E-commerce Platform",
-  description: "Plataforma de e-commerce com carrinho de compras.",
-  category: "web",
+  category: "Web Application",
+  shortDescription: "Plataforma de e-commerce com carrinho de compras.",
+  description: [
+   "Plataforma de e-commerce com carrinho de compras.",
+   "Permite gerenciar produtos, pedidos e pagamentos online."
+  ],
+  features: [
+   "Carrinho de compras",
+   "Gestão de produtos",
+   "Integração com métodos de pagamento"
+  ],
   technologies: ["TypeScript", "Vite", "Tailwind CSS"],
-  images: [
-   { url: "/e-commerce.png?height=200&width=400", alt: "E-commerce Platform" }
+  coverImage: "/e-commerce.png",
+  thumbnailImage: "/e-commerce.png",
+  gallery: [
+   { url: "/e-commerce.png", caption: "E-commerce Platform" }
   ],
   timeline: "2024",
   role: "Desenvolvedor Backend",
-  links: {
-   demo: "#",
-   github: "https://github.com/gui1416/econverse"
-  }
+  liveUrl: "#",
+  githubUrl: "https://github.com/gui1416/econverse",
+  relatedProjects: []
  },
  {
-  id: "4",
+  id: 4,
   slug: "task-management-app",
   title: "Task Management App",
-  description: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
-  category: "web",
+  category: "Web Application",
+  shortDescription: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
+  description: [
+   "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
+   "Permite criar, editar e acompanhar tarefas em equipe."
+  ],
+  features: [
+   "Colaboração em tempo real",
+   "Notificações automáticas",
+   "Gestão de tarefas por equipe"
+  ],
   technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-  images: [
-   { url: "/task-management.png?height=200&width=400", alt: "Task Management App" }
+  coverImage: "/task-management.png",
+  thumbnailImage: "/task-management.png",
+  gallery: [
+   { url: "/task-management.png", caption: "Task Management App" }
   ],
   timeline: "2025",
   role: "Desenvolvedor Full Stack",
-  links: {
-   demo: "https://task-management-three-orpin.vercel.app/",
-   github: "https://github.com/gui1416/task-management"
-  }
+  liveUrl: "https://task-management-three-orpin.vercel.app/",
+  githubUrl: "https://github.com/gui1416/task-management",
+  relatedProjects: []
  },
  {
-  id: "5",
+  id: 5,
   slug: "weather-dashboard",
   title: "Weather Dashboard",
-  description: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
-  category: "web",
+  category: "Web Application",
+  shortDescription: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
+  description: [
+   "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
+   "Permite consultar o clima em tempo real de diversas cidades."
+  ],
+  features: [
+   "Visualização de dados meteorológicos",
+   "Busca por cidade",
+   "Interface responsiva"
+  ],
   technologies: ["React", "D3.js", "OpenWeather API"],
-  images: [
-   { url: "/weather-dashboard.png?height=200&width=400", alt: "Weather Dashboard" }
+  coverImage: "/weather-dashboard.png",
+  thumbnailImage: "/weather-dashboard.png",
+  gallery: [
+   { url: "/weather-dashboard.png", caption: "Weather Dashboard" }
   ],
   timeline: "2024",
   role: "Desenvolvedor Frontend",
-  links: {
-   demo: "#",
-   github: "#"
-  }
+  liveUrl: "#",
+  githubUrl: "#",
+  relatedProjects: []
  },
  {
-  id: "6",
+  id: 6,
   slug: "portfolio-template",
   title: "Portfolio Template",
-  description: "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
-  category: "web",
+  category: "Web Application",
+  shortDescription: "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
+  description: [
+   "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
+   "Fácil de editar e adaptar para diferentes perfis profissionais."
+  ],
+  features: [
+   "Design responsivo",
+   "Personalização fácil",
+   "Pronto para deploy"
+  ],
   technologies: ["HTML", "CSS", "JavaScript"],
-  images: [
-   { url: "/portfolio-template.png?height=200&width=400", alt: "Portfolio Template" }
+  coverImage: "/portfolio-template.png",
+  thumbnailImage: "/portfolio-template.png",
+  gallery: [
+   { url: "/portfolio-template.png", caption: "Portfolio Template" }
   ],
   timeline: "2022",
   role: "Desenvolvedor Frontend",
-  links: {
-   demo: "https://gui1416.github.io/Web-Portifolio/",
-   github: "https://github.com/gui1416/Web-Portifolio"
-  }
+  liveUrl: "https://gui1416.github.io/Web-Portifolio/",
+  githubUrl: "https://github.com/gui1416/Web-Portifolio",
+  relatedProjects: []
  }
 ]
 
 export { projects }
-
-// Add these functions after the projects array export
 
 export function getAllProjects(): Project[] {
  return projects
@@ -148,5 +207,23 @@ export function getAllProjects(): Project[] {
 
 export function getProjectBySlug(slug: string): Project | undefined {
  return projects.find((project) => project.slug === slug)
+}
+
+export function getRelatedProjects(currentSlug: string, limit = 2): RelatedProject[] {
+ const currentProject = getProjectBySlug(currentSlug)
+ if (!currentProject || !currentProject.relatedProjects) {
+  // If no related projects defined, return random projects
+  return projects
+   .filter((project) => project.slug !== currentSlug)
+   .slice(0, limit)
+   .map((project) => ({
+    slug: project.slug,
+    title: project.title,
+    category: project.category,
+    image: project.thumbnailImage,
+   }))
+ }
+
+ return currentProject.relatedProjects.slice(0, limit)
 }
 
