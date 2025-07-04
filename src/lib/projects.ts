@@ -62,7 +62,20 @@ const projects: Project[] = [
     role: "Desenvolvedor Frontend",
     liveUrl: "https://q-rcode-generator-phi.vercel.app/",
     githubUrl: "https://github.com/gui1416/QRcode-generator",
-    relatedProjects: []
+    relatedProjects: [
+      {
+        slug: "task-management-app",
+        title: "Task Management App",
+        category: "Web Application",
+        image: "/task-management.png"
+      },
+      {
+        slug: "linktree-clone",
+        title: "Linktree Clone",
+        category: "Mobile App",
+        image: "/linktree.png"
+      }
+    ]
   },
   {
     id: 2,
@@ -170,7 +183,20 @@ const projects: Project[] = [
     role: "Desenvolvedor Frontend",
     liveUrl: "",
     githubUrl: "#",
-    relatedProjects: []
+    relatedProjects: [
+      {
+        slug: "portfolio-template",
+        title: "Portfolio Template",
+        category: "Web Application",
+        image: "/portfolio-template.png"
+      },
+      {
+        slug: "task-management-app",
+        title: "Task Management App",
+        category: "Web Application",
+        image: "/task-management.png"
+      }
+    ]
   },
   {
     id: 6,
@@ -219,16 +245,10 @@ export function getRelatedProjects(currentSlug: string, limit = 2): RelatedProje
       .filter((project) => project.slug !== currentSlug)
       .slice(0, limit)
       .map((project) => ({
-        id: project.id,
         slug: project.slug,
         title: project.title,
         category: project.category,
-        timeline: project.timeline,
         image: project.thumbnailImage,
-        shortDescription: project.shortDescription,
-        technologies: project.technologies,
-        liveUrl: project.liveUrl,
-        githubUrl: project.githubUrl,
       }))
   }
 

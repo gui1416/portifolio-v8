@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ArrowLeft, ExternalLink, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getAllProjects, getProjectBySlug } from "@/lib/projects"
+import { getAllProjects, getProjectBySlug, getRelatedProjects } from "@/lib/projects"
 import { notFound } from "next/navigation"
 // Ajuste os imports abaixo conforme sua base de componentes
 // import { SkillTag } from "@/components/skill-tag"
@@ -25,6 +25,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
  if (!project) {
   notFound()
  }
+
+ const relatedProjects = getRelatedProjects(slug, 2)
 
  return (
   <main className="min-h-screen text-white">
@@ -148,12 +150,12 @@ export default function ProjectPage({ params }: ProjectPageProps) {
        </CardContent>
       </Card>
       {/* Projetos Relacionados */}
-      {project.relatedProjects && project.relatedProjects.length > 0 && (
+      {relatedProjects && relatedProjects.length > 0 && (
        <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
         <CardContent className="p-4 sm:p-6">
          <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Mais Projetos</h2>
          <div className="space-y-3 sm:space-y-4">
-          {project.relatedProjects.map((related, index) => (
+          {relatedProjects.map((related, index) => (
            <Link key={index} href={`/projects/${related.slug}`} className="block group">
             <div className="flex items-center gap-2 sm:gap-3">
              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded overflow-hidden flex-shrink-0">
