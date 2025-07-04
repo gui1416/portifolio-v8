@@ -4,82 +4,24 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ExternalLink, Github, Calendar } from "lucide-react"
+import { getAllProjects } from "@/lib/projects"
+import Link from "next/link"
 
 export default function Projetos() {
-  const projetos = [
-    {
-      titulo: "Gerador de QR Code & Encurtador de Links",
-      descricao: "Site simple para geração de QR codes & Encurtar links.",
-      imagem: "/QRcode-links.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["Next.js", "qrcode.react", "clsx"],
-      links: {
-        demo: "https://q-rcode-generator-phi.vercel.app/",
-        github: "https://github.com/gui1416/QRcode-generator",
-      },
-      data: "2025",
+  // Busca todos os projetos principais
+  const projetos = getAllProjects().map((proj) => ({
+    slug: proj.slug, // <-- Adiciona o slug ao objeto do projeto
+    titulo: proj.title,
+    descricao: proj.shortDescription || "",
+    imagem: proj.coverImage,
+    categoria: proj.category,
+    tecnologias: proj.technologies || [],
+    links: {
+      demo: proj.liveUrl || "",
+      github: proj.githubUrl || "",
     },
-    {
-      titulo: "Linktree Clone",
-      descricao: "Clone do linktree feito como treino e para uso pessoal.",
-      imagem: "/linktree.png?height=200&width=400",
-      categoria: "mobile",
-      tecnologias: ["Next.js 14", "TypeScript", "Shadcn-ui"],
-      links: {
-        demo: "https://linktree-guilherme-machado.vercel.app/",
-        github: "https://github.com/gui1416",
-      },
-      data: "2025",
-    },
-    {
-      titulo: "E-commerce Platform",
-      descricao: "Plataforma de e-commerce com carrinho de compras.",
-      imagem: "/e-commerce.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["TypeScript", "Vite", "Tailwind CSS"],
-      links: {
-        demo: "#",
-        github: "https://github.com/gui1416/econverse",
-      },
-      data: "2024",
-    },
-    {
-      titulo: "Task Management App",
-      descricao: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
-      imagem: "/task-management.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["Next.js", "TypeScript", "Tailwind CSS"],
-      links: {
-        demo: "https://task-management-three-orpin.vercel.app/",
-        github: "https://github.com/gui1416/task-management",
-      },
-      data: "2025",
-    },
-    {
-      titulo: "Weather Dashboard",
-      descricao: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
-      imagem: "/weather-dashboard.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["React", "D3.js", "OpenWeather API"],
-      links: {
-        demo: "#",
-        github: "#",
-      },
-      data: "2024",
-    },
-    {
-      titulo: "Portfolio Template",
-      descricao: "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
-      imagem: "/portfolio-template.png?height=200&width=400",
-      categoria: "web",
-      tecnologias: ["HTML", "CSS", "JavaScript"],
-      links: {
-        demo: "https://gui1416.github.io/Web-Portifolio/",
-        github: "https://github.com/gui1416/Web-Portifolio",
-      },
-      data: "2022",
-    },
-  ]
+    data: proj.timeline,
+  }));
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
@@ -88,8 +30,8 @@ export default function Projetos() {
       <Tabs defaultValue="all" className="mb-8">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="all">Todos</TabsTrigger>
-          <TabsTrigger value="web">Web</TabsTrigger>
-          <TabsTrigger value="mobile">Mobile</TabsTrigger>
+          <TabsTrigger value="Web Application">Web</TabsTrigger>
+          <TabsTrigger value="Mobile App">Mobile</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="mt-6">
@@ -100,20 +42,20 @@ export default function Projetos() {
           </div>
         </TabsContent>
 
-        <TabsContent value="web" className="mt-6">
+        <TabsContent value="Web Application" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projetos
-              .filter((projeto) => projeto.categoria === "web")
+              .filter((projeto) => projeto.categoria === "Web Application")
               .map((projeto) => (
                 <ProjetoCard key={projeto.titulo} projeto={projeto} />
               ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="mobile" className="mt-6">
+        <TabsContent value="Mobile App" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projetos
-              .filter((projeto) => projeto.categoria === "mobile")
+              .filter((projeto) => projeto.categoria === "Mobile App")
               .map((projeto) => (
                 <ProjetoCard key={projeto.titulo} projeto={projeto} />
               ))}
@@ -140,12 +82,16 @@ export default function Projetos() {
 function ProjetoCard({ projeto }) {
   return (
     <Card className="overflow-hidden flex flex-col h-full">
-      <div className="relative h-48 w-full">
-        <Image src={projeto.imagem || "/placeholder.svg"} alt={projeto.titulo} fill className="object-cover" />
-      </div>
+      <Link href={`/projects/${projeto.slug}`} className="block">
+        <div className="relative h-48 w-full">
+          <Image src={projeto.imagem || "/placeholder.svg"} alt={projeto.titulo} fill className="object-cover" />
+        </div>
+      </Link>
       <CardHeader>
         <div className="flex justify-between items-start">
-          <CardTitle>{projeto.titulo}</CardTitle>
+          <Link href={`/projects/${projeto.slug}`} className="hover:underline">
+            <CardTitle>{projeto.titulo}</CardTitle>
+          </Link>
           <Badge variant="outline" className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
             {projeto.data}
@@ -170,7 +116,7 @@ function ProjetoCard({ projeto }) {
           </a>
         </Button>
         <Button size="sm" asChild>
-          <a href={projeto.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+          <a href={projeto.links.demo || "/projects/not-demo"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
             <ExternalLink className="h-4 w-4" />
             Demo
           </a>
