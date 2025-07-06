@@ -271,7 +271,7 @@ const projects: Project[] = [
     timeline: "2025",
     role: "Desenvolvedor Full Stack",
     liveUrl: "https://readme-generator-rust-one.vercel.app/",
-    githubUrl: "https://github.com/gui1416/Web-Portifolio",
+    githubUrl: "https://github.com/gui1416/readme-generator",
     relatedProjects: [
       {
         id: 1,
