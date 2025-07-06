@@ -168,7 +168,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               />
              </div>
              <div>
-              <h3 className="text-sm sm:text-base font-medium group-hover:text-cyan-400 transition-colors">
+              <h3 className="text-sm sm:text-base font-medium group-hover:text-zinc-400 transition-colors">
                {related.title}
               </h3>
               <p className="text-xs text-zinc-400">{related.category}</p>

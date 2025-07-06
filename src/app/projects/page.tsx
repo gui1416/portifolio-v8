@@ -115,12 +115,14 @@ function ProjetoCard({ projeto }) {
             Código
           </a>
         </Button>
-        <Button size="sm" asChild>
-          <a href={projeto.links.demo || "/projects/not-demo"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-            <ExternalLink className="h-4 w-4" />
-            Demo
-          </a>
-        </Button>
+        {projeto.links.demo && (
+          <Button size="sm" asChild>
+            <a href={projeto.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+              <ExternalLink className="h-4 w-4" />
+              Demo
+            </a>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   )

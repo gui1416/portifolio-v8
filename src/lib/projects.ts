@@ -106,7 +106,24 @@ const projects: Project[] = [
     role: "Desenvolvedor Full Stack",
     liveUrl: "https://linktree-guilherme-machado.vercel.app/",
     githubUrl: "https://github.com/gui1416",
-    relatedProjects: []
+    relatedProjects: [
+      {
+        id: 4,
+        slug: "task-management-app",
+        title: "Task Management App",
+        category: "Web Application",
+        timeline: "2025",
+        image: "/task-management.png"
+      },
+      {
+        id: 1,
+        slug: "qr-code-encurtador-links",
+        title: "Gerador de QR Code e Encurtador de Links",
+        category: "Web Application",
+        timeline: "2025",
+        image: "/QRcode-links.png"
+      }
+    ]
   },
   {
     id: 3,
@@ -160,7 +177,24 @@ const projects: Project[] = [
     role: "Desenvolvedor Full Stack",
     liveUrl: "https://task-management-three-orpin.vercel.app/",
     githubUrl: "https://github.com/gui1416/task-management",
-    relatedProjects: []
+    relatedProjects: [
+      {
+        id: 1,
+        slug: "qr-code-encurtador-links",
+        title: "Gerador de QR Code e Encurtador de Links",
+        category: "Web Application",
+        timeline: "2025",
+        image: "/QRcode-links.png"
+      },
+      {
+        id: 3,
+        slug: "e-commerce-platform",
+        title: "E-commerce Platform",
+        category: "Web Application",
+        timeline: "2024",
+        image: "/e-commerce.png"
+      }
+    ]
   },
   {
     id: 5,
