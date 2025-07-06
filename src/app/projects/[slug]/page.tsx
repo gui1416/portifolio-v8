@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getAllProjects, getProjectBySlug, getRelatedProjects } from "@/lib/projects"
 import { notFound } from "next/navigation"
+import { Badge } from "@/components/ui/badge"
 // Ajuste os imports abaixo conforme sua base de componentes
 // import { SkillTag } from "@/components/skill-tag"
 // import { EnhancedScrollIndicator } from "@/components/enhanced-scroll-indicator"
@@ -44,7 +45,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
      {/* Project Header */}
      <div className="lg:col-span-3">
-      <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm overflow-hidden">
+      <Card className="bg-zinc-900/70 border-zinc-800 backdrop-white-sm overflow-hidden">
        <div className="relative h-48 sm:h-64 md:h-80 w-full">
         <Image
          src={project.coverImage || "/placeholder.svg"}
@@ -54,7 +55,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
         <div className="absolute bottom-0 left-0 p-4 sm:p-6">
-         <div className="text-xs sm:text-sm text-cyan-400 mb-1 sm:mb-2">{project.category}</div>
+         <div className="text-xs sm:text-sm text-white-400 mb-1 sm:mb-2">{project.category}</div>
          <h1 className="text-xl sm:text-3xl md:text-4xl font-bold">{project.title}</h1>
          <p className="text-sm text-zinc-400 mt-1 sm:mt-2 max-w-2xl">{project.shortDescription}</p>
         </div>
@@ -80,7 +81,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <h3 className="text-base sm:text-lg font-bold mt-6 sm:mt-8 mb-2 sm:mb-3">Tecnologias Utilizadas</h3>
         <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
          {project.technologies.map((tech, index) => (
-          <span key={index} className="inline-block bg-cyan-700/30 text-cyan-300 rounded px-2 py-1 text-xs font-medium">{tech}</span>
+          <Badge key={index} variant="secondary">{tech}</Badge>
          ))}
         </div>
         <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:mt-8">
@@ -88,7 +89,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           <Button
            asChild
            size="sm"
-           className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-xs sm:text-sm"
+           className=""
           >
            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
             <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />

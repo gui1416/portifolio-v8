@@ -64,15 +64,19 @@ const projects: Project[] = [
     githubUrl: "https://github.com/gui1416/QRcode-generator",
     relatedProjects: [
       {
+        id: 4,
         slug: "task-management-app",
         title: "Task Management App",
         category: "Web Application",
+        timeline: "2025",
         image: "/task-management.png"
       },
       {
+        id: 2,
         slug: "linktree-clone",
         title: "Linktree Clone",
         category: "Mobile App",
+        timeline: "2025",
         image: "/linktree.png"
       }
     ]
@@ -182,18 +186,22 @@ const projects: Project[] = [
     timeline: "2024",
     role: "Desenvolvedor Frontend",
     liveUrl: "",
-    githubUrl: "#",
+    githubUrl: "",
     relatedProjects: [
       {
+        id: 6,
         slug: "portfolio-template",
         title: "Portfolio Template",
         category: "Web Application",
+        timeline: "2022",
         image: "/portfolio-template.png"
       },
       {
+        id: 4,
         slug: "task-management-app",
         title: "Task Management App",
         category: "Web Application",
+        timeline: "2025",
         image: "/task-management.png"
       }
     ]
