@@ -263,10 +263,10 @@ const projects: Project[] = [
     coverImage: "/readme-generator.png",
     thumbnailImage: "/readme-generator.png",
     gallery: [
-      { url: "/readne-generator.png", caption: "README Generator" },
-      { url: "/readne-generator-g1.png", caption: "Gallery1" },
-      { url: "/readne-generator-g2.png", caption: "Gallery2" },
-      { url: "/readne-generator-g3.png", caption: "Gallery3" }
+      { url: "/readme-generator.png", caption: "README Generator" },
+      { url: "/readme-generator-g1.png", caption: "Gallery1" },
+      { url: "/readme-generator-g2.png", caption: "Gallery2" },
+      { url: "/readme-generator-g3.png", caption: "Gallery3" }
     ],
     timeline: "2025",
     role: "Desenvolvedor Full Stack",
