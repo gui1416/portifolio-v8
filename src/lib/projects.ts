@@ -202,38 +202,38 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    slug: "weather-dashboard",
-    title: "Weather Dashboard",
+    slug: "licitacoes-ia",
+    title: "Licitações IA",
     category: "Web Application",
-    shortDescription: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
+    shortDescription: "Sistema de capitação de licitações publicas.",
     description: [
-      "Dashboard interativo desenvolvido para exibir previsões meteorológicas em tempo real, utilizando visualizações de dados avançadas.",
-      "Permite ao usuário consultar o clima de diversas cidades, visualizar tendências e tomar decisões baseadas em dados precisos.",
-      "Ferramenta ideal para quem precisa acompanhar condições climáticas de forma prática, visual e informativa."
+      "Sistema inteligente desenvolvido para automatizar a captação de licitações públicas com o apoio de inteligência artificial.",
+      "Apresenta uma interface moderna e responsiva, que permite aos usuários consultar oportunidades de licitação em tempo real, filtrando por palavras-chave e critérios personalizados.",
+      "Integrado com a API do ConLicitação, o sistema otimiza a análise de dados, facilitando a tomada de decisões estratégicas para empresas que atuam no setor público."
     ],
     features: [
-      "Visualização de dados meteorológicos",
-      "Busca por cidade",
-      "Interface responsiva"
+      "Busca avançada por palavras-chave",
+      "Visualização de licitações em tempo real",
+      "Interface intuitiva e responsiva"
     ],
-    technologies: ["React", "D3.js", "OpenWeather API"],
-    coverImage: "/weather-dashboard.png",
-    thumbnailImage: "/weather-dashboard.png",
+    technologies: ["Gemini API", "Next.js 15", "ConLicitação API"],
+    coverImage: "/licitacoes-ia.png",
+    thumbnailImage: "/licitacoes-ia-t.png",
     gallery: [
-      { url: "/weather-dashboard.png", caption: "Weather Dashboard" }
+      { url: "/licitacoes-ia.png", caption: "coverImage" }
     ],
-    timeline: "2024",
-    role: "Desenvolvedor Frontend",
-    liveUrl: "",
-    githubUrl: "",
+    timeline: "2025",
+    role: "Desenvolvedor Full Stack",
+    liveUrl: "https://cap-licita.vercel.app/",
+    githubUrl: "https://github.com/gui1416/capture-system",
     relatedProjects: [
       {
-        id: 6,
-        slug: "portfolio-template",
-        title: "Portfolio Template",
-        category: "Web Application",
-        timeline: "2022",
-        image: "/portfolio-template.png"
+        id: 2,
+        slug: "linktree-clone",
+        title: "Linktree Clone",
+        category: "Mobile App",
+        timeline: "2025",
+        image: "/linktree.png"
       },
       {
         id: 4,
