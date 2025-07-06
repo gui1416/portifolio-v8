@@ -44,8 +44,9 @@ const projects: Project[] = [
     category: "Web Application",
     shortDescription: "Site simples para geração de QR codes e encurtamento de links.",
     description: [
-      "Site simples para geração de QR codes e encurtamento de links.",
-      "Permite criar QR codes personalizados e encurtar URLs para fácil compartilhamento."
+      "Aplicação web desenvolvida para facilitar a criação de QR codes personalizados e o encurtamento de URLs, proporcionando praticidade no compartilhamento de links em diferentes plataformas.",
+      "Permite ao usuário gerar QR codes customizados para qualquer URL, além de encurtar links longos, tornando-os mais acessíveis e fáceis de divulgar.",
+      "Ideal para profissionais, empresas e eventos que desejam compartilhar informações de forma rápida, moderna e eficiente."
     ],
     features: [
       "Geração de QR Code",
@@ -88,8 +89,9 @@ const projects: Project[] = [
     category: "Mobile App",
     shortDescription: "Clone do Linktree feito como treino e para uso pessoal.",
     description: [
-      "Clone do Linktree feito como treino e para uso pessoal.",
-      "Permite criar uma página de links personalizada para redes sociais e contatos."
+      "Projeto inspirado no Linktree, desenvolvido para centralizar e organizar múltiplos links em uma única página personalizada.",
+      "Permite ao usuário criar um perfil com links para redes sociais, contatos e outros recursos, facilitando o compartilhamento em perfis digitais.",
+      "Conta com design responsivo e interface intuitiva, sendo ideal para profissionais, influenciadores e empresas que desejam reunir seus principais canais de comunicação em um só lugar."
     ],
     features: [
       "Página de links personalizada",
@@ -132,8 +134,9 @@ const projects: Project[] = [
     category: "Web Application",
     shortDescription: "Plataforma de e-commerce com carrinho de compras.",
     description: [
-      "Plataforma de e-commerce com carrinho de compras.",
-      "Permite gerenciar produtos, pedidos e pagamentos online."
+      "Plataforma completa de e-commerce desenvolvida para oferecer uma experiência de compra online eficiente e segura.",
+      "Permite o gerenciamento de produtos, controle de estoque, processamento de pedidos e integração com métodos de pagamento digitais.",
+      "Ideal para pequenos e médios negócios que buscam expandir sua presença digital e automatizar processos de vendas."
     ],
     features: [
       "Carrinho de compras",
@@ -159,8 +162,9 @@ const projects: Project[] = [
     category: "Web Application",
     shortDescription: "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
     description: [
-      "Aplicativo de gerenciamento de tarefas com recursos de colaboração em tempo real e notificações.",
-      "Permite criar, editar e acompanhar tarefas em equipe."
+      "Aplicativo robusto para gerenciamento de tarefas, focado em colaboração de equipes e aumento de produtividade.",
+      "Oferece recursos como criação, edição e acompanhamento de tarefas em tempo real, além de notificações automáticas para manter todos alinhados.",
+      "Ideal para times que buscam organizar fluxos de trabalho, delegar responsabilidades e monitorar o progresso de projetos de forma eficiente."
     ],
     features: [
       "Colaboração em tempo real",
@@ -203,8 +207,9 @@ const projects: Project[] = [
     category: "Web Application",
     shortDescription: "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
     description: [
-      "Dashboard interativo que exibe previsões meteorológicas com visualizações de dados avançadas.",
-      "Permite consultar o clima em tempo real de diversas cidades."
+      "Dashboard interativo desenvolvido para exibir previsões meteorológicas em tempo real, utilizando visualizações de dados avançadas.",
+      "Permite ao usuário consultar o clima de diversas cidades, visualizar tendências e tomar decisões baseadas em dados precisos.",
+      "Ferramenta ideal para quem precisa acompanhar condições climáticas de forma prática, visual e informativa."
     ],
     features: [
       "Visualização de dados meteorológicos",
@@ -247,8 +252,9 @@ const projects: Project[] = [
     category: "Web Application",
     shortDescription: "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
     description: [
-      "Template de portfólio responsivo e personalizável para desenvolvedores e designers.",
-      "Fácil de editar e adaptar para diferentes perfis profissionais."
+      "Template moderno e responsivo criado para profissionais que desejam apresentar seus projetos e habilidades de forma elegante.",
+      "Fácil de personalizar, permite a inclusão de informações, imagens e links relevantes, adaptando-se a diferentes perfis e áreas de atuação.",
+      "Ideal para desenvolvedores, designers e freelancers que buscam destacar seu trabalho e conquistar novas oportunidades."
     ],
     features: [
       "Design responsivo",
@@ -282,15 +288,21 @@ export function getProjectBySlug(slug: string): Project | undefined {
 export function getRelatedProjects(currentSlug: string, limit = 2): RelatedProject[] {
   const currentProject = getProjectBySlug(currentSlug)
   if (!currentProject || !currentProject.relatedProjects) {
-    // If no related projects defined, return random projects
+    // If no related projects defined, return random projects with all required fields for RelatedProject
     return projects
       .filter((project) => project.slug !== currentSlug)
       .slice(0, limit)
       .map((project) => ({
+        id: project.id,
         slug: project.slug,
         title: project.title,
         category: project.category,
         image: project.thumbnailImage,
+        timeline: project.timeline,
+        shortDescription: project.shortDescription,
+        technologies: project.technologies,
+        liveUrl: project.liveUrl,
+        githubUrl: project.githubUrl,
       }))
   }
 
