@@ -247,6 +247,49 @@ const projects: Project[] = [
   },
   {
     id: 6,
+    slug: "readme-generator",
+    title: "README Generator",
+    category: "Web Application",
+    shortDescription: "Uma ferramenta online para gerar arquivos README.md personalizados para seus projetos GitHub!",
+    description: [
+      "O README Generator é uma aplicação web desenvolvida em TypeScript que simplifica a criação de arquivos `README.md` para projetos no GitHub. Ele permite gerar READMEs personalizados com facilidade, economizando tempo e garantindo consistência na documentação dos seus projetos."
+    ],
+    features: [
+      "Geração de README.md",
+      "Histórico de gerações",
+      "Preview em tempo real"
+    ],
+    technologies: ["TypeScript", "react-markdown", "remark-gfm", "Node.js"],
+    coverImage: "/readme-generator.png",
+    thumbnailImage: "/readme-generator.png",
+    gallery: [
+      { url: "/readne-generator.png", caption: "README Generator" }
+    ],
+    timeline: "2025",
+    role: "Desenvolvedor Full Stack",
+    liveUrl: "https://readme-generator-rust-one.vercel.app/",
+    githubUrl: "https://github.com/gui1416/Web-Portifolio",
+    relatedProjects: [
+      {
+        id: 1,
+        slug: "qr-code-encurtador-links",
+        title: "Gerador de QR Code e Encurtador de Links",
+        category: "Web Application",
+        timeline: "2025",
+        image: "/QRcode-links.png"
+      },
+      {
+        id: 2,
+        slug: "linktree-clone",
+        title: "Linktree Clone",
+        category: "Mobile App",
+        timeline: "2025",
+        image: "/linktree.png"
+      }
+    ]
+  },
+  {
+    id: 7,
     slug: "portfolio-template",
     title: "Portfolio Template",
     category: "Web Application",
