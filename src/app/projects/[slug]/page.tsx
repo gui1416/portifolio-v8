@@ -6,11 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getAllProjects, getProjectBySlug, getRelatedProjects } from "@/lib/projects"
 import { notFound } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
-// Ajuste os imports abaixo conforme sua base de componentes
-// import { SkillTag } from "@/components/skill-tag"
-// import { EnhancedScrollIndicator } from "@/components/enhanced-scroll-indicator"
-// import { AnimatedSection } from "@/components/animated-section"
-// import { PortfolioHeader } from "@/components/portfolio-header"
+
 
 interface ProjectPageProps {
  params: {
@@ -18,7 +14,7 @@ interface ProjectPageProps {
  }
 }
 
-// Corrige a função para não ser async e acessar params diretamente
+
 export default function ProjectPage({ params }: ProjectPageProps) {
  const { slug } = params
  const project = getProjectBySlug(slug)
@@ -31,9 +27,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
  return (
   <main className="min-h-screen text-white">
-   {/* Header e grid de fundo podem ser ajustados conforme seu layout */}
    <div className="fixed inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:20px_20px] opacity-20 z-0"></div>
-   {/* <PortfolioHeader /> */}
    <div className="relative z-10 container mx-auto p-3 sm:p-4 pt-20 sm:pt-24 pb-6 sm:pb-8">
     <Link
      href="/projects"
@@ -43,7 +37,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
      Voltar para Projetos
     </Link>
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-     {/* Project Header */}
      <div className="lg:col-span-3">
       <Card className="bg-zinc-900/70 border-zinc-800 backdrop-white-sm overflow-hidden">
        <div className="relative h-48 sm:h-64 md:h-80 w-full">
@@ -62,7 +55,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
        </div>
       </Card>
      </div>
-     {/* Project Content */}
      <div className="lg:col-span-2 space-y-4 sm:space-y-6">
       <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
        <CardContent className="p-4 sm:p-6">
@@ -108,7 +100,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
        </CardContent>
       </Card>
-      {/* Project Gallery */}
       {project.gallery && project.gallery.length > 0 && (
        <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
         <CardContent className="p-4 sm:p-6">
@@ -129,7 +120,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
        </Card>
       )}
      </div>
-     {/* Project Sidebar */}
      <div className="space-y-4 sm:space-y-6">
       <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
        <CardContent className="p-4 sm:p-6">
@@ -150,7 +140,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
        </CardContent>
       </Card>
-      {/* Projetos Relacionados */}
       {relatedProjects && relatedProjects.length > 0 && (
        <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
         <CardContent className="p-4 sm:p-6">

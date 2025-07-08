@@ -29,7 +29,6 @@ export default function RootLayout({
           <SidebarProvider>
             <div className="flex min-h-screen">
               <Sidebar />
-              {/* Adicionado padding-top para dispositivos móveis */}
               <main className="flex-1 p-6 md:p-10 ml-0 lg:ml-20 pt-safe transition-all duration-300 w-full">
                 {children}
               </main>

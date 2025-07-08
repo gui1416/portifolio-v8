@@ -8,9 +8,8 @@ import { getAllProjects } from "@/lib/projects"
 import Link from "next/link"
 
 export default function Projetos() {
-  // Busca todos os projetos principais
   const projetos = getAllProjects().map((proj) => ({
-    slug: proj.slug, // <-- Adiciona o slug ao objeto do projeto
+    slug: proj.slug,
     titulo: proj.title,
     descricao: proj.shortDescription || "",
     imagem: proj.coverImage,

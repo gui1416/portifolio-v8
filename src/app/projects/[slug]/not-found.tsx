@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 export default function ProjectNotFound() {
  return (
   <div className="min-h-screen text-white flex items-center justify-center p-6 relative overflow-hidden">
-   {/* Background Effects - Grayscale */}
    <div className="absolute inset-0 opacity-20">
     <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse" />
     <div
@@ -13,15 +12,10 @@ export default function ProjectNotFound() {
      style={{ animationDelay: "1s" }}
     />
    </div>
-
    <div className="relative z-10 text-center space-y-10 max-w-2xl">
-    {/* Main Icon with Glow Effect */}
     <div className="relative">
      <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 flex items-center justify-center relative overflow-hidden group">
-      {/* Glow effect - Grayscale */}
       <div className="absolute inset-0 bg-gradient-to-br from-zinc-600/10 to-zinc-400/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-      {/* Animated ring - Grayscale */}
       <div
        className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-zinc-500/30 to-zinc-400/30 bg-clip-border animate-spin"
        style={{ animationDuration: "3s" }}
@@ -31,8 +25,6 @@ export default function ProjectNotFound() {
 
       <Search className="w-12 h-12 text-zinc-400 relative z-10 group-hover:text-zinc-200 transition-colors duration-300" />
      </div>
-
-     {/* Floating particles - Grayscale */}
      <div
       className="absolute -top-2 -right-2 w-3 h-3 bg-zinc-400 rounded-full animate-bounce opacity-60"
       style={{ animationDelay: "0.5s" }}
@@ -46,8 +38,6 @@ export default function ProjectNotFound() {
       style={{ animationDelay: "2s" }}
      />
     </div>
-
-    {/* Content with Enhanced Typography */}
     <div className="space-y-6">
      <div className="space-y-3">
       <h1 className="text-8xl font-extralight bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
@@ -61,8 +51,6 @@ export default function ProjectNotFound() {
       criações?
      </p>
     </div>
-
-    {/* Enhanced Action Buttons - Grayscale */}
     <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
      <Button
       asChild
@@ -87,8 +75,6 @@ export default function ProjectNotFound() {
       </Link>
      </Button>
     </div>
-
-    {/* Enhanced Help Section */}
     <div className="pt-12 mt-12">
      <div className="relative">
       <div className="absolute inset-0 flex items-center">

@@ -334,7 +334,6 @@ export function getProjectBySlug(slug: string): Project | undefined {
 export function getRelatedProjects(currentSlug: string, limit = 2): RelatedProject[] {
   const currentProject = getProjectBySlug(currentSlug)
   if (!currentProject || !currentProject.relatedProjects) {
-    // If no related projects defined, return random projects with all required fields for RelatedProject
     return projects
       .filter((project) => project.slug !== currentSlug)
       .slice(0, limit)

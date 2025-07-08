@@ -18,14 +18,12 @@ export default function SobreMim() {
       <h1 className="text-4xl font-bold mb-8">Sobre Mim</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        {/* Profile Image */}
         <div className="flex justify-center md:justify-start">
           <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20">
             <Image src="https://github.com/gui1416.png" alt="Guilherme" fill className="object-cover" />
           </div>
         </div>
 
-        {/* Profile Info */}
         <div className="md:col-span-2 flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-2">Guilherme Machado</h2>
           <p className="text-xl text-primary mb-4">Desenvolvedor Full-Stack</p>
@@ -66,7 +64,6 @@ export default function SobreMim() {
         </div>
       </div>
 
-      {/* Technologies */}
       <h2 className="text-2xl font-semibold mb-6">Tecnologias</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-12">
         {technologies.map((tech) => (
@@ -79,7 +76,6 @@ export default function SobreMim() {
         ))}
       </div>
 
-      {/* Skills Summary */}
       <h2 className="text-2xl font-semibold mb-6">Resumo de Habilidades</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
