@@ -151,9 +151,26 @@ const projects: Project[] = [
     ],
     timeline: "2024",
     role: "Desenvolvedor Backend",
-    liveUrl: "#",
+    liveUrl: "",
     githubUrl: "https://github.com/gui1416/econverse",
-    relatedProjects: []
+    relatedProjects: [
+      {
+        id: 5,
+        slug: "licitacoes-ia",
+        title: "Licitações IA",
+        category: "Web Application",
+        timeline: "2025",
+        image: "/licitacoes-ia.png"
+      },
+      {
+        id: 4,
+        slug: "task-management-app",
+        title: "Task Management App",
+        category: "Web Application",
+        timeline: "2025",
+        image: "/task-management.png"
+      }
+    ]
   },
   {
     id: 4,
