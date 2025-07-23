@@ -106,8 +106,8 @@ const projects: Project[] = [
     ],
     timeline: "2025",
     role: "Desenvolvedor Full Stack",
-    liveUrl: "https://linktree-guilherme-machado.vercel.app/",
-    githubUrl: "https://github.com/gui1416",
+    liveUrl: "https://linktree-gui-pi.vercel.app/",
+    githubUrl: "https://github.com/gui1416/linktree-personal",
     relatedProjects: [
       {
         id: 4,
