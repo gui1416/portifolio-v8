@@ -5,7 +5,7 @@ import { Calendar, MapPin, Briefcase } from "lucide-react"
 export default function Experiencia() {
   const experiencias = [
     {
-      cargo: "Auxiliar de Desenvolvimento",
+      cargo: "Auxiliar de TI",
       empresa: "Soluções Serviços Terceirizados - LTDA",
       periodo: "2025 - Presente",
       local: "São Paulo, SP",
