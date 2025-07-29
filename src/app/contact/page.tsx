@@ -23,25 +23,44 @@ export default function Contato() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    console.log("Dados do formulário:", formData)
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setTimeout(() => {
-      toast.success("Mensagem enviada!", {
-        description: "Obrigado pelo contato. Responderei em breve.",
-      })
-      setFormData({
-        nome: "",
-        email: "",
-        assunto: "",
-        mensagem: "",
-      })
-      setIsSubmitting(false)
-    }, 1500)
-  }
+      if (response.ok) {
+        toast.success("Mensagem enviada!", {
+          description: "Obrigado pelo contato. Responderei em breve.",
+        });
+        setFormData({
+          nome: "",
+          email: "",
+          assunto: "",
+          mensagem: "",
+        });
+      } else {
+        const errorData = await response.json();
+        toast.error("Erro ao enviar mensagem", {
+          description: errorData.error || "Ocorreu um erro inesperado. Tente novamente.",
+        });
+      }
+    } catch (error) {
+      console.error("Erro de rede ou ao enviar o formulário:", error);
+      toast.error("Erro de conexão", {
+        description: "Não foi possível conectar ao servidor. Verifique sua internet ou tente mais tarde.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const contatoInfo = [
     {
