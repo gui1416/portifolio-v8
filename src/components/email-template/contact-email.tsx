@@ -107,7 +107,7 @@ const headerSection = {
 
 const logo = {
  display: 'block',
- textAlign: 'center' as const,
+ margin: '0 auto',
 };
 
 const titleSection = {
