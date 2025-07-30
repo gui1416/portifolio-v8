@@ -24,10 +24,6 @@ interface ContactEmailProps {
 export function ContactEmail({ nome, email, assunto, mensagem }: ContactEmailProps) {
  const previewText = `Nova mensagem de contato: ${assunto}`;
 
- // baseUrl para referenciar a logo hospedada, p.ex. na pasta public
- const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : '';
 
  return (
   <Html lang="pt">
@@ -35,11 +31,10 @@ export function ContactEmail({ nome, email, assunto, mensagem }: ContactEmailPro
    <Preview>{previewText}</Preview>
    <Body style={main}>
     <Container style={container}>
-     {/* Cabeçalho com logo clicável */}
      <Section style={headerSection}>
       <Link href="https://portifolio-v8.vercel.app/" target="_blank">
        <Img
-        src={`${baseUrl}/logo.png`} // ou `/logo.png` se estiver na pasta public/
+        src={`https://portifolio-v8.vercel.app/logo.png`}
         width="120"
         height="auto"
         alt="Minha Logo"
@@ -62,7 +57,7 @@ export function ContactEmail({ nome, email, assunto, mensagem }: ContactEmailPro
 
      <Section>
       <Text style={label}><strong>Mensagem:</strong></Text>
-      <Text style={messageBox}>{mensagem}</Text>
+      <Text style={messageBox}>”{mensagem}”</Text>
      </Section>
 
      <Hr style={hr} />
@@ -107,7 +102,7 @@ const container = {
 
 const headerSection = {
  paddingBottom: '16px',
- textAlign: 'left' as const,
+ textAlign: 'center' as const,
 };
 
 const logo = {
@@ -157,7 +152,7 @@ const footerText = {
 
 const button = {
  backgroundColor: colors.primary,
- color: 'hsl(0, 0%, 98%)', // --primary-foreground
+ color: 'hsl(0, 0%, 98%)',
  padding: '12px 24px',
  borderRadius: '4px',
  fontSize: '16px',

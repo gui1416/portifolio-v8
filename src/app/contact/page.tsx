@@ -36,7 +36,11 @@ export default function Contato() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      if (response.status === 429) {
+        toast.error("Você está enviando mensagens muito rápido.", {
+          description: "Por favor, aguarde um minutos antes de tentar novamente.",
+        });
+      } else if (response.ok) {
         toast.success("Mensagem enviada!", {
           description: "Obrigado pelo contato. Responderei em breve.",
         });
