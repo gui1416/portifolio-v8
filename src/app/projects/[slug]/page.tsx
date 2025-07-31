@@ -14,16 +14,23 @@ interface ProjectPageProps {
  }
 }
 
+export async function generateStaticParams() {
+ const projects = await getAllProjects();
+ return projects.map((project) => ({
+  slug: project.slug,
+ }));
+}
 
-export default function ProjectPage({ params }: ProjectPageProps) {
+
+export default async function ProjectPage({ params }: ProjectPageProps) {
  const { slug } = params
- const project = getProjectBySlug(slug)
+ const project = await getProjectBySlug(slug)
 
  if (!project) {
   notFound()
  }
 
- const relatedProjects = getRelatedProjects(slug, 2)
+ const relatedProjects = await getRelatedProjects(slug, 2)
 
  return (
   <main className="min-h-screen text-white">

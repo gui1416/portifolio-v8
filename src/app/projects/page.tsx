@@ -7,8 +7,8 @@ import { ExternalLink, Github, Calendar } from "lucide-react"
 import { getAllProjects } from "@/lib/projects"
 import Link from "next/link"
 
-export default function Projetos() {
-  const projetos = getAllProjects().map((proj) => ({
+export default async function Projetos() {
+  const projetos = (await getAllProjects()).map((proj) => ({
     slug: proj.slug,
     titulo: proj.title,
     descricao: proj.shortDescription || "",
