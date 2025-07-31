@@ -53,15 +53,15 @@ export default function Educacao() {
   const workshopsList = [
     {
       nome: "Visita a Oracle",
-      link: "#",
+      link: "",
     },
     {
       nome: "Palestra sobre IA",
-      link: "#",
+      link: "",
     },
     {
       nome: "Workshop de Acessibilidade Web",
-      link: "#",
+      link: "",
     },
   ]
 
@@ -107,12 +107,14 @@ export default function Educacao() {
                 </div>
               </div>
 
-              <Button size="sm" className="mt-2" asChild>
-                <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                  <ExternalLink className="h-4 w-4" />
-                  Ver Certificado
-                </a>
-              </Button>
+              {item.link && (
+                <Button size="sm" className="mt-2" asChild>
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                    <ExternalLink className="h-4 w-4" />
+                    Ver Certificado
+                  </a>
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}
