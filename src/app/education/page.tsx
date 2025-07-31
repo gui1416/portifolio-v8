@@ -13,7 +13,7 @@ export default function Educacao() {
       descricao:
         "Formação completa em Ciência da Computação com foco em desenvolvimento de software e sistemas distribuídos.",
       certificacoes: ["Programação Avançada", "Inteligência Artificial", "Desenvolvimento Web"],
-      link: "#",
+      link: "",
     },
     {
       instituicao: "CISCO - Networking Academy",
