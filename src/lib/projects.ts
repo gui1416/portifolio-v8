@@ -36,7 +36,6 @@ export interface Project {
   relatedProjects?: RelatedProject[]
 }
 
-// A URL agora é lida da variável de ambiente
 const API_URL = process.env.PROJECTS_API_URL;
 
 async function fetchProjects(): Promise<Project[]> {

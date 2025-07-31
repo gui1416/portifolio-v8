@@ -1,63 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, MapPin, Briefcase } from "lucide-react"
+import { getExperiencias } from "@/lib/experiences"
 
-export default function Experiencia() {
-  const experiencias = [
-    {
-      cargo: "Auxiliar de TI",
-      empresa: "Soluções Serviços Terceirizados - LTDA",
-      periodo: "2025 - Presente",
-      local: "São Paulo, SP",
-      descricao:
-        "Desenvolvimento de aplicações web modernas utilizando React, Next.js e TypeScript.",
-      responsabilidades: [
-        "Documentação Técnica",
-        "Implantação de Sistemas",
-        "Aprendizado Contínuo",
-        "Colaboração com Outras Áreas",
-      ],
-      tecnologias: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux", "Gemini API", "Node.js", "Express", "MongoDB", "PostgreSQL", "Git", "GitHub"],
-    },
-    {
-      cargo: "Auxiliar de Contratos",
-      empresa: "Soluções Serviços Terceirizados - LTDA",
-      periodo: "2024 - 2025",
-      local: "São Paulo, SP",
-      descricao:
-        "Atuação no auxilio de todos o ciclo de vida contratual, desde a elaboração até o arquivamento.",
-      responsabilidades: [
-        "Organização e Arquivamento de Documentos",
-        "Controle de Prazos e Vencimentos",
-        "Cadastro e Atualização de Informações",
-        "Manutenção do equilibrio finânceiro",
-      ],
-      tecnologias: ["Teknisa", "Google Shet", "Excel", "Google Drive", "Google Docs", "Google Forms", "Google Calendar", "Google Meet", "Microsoft Office", "AnyDesk"],
-    },
-    {
-      cargo: "Operador de Cobranças",
-      empresa: "Roveri Associados",
-      periodo: "2023 - 2023",
-      local: "São Caetano do Sul, SP",
-      descricao:
-        "Atuação na realização de cobranças de valores devidos por clientes, buscando a regularização de débitos de forma eficiente.",
-      responsabilidades: [
-        "Contato com Clientes Devedores",
-        "Negociação de Pagamentos",
-        "Esclarecimento de Dúvidas",
-        "Emissão de Boletos e Outros Documentos",
-      ],
-      tecnologias: [null],
-    },
-  ]
+
+export const revalidate = 3600
+
+export default async function ExperienciaPage() {
+  const experiencias = await getExperiencias();
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
       <h1 className="text-4xl font-bold mb-8">Experiência Profissional</h1>
 
       <div className="space-y-8">
-        {experiencias.map((exp, index) => (
-          <Card key={index} className="relative overflow-hidden">
+        {experiencias.map((exp) => (
+          <Card key={exp.id} className="relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
             <CardHeader>
               <div className="flex items-start justify-between flex-wrap gap-2">
@@ -90,16 +48,16 @@ export default function Experiencia() {
                 </ul>
               </div>
 
-              <div>
-                <h4 className="text-sm font-medium mb-2">Tecnologias Utilizadas:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {exp.tecnologias.map((tech, i) => (
-                    <Badge key={i} variant="secondary">
-                      {tech}
-                    </Badge>
-                  ))}
+              {exp.tecnologias && exp.tecnologias.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-medium mb-2">Tecnologias Utilizadas:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.tecnologias.map((tech, i) => (
+                      tech && <Badge key={i} variant="secondary">{tech}</Badge>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </CardContent>
           </Card>
         ))}
