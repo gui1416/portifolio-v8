@@ -1,9 +1,15 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GraduationCap, Calendar, MapPin, Award, ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { useState } from "react"
 
 export default function Educacao() {
+  const [certificateUrl, setCertificateUrl] = useState<string | null>(null)
+
   const educacaoItems = [
     {
       instituicao: "Faculdade das Americas - FAM",
@@ -61,9 +67,13 @@ export default function Educacao() {
     },
     {
       nome: "Workshop de Acessibilidade Web",
-      link: "",
+      link: "https://drive.google.com/file/d/1EXAMPLE/view",
     },
   ]
+
+  const handleOpenCertificate = (url: string) => {
+    setCertificateUrl(url)
+  }
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
@@ -72,7 +82,6 @@ export default function Educacao() {
       <div className="space-y-8">
         {educacaoItems.map((item, index) => (
           <Card key={index} className="relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div>
@@ -108,11 +117,9 @@ export default function Educacao() {
               </div>
 
               {item.link && (
-                <Button size="sm" className="mt-2" asChild>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                    <ExternalLink className="h-4 w-4" />
-                    Ver Certificado
-                  </a>
+                <Button size="sm" className="mt-2 flex items-center gap-1" onClick={() => handleOpenCertificate(item.link)}>
+                  <Award className="h-4 w-4" />
+                  Ver Certificado
                 </Button>
               )}
             </CardContent>
@@ -134,10 +141,8 @@ export default function Educacao() {
                   <li key={index}>
                     •{" "}
                     <a
-                      href={curso.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-primary hover:underline transition-colors"
+                      onClick={() => handleOpenCertificate(curso.link)}
+                      className="cursor-pointer hover:text-primary hover:underline transition-colors"
                     >
                       {curso.nome}
                     </a>
@@ -157,14 +162,16 @@ export default function Educacao() {
                 {workshopsList.map((workshop, index) => (
                   <li key={index}>
                     •{" "}
-                    <a
-                      href={workshop.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-primary hover:underline transition-colors"
-                    >
-                      {workshop.nome}
-                    </a>
+                    {workshop.link ? (
+                      <a
+                        onClick={() => handleOpenCertificate(workshop.link)}
+                        className="cursor-pointer hover:text-primary hover:underline transition-colors"
+                      >
+                        {workshop.nome}
+                      </a>
+                    ) : (
+                      <span>{workshop.nome}</span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -172,6 +179,30 @@ export default function Educacao() {
           </Card>
         </div>
       </div>
+
+      <Dialog
+        open={!!certificateUrl}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setCertificateUrl(null)
+          }
+        }}
+      >
+        <DialogContent className="p-0 w-[90vw] max-w-[1200px] flex flex-col">
+          <DialogHeader className="p-6 pb-2">
+            <DialogTitle>Visualizador de Certificado</DialogTitle>
+          </DialogHeader>
+          <div className="w-full p-2 pt-0">
+            {certificateUrl && (
+              <iframe
+                src={certificateUrl.replace("/view?usp=sharing", "/preview")}
+                className="w-full aspect-video border-0 rounded-md"
+                title="Certificado"
+              ></iframe>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
