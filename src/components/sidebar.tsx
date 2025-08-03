@@ -34,10 +34,8 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile overlay */}
       {isOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={closeSidebar} />}
 
-      {/* Sidebar */}
       <aside
         className={`
           fixed top-0 left-0 z-50 h-screen bg-card border-r border-border
@@ -46,7 +44,6 @@ export function Sidebar() {
         `}
       >
         <div className="h-full flex flex-col overflow-hidden">
-          {/* Profile section */}
           <div className="p-4 flex flex-col items-center">
             <Avatar className={`w-16 h-16 mb-2 ${!isOpen && "lg:w-12 lg:h-12"}`}>
               <AvatarImage src="https://github.com/gui1416.png" alt="Guilherme" />
@@ -56,7 +53,7 @@ export function Sidebar() {
             {isOpen && (
               <div className="text-center">
                 <h3 className="font-semibold">Guilherme</h3>
-                <p className="text-sm text-muted-foreground">Desenvolvedor Full-Stack</p>
+                <p className="text-sm text-muted-foreground">Desenvolvedor Web</p>
               </div>
             )}
           </div>
@@ -87,7 +84,6 @@ export function Sidebar() {
             </ul>
           </nav>
 
-          {/* Toggle button - only visible on desktop */}
           <div className="p-4 mt-auto hidden lg:block">
             <Button variant="outline" size="icon" onClick={toggleSidebar} className="w-full flex justify-center">
               {isOpen ? <ChevronLeft /> : <ChevronRight />}
@@ -96,7 +92,6 @@ export function Sidebar() {
         </div>
       </aside>
 
-      {/* Mobile menu button - fixed at the top */}
       <Button
         variant="outline"
         size="icon"
