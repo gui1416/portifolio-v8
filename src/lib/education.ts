@@ -1,10 +1,10 @@
-import 'server-only'
+// src/lib/education.ts
 
 export type Education = {
  id: number;
  instituicao: string;
  curso: string;
- duração: string;
+ duracao: string;
  local: string;
  descricao: string;
  certificacoes: string[];
@@ -12,17 +12,25 @@ export type Education = {
 };
 
 export async function getEducation(): Promise<Education[]> {
- const apiUrl = process.env.EDUCATION_API_URL;
+ const apiUrl = process.env.NEXT_PUBLIC_EDUCATION_API_URL;
 
  if (!apiUrl) {
-  throw new Error("A URL da API de educação não está definida.");
+  throw new Error(
+   "A variável de ambiente NEXT_PUBLIC_EDUCATION_API_URL não está definida."
+  );
  }
 
- const response = await fetch(apiUrl, { cache: 'force-cache' });
+ try {
+  const response = await fetch(apiUrl);
 
- if (!response.ok) {
-  throw new Error("Falha ao buscar os dados de educação da API.");
+  if (!response.ok) {
+   console.error("Falha ao buscar os dados de educação da API.");
+   return [];
+  }
+
+  return response.json();
+ } catch (error) {
+  console.error("Erro de conexão ao buscar dados de educação:", error);
+  return [];
  }
-
- return response.json();
 }
