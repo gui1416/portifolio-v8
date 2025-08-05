@@ -14,7 +14,7 @@ export default function Educacao() {
     {
       instituicao: "Faculdade das Americas - FAM",
       curso: "Bacharelado em Ciência da Computação",
-      periodo: "2023 - 2027",
+      duracao: "3245 horas",
       local: "São Paulo, SP",
       descricao:
         "Formação completa em Ciência da Computação com foco em desenvolvimento de software e sistemas distribuídos.",
@@ -24,7 +24,7 @@ export default function Educacao() {
     {
       instituicao: "CISCO - Networking Academy",
       curso: "Introdução à Cibersegurança",
-      periodo: "2025 - 2025",
+      duracao: "6 horas",
       local: "Online",
       descricao: "Curso técnico com ênfase em introduzir conhecimentos gerais a cibersegurança.",
       certificacoes: ["Métodos de infiltração", "Manutenção de Dados"],
@@ -33,7 +33,7 @@ export default function Educacao() {
     {
       instituicao: "Udemy",
       curso: "Certificação Amazon AWS Cloud Practitioner (CLF-C01)",
-      periodo: "2024 - 2025",
+      duracao: "13 horas",
       local: "Online",
       descricao: "Certificação introdutória aos serviços e conceitos da nuvem AWS.",
       certificacoes: ["Conhecimento fundamental dos serviços AWS", "Conformidade AWS", "Arquitetura em nuvem"],
@@ -90,7 +90,7 @@ export default function Educacao() {
                 </div>
                 <Badge variant="outline" className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
-                  {item.periodo}
+                  {item.duracao}
                 </Badge>
               </div>
             </CardHeader>
