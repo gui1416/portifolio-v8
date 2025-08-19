@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
- const { slug } = params
+ const { slug } = await params
  const project = await getProjectBySlug(slug)
 
  if (!project) {
