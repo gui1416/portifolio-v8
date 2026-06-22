@@ -50,7 +50,7 @@
     "fuse.js": "^7.1.0",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
-    "next": "15.2.4",
+    "next": "15.5.19",
     "next-themes": "latest",
     "react": "^18.0.0",
     "react-day-picker": "8.10.1",
@@ -72,5 +72,8 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "$postcss"
   }
 }

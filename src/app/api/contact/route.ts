@@ -8,8 +8,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for') || request.ip || 'unknown';
 
-  const { success } = await rateLimit.limit(ip);
-  if (!success) {
+  let allowed = true;
+  try {
+    const { success } = await rateLimit.limit(ip);
+    allowed = success;
+  } catch (err) {
+    console.error('Rate limit indisponível, seguindo sem bloqueio:', err);
+  }
+
+  if (!allowed) {
     return NextResponse.json(
       { error: 'Você está enviando mensagens muito rápido. Tente novamente mais tarde.' },
       { status: 429 }

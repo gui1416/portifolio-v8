@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wsl.exe -e bash -lc \"cd ~/.guilherme/portifolio-v8 && npm install 2>&1 && echo '---AUDIT---' && npm audit 2>&1\")",
+      "Bash(wsl.exe -e bash -lc \"cd ~/.guilherme/portifolio-v8 && npm ls postcss 2>&1; cat package.json | grep -A5 overrides\")",
+      "Bash(wsl.exe -e bash -lc \"cd ~/.guilherme/portifolio-v8 && rm -rf node_modules package-lock.json && npm install 2>&1 | tail -30\")"
+    ]
+  }
+}
