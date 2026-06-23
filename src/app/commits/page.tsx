@@ -7,7 +7,43 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { GitCommit, GitBranch, ExternalLink, Github, Clock } from "lucide-react"
 
-async function getGithubCommits() {
+interface GithubRepo {
+  name: string
+  html_url: string
+  description: string | null
+  stargazers_count: number
+  language: string | null
+}
+
+interface GithubCommitApi {
+  sha: string
+  html_url: string
+  commit: {
+    message: string
+    author: {
+      name: string
+      date: string
+    }
+  }
+}
+
+interface Commit {
+  repo: {
+    name: string
+    url: string
+    description: string | null
+    stars: number
+    language: string | null
+  }
+  sha: string
+  message: string
+  author: string
+  date: string
+  url: string
+  branch: string
+}
+
+async function getGithubCommits(): Promise<Commit[]> {
   const username = "gui1416"
 
   try {
@@ -19,9 +55,9 @@ async function getGithubCommits() {
       throw new Error(`Erro ao buscar repositórios: ${reposResponse.status}`)
     }
 
-    const repos = await reposResponse.json()
+    const repos: GithubRepo[] = await reposResponse.json()
 
-    const commitsPromises = repos.map(async (repo) => {
+    const commitsPromises = repos.map(async (repo): Promise<Commit[]> => {
       const commitsResponse = await fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=5`, {
         next: { revalidate: 3600 },
       })
@@ -31,7 +67,7 @@ async function getGithubCommits() {
         return []
       }
 
-      const commits = await commitsResponse.json()
+      const commits: GithubCommitApi[] = await commitsResponse.json()
 
       return commits.map((commit) => ({
         repo: {
@@ -61,7 +97,7 @@ async function getGithubCommits() {
   }
 }
 
-function CommitCard({ commit }) {
+function CommitCard({ commit }: { commit: Commit }) {
   const commitDate = new Date(commit.date)
   const timeAgo = formatDistanceToNow(commitDate, { addSuffix: true, locale: ptBR })
 

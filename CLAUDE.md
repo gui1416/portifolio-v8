@@ -29,7 +29,7 @@ Most page content (projects, education, experience) is NOT stored in this repo �
 - `src/lib/experiences.ts` — fetches from `EXPERIENCES_API_URL`, `cache: 'force-cache'`
 - `src/lib/education.ts` — fetches from `NEXT_PUBLIC_EDUCATION_API_URL`
 
-Each module throws or fails gracefully (returns `[]`) differently when the env var is missing — check the specific file before assuming behavior. The `/commits` page (`src/app/commits/page.tsx`) instead calls the public GitHub REST API directly (`api.github.com/users/gui1416/...`) to list recent commits across repos, with no auth token.
+Each module throws or fails gracefully (returns `[]`) differently when the env var is missing — check the specific file before assuming behavior. The `/commits` page (`src/app/commits/page.tsx`) instead calls the public GitHub REST API directly (`api.github.com/users/gui1416/...`) to list recent commits across repos, with no auth token. `src/lib/github-contributions.ts` similarly hits a public, unauthenticated third-party endpoint (`github-contributions-api.jogruber.de/v4/<username>`) to get GitHub's contribution-calendar data (no official REST/GraphQL-free equivalent exists), revalidated hourly; it's rendered by `src/components/github-contributions-card.tsx` on the `/hero` page below the WhatsApp button, with `<lg` using a fixed-cell horizontally-scrollable layout and `lg:` switching to a fluid CSS-grid layout (`1fr` columns + `aspect-square` cells) that always fits the card width with no scroll.
 
 When adding new content sections, follow the existing pattern: a `src/lib/*.ts` data-fetching module with exported types, consumed by a Server Component page.
 

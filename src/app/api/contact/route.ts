@@ -6,17 +6,13 @@ import { ContactEmail } from '@/components/email-template/contact-email';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('x-forwarded-for') || request.ip || 'unknown';
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+    request.headers.get('x-real-ip') ||
+    'unknown';
 
-  let allowed = true;
-  try {
-    const { success } = await rateLimit.limit(ip);
-    allowed = success;
-  } catch (err) {
-    console.error('Rate limit indisponível, seguindo sem bloqueio:', err);
-  }
-
-  if (!allowed) {
+  const { success } = await rateLimit.limit(ip);
+  if (!success) {
     return NextResponse.json(
       { error: 'Você está enviando mensagens muito rápido. Tente novamente mais tarde.' },
       { status: 429 }

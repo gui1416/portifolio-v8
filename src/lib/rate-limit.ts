@@ -1,12 +1,16 @@
-import { Redis } from '@upstash/redis';
-import { Ratelimit } from '@upstash/ratelimit';
+const WINDOW_MS = 60_000; // 1 envio por 60 segundos
+const lastRequestByIp = new Map<string, number>();
 
-const redis = new Redis({
- url: process.env.UPSTASH_REDIS_REST_URL!,
- token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+export const rateLimit = {
+ limit: async (ip: string) => {
+  const now = Date.now();
+  const last = lastRequestByIp.get(ip);
 
-export const rateLimit = new Ratelimit({
- redis,
- limiter: Ratelimit.slidingWindow(1, '60 s'), // 1 envio por 60 segundos
-});
+  if (last !== undefined && now - last < WINDOW_MS) {
+   return { success: false };
+  }
+
+  lastRequestByIp.set(ip, now);
+  return { success: true };
+ },
+};

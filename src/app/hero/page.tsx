@@ -1,7 +1,9 @@
+import { Suspense } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Download, Mail, MessageSquare, Cpu, Database, Globe, Layout, Smartphone, Server } from "lucide-react"
+import { GithubContributionsCard, GithubContributionsCardSkeleton } from "@/components/github-contributions-card"
 
 export default function SobreMim() {
   const technologies = [
@@ -62,6 +64,11 @@ export default function SobreMim() {
             </Button>
           </div>
         </div>
+      </div>
+      <div className="mb-12">
+        <Suspense fallback={<GithubContributionsCardSkeleton />}>
+          <GithubContributionsCard />
+        </Suspense>
       </div>
 
       <h2 className="text-2xl font-semibold mb-6">Tecnologias</h2>
