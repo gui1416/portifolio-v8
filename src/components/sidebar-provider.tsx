@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect, useCallback } from "react"
 
 type SidebarContextType = {
   isOpen: boolean
@@ -12,27 +12,40 @@ type SidebarContextType = {
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
 
+const DESKTOP_OPEN_STORAGE_KEY = "sidebar:desktop-open"
+
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsOpen(window.innerWidth >= 1024)
+    const getDesktopPreference = () => {
+      const stored = window.localStorage.getItem(DESKTOP_OPEN_STORAGE_KEY)
+      return stored === null ? true : stored === "true"
     }
 
-    checkScreenSize()
+    const applyForWidth = (width: number) => {
+      setIsOpen(width >= 1024 ? getDesktopPreference() : false)
+    }
 
-    window.addEventListener("resize", checkScreenSize)
+    applyForWidth(window.innerWidth)
 
-    return () => window.removeEventListener("resize", checkScreenSize)
+    const handleResize = () => applyForWidth(window.innerWidth)
+    window.addEventListener("resize", handleResize)
+
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  const toggleSidebar = () => setIsOpen(!isOpen)
-  const closeSidebar = () => {
-    if (window.innerWidth < 1024) {
-      setIsOpen(false)
-    }
-  }
+  const toggleSidebar = useCallback(() => {
+    setIsOpen((prev) => {
+      const next = !prev
+      if (window.innerWidth >= 1024) {
+        window.localStorage.setItem(DESKTOP_OPEN_STORAGE_KEY, String(next))
+      }
+      return next
+    })
+  }, [])
+
+  const closeSidebar = useCallback(() => setIsOpen(false), [])
 
   return <SidebarContext.Provider value={{ isOpen, toggleSidebar, closeSidebar }}>{children}</SidebarContext.Provider>
 }

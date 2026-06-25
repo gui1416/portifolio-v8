@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useRef } from "react"
 import {
   User,
   GraduationCap,
@@ -18,23 +19,47 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
+const navItems = [
+  { href: "/hero", label: "Sobre Mim", icon: User },
+  { href: "/education", label: "Educação", icon: GraduationCap },
+  { href: "/skills", label: "Habilidades", icon: Code2 },
+  { href: "/experience", label: "Experiência", icon: Briefcase },
+  { href: "/projects", label: "Projetos", icon: FolderKanban },
+  { href: "/commits", label: "Atualizações", icon: GitCommit },
+  { href: "/contact", label: "Contato", icon: Mail },
+]
+
 export function Sidebar() {
   const { isOpen, toggleSidebar, closeSidebar } = useSidebar()
   const pathname = usePathname()
+  const previousPathnameRef = useRef(pathname)
 
-  const navItems = [
-    { href: "/hero", label: "Sobre Mim", icon: User },
-    { href: "/education", label: "Educação", icon: GraduationCap },
-    { href: "/skills", label: "Habilidades", icon: Code2 },
-    { href: "/experience", label: "Experiência", icon: Briefcase },
-    { href: "/projects", label: "Projetos", icon: FolderKanban },
-    { href: "/commits", label: "Atualizações", icon: GitCommit },
-    { href: "/contact", label: "Contato", icon: Mail },
-  ]
+  useEffect(() => {
+    if (previousPathnameRef.current === pathname) return
+    previousPathnameRef.current = pathname
+    closeSidebar()
+  }, [pathname, closeSidebar])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeSidebar()
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isOpen, closeSidebar])
 
   return (
     <>
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={closeSidebar} />}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={closeSidebar}
+          aria-hidden="true"
+        />
+      )}
 
       <aside
         className={`
@@ -60,24 +85,24 @@ export function Sidebar() {
 
           <Separator />
 
-          {/* Navigation */}
-          <nav className="flex-1 py-4 overflow-y-auto">
+          <nav aria-label="Navegação principal" className="flex-1 py-4 overflow-y-auto">
             <ul className="space-y-1 px-2">
               {navItems.map((item) => {
-                const isActive = pathname === item.href
+                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
                 const Icon = item.icon
 
                 return (
                   <li key={item.href}>
-                    <Link href={item.href} passHref onClick={closeSidebar}>
-                      <Button
-                        variant={isActive ? "secondary" : "ghost"}
-                        className={`w-full justify-start ${!isOpen && "lg:justify-center"}`}
-                      >
+                    <Button
+                      asChild
+                      variant={isActive ? "secondary" : "ghost"}
+                      className={`w-full justify-start ${!isOpen && "lg:justify-center"}`}
+                    >
+                      <Link href={item.href} onClick={closeSidebar} aria-current={isActive ? "page" : undefined}>
                         <Icon className={`h-5 w-5 ${isOpen ? "mr-2" : ""}`} />
                         {isOpen && <span>{item.label}</span>}
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                   </li>
                 )
               })}
@@ -85,21 +110,30 @@ export function Sidebar() {
           </nav>
 
           <div className="p-4 mt-auto hidden lg:block">
-            <Button variant="outline" size="icon" onClick={toggleSidebar} className="w-full flex justify-center">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggleSidebar}
+              className="w-full flex justify-center"
+              aria-label={isOpen ? "Recolher menu" : "Expandir menu"}
+            >
               {isOpen ? <ChevronLeft /> : <ChevronRight />}
             </Button>
           </div>
         </div>
       </aside>
 
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={toggleSidebar}
-        className="fixed top-4 left-4 z-50 lg:hidden shadow-lg"
-      >
-        <Menu />
-      </Button>
+      {!isOpen && (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleSidebar}
+          className="fixed top-4 left-4 z-50 lg:hidden shadow-lg"
+          aria-label="Abrir menu"
+        >
+          <Menu />
+        </Button>
+      )}
     </>
   )
 }
