@@ -36,7 +36,7 @@ export function CommitsTabs({ repos, commits }: { repos: GithubRepo[]; commits: 
 
   return (
     <Tabs value={activeTab} onValueChange={handleTabChange}>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <TabsList>
           <TabsTrigger value="repos">Repositórios</TabsTrigger>
           <TabsTrigger value="commits">Commits</TabsTrigger>

@@ -38,8 +38,8 @@ async function CommitsPageContent() {
 export default function Atualizacoes() {
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-2">Atualizações</h1>
-      <p className="text-muted-foreground mb-8">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-2">Atualizações</h1>
+      <p className="text-muted-foreground mb-8 text-sm sm:text-base">
         Explore meus repositórios públicos ou acompanhe minhas contribuições mais recentes no GitHub.
       </p>
 

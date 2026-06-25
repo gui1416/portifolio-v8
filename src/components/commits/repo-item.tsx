@@ -55,11 +55,11 @@ export function RepoItem({ repo, variant }: { repo: GithubRepo; variant: RepoIte
         className={`transition-colors group-hover:border-primary/50 ${variant === "grid" ? "h-full" : "mb-4"}`}
       >
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg">{repo.name}</CardTitle>
+          <CardTitle className="text-lg break-words">{repo.name}</CardTitle>
           <CardDescription>{repo.description || "Sem descrição"}</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             {repo.language && <Badge variant="outline">{repo.language}</Badge>}
             {repo.stargazers_count > 0 && (
               <span className="flex items-center gap-1">

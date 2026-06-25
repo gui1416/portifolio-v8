@@ -38,15 +38,15 @@ export default async function RepoPage({ params }: RepoPageProps) {
 
       <Card className="mb-8">
         <CardHeader>
-          <div className="flex justify-between items-start gap-2">
-            <div>
-              <CardTitle className="text-2xl">{repo.name}</CardTitle>
+          <div className="flex flex-wrap justify-between items-start gap-2">
+            <div className="min-w-0">
+              <CardTitle className="text-2xl break-words">{repo.name}</CardTitle>
               <CardDescription className="mt-1">{repo.description || "Sem descrição"}</CardDescription>
             </div>
             {repo.language && <Badge variant="outline">{repo.language}</Badge>}
           </div>
         </CardHeader>
-        <CardContent className="flex items-center gap-4 text-sm text-muted-foreground">
+        <CardContent className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
           {repo.stargazers_count > 0 && (
             <span className="flex items-center gap-1">
               <Star className="h-4 w-4" /> {repo.stargazers_count}

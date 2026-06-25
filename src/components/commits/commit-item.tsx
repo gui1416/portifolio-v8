@@ -84,16 +84,16 @@ export function CommitItem({
     <Card className={variant === "grid" ? "h-full flex flex-col" : "mb-4"}>
       {showRepo && (
         <CardHeader className="pb-2">
-          <div className="flex justify-between items-start gap-2">
-            <div>
+          <div className="flex flex-wrap justify-between items-start gap-2">
+            <div className="min-w-0">
               <Link
                 href={commit.repo.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline flex items-center gap-1"
               >
-                <Github className="h-4 w-4" />
-                <CardTitle className="text-lg">{commit.repo.name}</CardTitle>
+                <Github className="h-4 w-4 shrink-0" />
+                <CardTitle className="text-lg break-words">{commit.repo.name}</CardTitle>
               </Link>
               {variant === "list" && (
                 <CardDescription className="mt-1">{commit.repo.description || "Sem descrição"}</CardDescription>
