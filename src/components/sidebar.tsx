@@ -1,7 +1,6 @@
 "use client"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useEffect, useRef } from "react"
+import { useTranslations } from "next-intl"
 import {
   User,
   GraduationCap,
@@ -14,22 +13,25 @@ import {
   Menu,
   GitCommit,
 } from "lucide-react"
+import { Link, usePathname } from "@/i18n/navigation"
 import { useSidebar } from "@/components/sidebar-provider"
+import { LanguageSwitcher } from "@/components/language-switcher"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
 const navItems = [
-  { href: "/hero", label: "Sobre Mim", icon: User },
-  { href: "/education", label: "Educação", icon: GraduationCap },
-  { href: "/skills", label: "Habilidades", icon: Code2 },
-  { href: "/experience", label: "Experiência", icon: Briefcase },
-  { href: "/projects", label: "Projetos", icon: FolderKanban },
-  { href: "/commits", label: "Atualizações", icon: GitCommit },
-  { href: "/contact", label: "Contato", icon: Mail },
-]
+  { href: "/hero", key: "hero", icon: User },
+  { href: "/education", key: "education", icon: GraduationCap },
+  { href: "/skills", key: "skills", icon: Code2 },
+  { href: "/experience", key: "experience", icon: Briefcase },
+  { href: "/projects", key: "projects", icon: FolderKanban },
+  { href: "/commits", key: "commits", icon: GitCommit },
+  { href: "/contact", key: "contact", icon: Mail },
+] as const
 
 export function Sidebar() {
+  const t = useTranslations("nav")
   const { isOpen, toggleSidebar, closeSidebar } = useSidebar()
   const pathname = usePathname()
   const previousPathnameRef = useRef(pathname)
@@ -78,14 +80,14 @@ export function Sidebar() {
             {isOpen && (
               <div className="text-center">
                 <h3 className="font-semibold">Guilherme</h3>
-                <p className="text-sm text-muted-foreground">Desenvolvedor Web</p>
+                <p className="text-sm text-muted-foreground">{t("role")}</p>
               </div>
             )}
           </div>
 
           <Separator />
 
-          <nav aria-label="Navegação principal" className="flex-1 py-4 overflow-y-auto">
+          <nav aria-label={t("ariaLabel")} className="flex-1 py-4 overflow-y-auto">
             <ul className="space-y-1 px-2">
               {navItems.map((item) => {
                 const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
@@ -100,7 +102,7 @@ export function Sidebar() {
                     >
                       <Link href={item.href} onClick={closeSidebar} aria-current={isActive ? "page" : undefined}>
                         <Icon className={`h-5 w-5 ${isOpen ? "mr-2" : ""}`} />
-                        {isOpen && <span>{item.label}</span>}
+                        {isOpen && <span>{t(item.key)}</span>}
                       </Link>
                     </Button>
                   </li>
@@ -109,13 +111,17 @@ export function Sidebar() {
             </ul>
           </nav>
 
+          <div className="px-4 pb-2">
+            <LanguageSwitcher collapsed={!isOpen} />
+          </div>
+
           <div className="p-4 mt-auto hidden lg:block">
             <Button
               variant="outline"
               size="icon"
               onClick={toggleSidebar}
               className="w-full flex justify-center"
-              aria-label={isOpen ? "Recolher menu" : "Expandir menu"}
+              aria-label={isOpen ? t("collapse") : t("expand")}
             >
               {isOpen ? <ChevronLeft /> : <ChevronRight />}
             </Button>
@@ -129,7 +135,7 @@ export function Sidebar() {
           size="icon"
           onClick={toggleSidebar}
           className="fixed top-4 left-4 z-50 lg:hidden shadow-lg"
-          aria-label="Abrir menu"
+          aria-label={t("openMenu")}
         >
           <Menu />
         </Button>

@@ -2,8 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
-export default function Skills() {
+export default async function Skills({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations("skills")
+
   const technicalSkills = [
     { name: "HTML/CSS", level: 95, category: "frontend" },
     { name: "JavaScript", level: 90, category: "frontend" },
@@ -24,33 +33,33 @@ export default function Skills() {
   ]
 
   const softSkills = [
-    { name: "Comunicação", level: 90 },
-    { name: "Trabalho em Equipe", level: 95 },
-    { name: "Resolução de Problemas", level: 85 },
-    { name: "Gestão de Tempo", level: 80 },
-    { name: "Adaptabilidade", level: 90 },
-    { name: "Pensamento Crítico", level: 85 },
-    { name: "Aprendizado contínuo", level: 95 },
-    { name: "Autogerenciamento", level: 80 },
-    { name: "Criatividade", level: 75 },
-    { name: "Liderança", level: 70 },
+    { name: t("soft.communication"), level: 90 },
+    { name: t("soft.teamwork"), level: 95 },
+    { name: t("soft.problemSolving"), level: 85 },
+    { name: t("soft.timeManagement"), level: 80 },
+    { name: t("soft.adaptability"), level: 90 },
+    { name: t("soft.criticalThinking"), level: 85 },
+    { name: t("soft.continuousLearning"), level: 95 },
+    { name: t("soft.selfManagement"), level: 80 },
+    { name: t("soft.creativity"), level: 75 },
+    { name: t("soft.leadership"), level: 70 },
   ]
 
   const languages = [
-    { name: "Português", level: "Nativo", badge: "Fluente" },
-    { name: "Inglês", level: "Avançado", badge: "Proficiente" },
-    { name: "Espanhol", level: "Intermediário", badge: "Conversacional" },
+    { name: t("languages.portuguese"), level: t("languages.levelNative"), badge: t("languages.badgeFluent") },
+    { name: t("languages.english"), level: t("languages.levelAdvanced"), badge: t("languages.badgeProficient") },
+    { name: t("languages.spanish"), level: t("languages.levelIntermediate"), badge: t("languages.badgeConversational") },
   ]
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-8">Habilidades</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <Tabs defaultValue="technical" className="mb-12">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="technical">Técnicas</TabsTrigger>
-          <TabsTrigger value="soft">Interpessoais</TabsTrigger>
-          <TabsTrigger value="languages">Idiomas</TabsTrigger>
+          <TabsTrigger value="technical">{t("tabTechnical")}</TabsTrigger>
+          <TabsTrigger value="soft">{t("tabSoft")}</TabsTrigger>
+          <TabsTrigger value="languages">{t("tabLanguages")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="technical" className="mt-6">
@@ -98,16 +107,14 @@ export default function Skills() {
         </TabsContent>
       </Tabs>
 
-      <h2 className="text-2xl font-semibold mb-6">Áreas de Especialização</h2>
+      <h2 className="text-2xl font-semibold mb-6">{t("specializationAreas")}</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Desenvolvimento Frontend</CardTitle>
+            <CardTitle className="text-lg">{t("frontendTitle")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Especializado em criar interfaces modernas, responsivas e acessíveis com as tecnologias mais recentes.
-            </p>
+            <p className="text-muted-foreground mb-4">{t("frontendDesc")}</p>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">React</Badge>
               <Badge variant="secondary">Next.js</Badge>
@@ -119,12 +126,10 @@ export default function Skills() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Desenvolvimento Backend</CardTitle>
+            <CardTitle className="text-lg">{t("backendTitle")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Experiência na criação de APIs robustas e escaláveis, com foco em performance e segurança.
-            </p>
+            <p className="text-muted-foreground mb-4">{t("backendDesc")}</p>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">Node.js</Badge>
               <Badge variant="secondary">Express</Badge>
@@ -136,12 +141,10 @@ export default function Skills() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">DevOps & Ferramentas</CardTitle>
+            <CardTitle className="text-lg">{t("devopsTitle")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Conhecimento em práticas modernas de desenvolvimento, testes e implantação contínua.
-            </p>
+            <p className="text-muted-foreground mb-4">{t("devopsDesc")}</p>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">Git</Badge>
               <Badge variant="secondary">Docker</Badge>

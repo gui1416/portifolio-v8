@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,6 +11,7 @@ import { Mail, Phone, MapPin, Github, Linkedin, Send } from "lucide-react"
 import { toast } from "sonner"
 
 export default function Contato() {
+  const t = useTranslations("contact")
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -18,12 +20,12 @@ export default function Contato() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 
@@ -37,12 +39,12 @@ export default function Contato() {
       });
 
       if (response.status === 429) {
-        toast.error("Você está enviando mensagens muito rápido.", {
-          description: "Por favor, aguarde um minutos antes de tentar novamente.",
+        toast.error(t("toastRateLimitTitle"), {
+          description: t("toastRateLimitDesc"),
         });
       } else if (response.ok) {
-        toast.success("Mensagem enviada!", {
-          description: "Obrigado pelo contato. Responderei em breve.",
+        toast.success(t("toastSuccessTitle"), {
+          description: t("toastSuccessDesc"),
         });
         setFormData({
           nome: "",
@@ -52,14 +54,14 @@ export default function Contato() {
         });
       } else {
         const errorData = await response.json();
-        toast.error("Erro ao enviar mensagem", {
-          description: errorData.error || "Ocorreu um erro inesperado. Tente novamente.",
+        toast.error(t("toastErrorTitle"), {
+          description: errorData.error || t("toastUnexpectedError"),
         });
       }
     } catch (error) {
       console.error("Erro de rede ou ao enviar o formulário:", error);
-      toast.error("Erro de conexão", {
-        description: "Não foi possível conectar ao servidor. Verifique sua internet ou tente mais tarde.",
+      toast.error(t("toastConnErrorTitle"), {
+        description: t("toastConnErrorDesc"),
       });
     } finally {
       setIsSubmitting(false);
@@ -69,31 +71,31 @@ export default function Contato() {
   const contatoInfo = [
     {
       icon: Mail,
-      label: "Email",
+      label: t("infoEmail"),
       value: "guirmdev@gmail.com",
       link: "mailto:guirmdev@gmail.com",
     },
     {
       icon: Phone,
-      label: "Telefone",
+      label: t("infoPhone"),
       value: "+55 (11) 96995-4587",
       link: "https://wa.me/5511969954587?text=Olá%2C%20vim%20pelo%20seu%20site!",
     },
     {
       icon: MapPin,
-      label: "Localização",
-      value: "Mauá, SP - Brasil",
+      label: t("infoLocation"),
+      value: t("locationValue"),
       link: null,
     },
     {
       icon: Github,
-      label: "GitHub",
+      label: t("infoGithub"),
       value: "github.com/gui1416",
       link: "https://github.com/gui1416",
     },
     {
       icon: Linkedin,
-      label: "LinkedIn",
+      label: t("infoLinkedin"),
       value: "linkedin.com/in/guilherme-rabelo",
       link: "https://www.linkedin.com/in/guilherme-rabelo-3aa160294/",
     },
@@ -101,54 +103,54 @@ export default function Contato() {
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-8">Contato</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-2xl font-semibold mb-6">Envie uma mensagem</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t("sendMessage")}</h2>
           <Card>
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="nome">Nome</Label>
+                  <Label htmlFor="nome">{t("name")}</Label>
                   <Input
                     id="nome"
                     name="nome"
-                    placeholder="Seu nome"
+                    placeholder={t("namePlaceholder")}
                     value={formData.nome}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("email")}</Label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="seu.email@exemplo.com"
+                    placeholder={t("emailPlaceholder")}
                     value={formData.email}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="assunto">Assunto</Label>
+                  <Label htmlFor="assunto">{t("subject")}</Label>
                   <Input
                     id="assunto"
                     name="assunto"
-                    placeholder="Assunto da mensagem"
+                    placeholder={t("subjectPlaceholder")}
                     value={formData.assunto}
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="mensagem">Mensagem</Label>
+                  <Label htmlFor="mensagem">{t("message")}</Label>
                   <Textarea
                     id="mensagem"
                     name="mensagem"
-                    placeholder="Sua mensagem..."
+                    placeholder={t("messagePlaceholder")}
                     rows={5}
                     value={formData.mensagem}
                     onChange={handleChange}
@@ -157,11 +159,11 @@ export default function Contato() {
                 </div>
                 <Button type="submit" className="w-full gap-2" disabled={isSubmitting}>
                   {isSubmitting ? (
-                    "Enviando..."
+                    t("sending")
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      Enviar Mensagem
+                      {t("send")}
                     </>
                   )}
                 </Button>
@@ -171,14 +173,11 @@ export default function Contato() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold mb-6">Informações de Contato</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t("contactInfo")}</h2>
           <Card>
             <CardHeader>
-              <CardTitle>Vamos conversar!</CardTitle>
-              <CardDescription>
-                Estou disponível para projetos freelance, oportunidades de trabalho ou apenas para trocar ideias sobre
-                tecnologia.
-              </CardDescription>
+              <CardTitle>{t("letsChat")}</CardTitle>
+              <CardDescription>{t("letsChatDesc")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -210,18 +209,15 @@ export default function Contato() {
 
           <Card className="mt-6">
             <CardContent className="pt-6">
-              <h3 className="font-medium mb-2">Horário de Disponibilidade</h3>
+              <h3 className="font-medium mb-2">{t("availability")}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Segunda a Sexta: 9h às 18h
+                {t("availabilityLine1")}
                 <br />
-                Respondo emails e mensagens em até 24 horas.
+                {t("availabilityLine2")}
               </p>
 
-              <h3 className="font-medium mb-2">Preferência de Contato</h3>
-              <p className="text-sm text-muted-foreground">
-                Para assuntos profissionais, prefiro contato por email ou LinkedIn. Para conversas rápidas, pode me
-                chamar no WhatsApp.
-              </p>
+              <h3 className="font-medium mb-2">{t("contactPreference")}</h3>
+              <p className="text-sm text-muted-foreground">{t("contactPreferenceValue")}</p>
             </CardContent>
           </Card>
         </div>

@@ -1,8 +1,17 @@
-import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 import { Search, Home, FolderOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/navigation"
 
-export default function ProjectNotFound() {
+export default async function ProjectNotFound() {
+ const t = await getTranslations("notFound")
+ const sectionLinks = [
+  { href: "/projects", label: t("allProjects") },
+  { href: "/hero", label: t("about") },
+  { href: "/skills", label: t("skills") },
+  { href: "/contact", label: t("contact") },
+ ] as const
+
  return (
   <div className="min-h-screen text-white flex items-center justify-center p-6 relative overflow-hidden">
    <div className="absolute inset-0 opacity-20">
@@ -43,12 +52,11 @@ export default function ProjectNotFound() {
       <h1 className="text-8xl font-extralight bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
        404
       </h1>
-      <h2 className="text-3xl font-light text-white tracking-wide">Projeto não encontrado</h2>
+      <h2 className="text-3xl font-light text-white tracking-wide">{t("projectTitle")}</h2>
      </div>
 
      <p className="text-zinc-400 text-xl leading-relaxed max-w-lg mx-auto font-light">
-      O projeto que você está procurando parece ter se perdido no espaço digital. Que tal explorar outras
-      criações?
+      {t("projectDesc")}
      </p>
     </div>
     <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
@@ -59,7 +67,7 @@ export default function ProjectNotFound() {
      >
       <Link href="/projects" className="flex items-center gap-3">
        <FolderOpen className="w-5 h-5" />
-       Explorar Projetos
+       {t("exploreProjects")}
       </Link>
      </Button>
 
@@ -71,7 +79,7 @@ export default function ProjectNotFound() {
      >
       <Link href="/hero" className="flex items-center gap-3">
        <Home className="w-5 h-5" />
-       Página Inicial
+       {t("home")}
       </Link>
      </Button>
     </div>
@@ -81,17 +89,12 @@ export default function ProjectNotFound() {
        <div className="w-full border-t border-zinc-800" />
       </div>
       <div className="relative flex justify-center text-sm">
-       <span className="bg-black px-4 text-zinc-500">Ou explore outras seções</span>
+       <span className="bg-black px-4 text-zinc-500">{t("otherSections")}</span>
       </div>
      </div>
 
      <div className="flex flex-wrap justify-center gap-3 mt-6">
-      {[
-       { href: "/projects", label: "Todos os Projetos" },
-       { href: "/hero", label: "Sobre Mim" },
-       { href: "/skills", label: "Habilidades" },
-       { href: "/contact", label: "Contato" },
-      ].map((link) => (
+      {sectionLinks.map((link) => (
        <Link
         key={link.href}
         href={link.href}

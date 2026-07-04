@@ -1,7 +1,10 @@
+"use client"
+
 import Link from "next/link"
 import { formatDistanceToNow } from "date-fns"
-import { ptBR } from "date-fns/locale"
+import { useLocale, useTranslations } from "next-intl"
 import { Clock, ExternalLink, GitBranch, GitCommit, Github } from "lucide-react"
+import { dateFnsLocale } from "@/lib/date-locale"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import type { Commit } from "@/lib/github"
@@ -17,8 +20,10 @@ export function CommitItem({
   variant: CommitItemVariant
   showRepo?: boolean
 }) {
+  const t = useTranslations("commits")
+  const locale = useLocale()
   const commitDate = new Date(commit.date)
-  const timeAgo = formatDistanceToNow(commitDate, { addSuffix: true, locale: ptBR })
+  const timeAgo = formatDistanceToNow(commitDate, { addSuffix: true, locale: dateFnsLocale(locale) })
   const shortSha = commit.sha.substring(0, 7)
 
   const maxLength = variant === "compact" ? 60 : 100
@@ -74,7 +79,7 @@ export function CommitItem({
           rel="noopener noreferrer"
           className="text-xs text-primary hover:underline inline-flex items-center gap-1 mt-1"
         >
-          Ver commit <ExternalLink className="h-3 w-3" />
+          {t("viewCommit")} <ExternalLink className="h-3 w-3" />
         </Link>
       </div>
     )
@@ -96,7 +101,7 @@ export function CommitItem({
                 <CardTitle className="text-lg break-words">{commit.repo.name}</CardTitle>
               </Link>
               {variant === "list" && (
-                <CardDescription className="mt-1">{commit.repo.description || "Sem descrição"}</CardDescription>
+                <CardDescription className="mt-1">{commit.repo.description || t("noDescription")}</CardDescription>
               )}
             </div>
             {commit.repo.language && <Badge variant="outline">{commit.repo.language}</Badge>}
@@ -126,7 +131,7 @@ export function CommitItem({
           rel="noopener noreferrer"
           className="text-primary hover:underline flex items-center"
         >
-          Ver commit <ExternalLink className="h-3 w-3 ml-1" />
+          {t("viewCommit")} <ExternalLink className="h-3 w-3 ml-1" />
         </Link>
       </CardFooter>
     </Card>

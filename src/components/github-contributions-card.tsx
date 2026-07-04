@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Github } from "lucide-react"
@@ -11,11 +12,10 @@ const LEVEL_COLORS = [
   "bg-emerald-300",
 ]
 
-const MONTHS_PT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
-
-const WEEKDAY_LABELS_PT = ["", "Seg", "", "Qua", "", "Sex", ""]
-
 export async function GithubContributionsCard() {
+  const t = await getTranslations("contributions")
+  const months = t.raw("months") as string[]
+  const weekdayLabels = t.raw("weekdays") as string[]
   const { total, days } = await getGithubContributions()
 
   if (days.length === 0) {
@@ -23,7 +23,7 @@ export async function GithubContributionsCard() {
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-8 text-center">
           <Github className="h-8 w-8 text-muted-foreground mb-2" />
-          <p className="text-sm text-muted-foreground">Não foi possível carregar as contribuições do GitHub.</p>
+          <p className="text-sm text-muted-foreground">{t("loadError")}</p>
         </CardContent>
       </Card>
     )
@@ -38,7 +38,7 @@ export async function GithubContributionsCard() {
     .map((week, index) => {
       const firstDayOfMonth = week.find((day) => new Date(day.date).getDate() === 1)
       if (!firstDayOfMonth) return null
-      return { index, label: MONTHS_PT[new Date(firstDayOfMonth.date).getMonth()] }
+      return { index, label: months[new Date(firstDayOfMonth.date).getMonth()] }
     })
     .filter((month): month is { index: number; label: string } => month !== null)
 
@@ -47,7 +47,7 @@ export async function GithubContributionsCard() {
       <CardHeader className="pb-2">
         <p className="text-sm font-medium flex items-center gap-2">
           <Github className="h-4 w-4" />
-          {total} contribuições no último ano
+          {t("totalInYear", { total })}
         </p>
       </CardHeader>
       <CardContent>
@@ -67,7 +67,7 @@ export async function GithubContributionsCard() {
             </div>
             <div className="flex gap-1">
               <div className="flex flex-col gap-1 mr-1 w-6 shrink-0 text-[10px] leading-3 text-muted-foreground">
-                {WEEKDAY_LABELS_PT.map((label, index) => (
+                {weekdayLabels.map((label, index) => (
                   <span key={index} className="h-3">
                     {label}
                   </span>
@@ -79,7 +79,7 @@ export async function GithubContributionsCard() {
                     {week.map((day) => (
                       <div
                         key={day.date}
-                        title={`${day.count} contribuições em ${day.date}`}
+                        title={t("tooltip", { count: day.count, date: day.date })}
                         className={`h-3 w-3 rounded-sm ${LEVEL_COLORS[day.level] ?? LEVEL_COLORS[0]}`}
                       />
                     ))}
@@ -110,7 +110,7 @@ export async function GithubContributionsCard() {
               gridTemplateRows: "repeat(7, minmax(0, 1fr))",
             }}
           >
-            {WEEKDAY_LABELS_PT.map((label, dayIndex) => (
+            {weekdayLabels.map((label, dayIndex) => (
               <span
                 key={`label-${dayIndex}`}
                 className="flex items-center text-[10px] leading-none text-muted-foreground"
@@ -123,7 +123,7 @@ export async function GithubContributionsCard() {
               week.map((day, dayIndex) => (
                 <div
                   key={day.date}
-                  title={`${day.count} contribuições em ${day.date}`}
+                  title={t("tooltip", { count: day.count, date: day.date })}
                   className={`aspect-square rounded-sm ${LEVEL_COLORS[day.level] ?? LEVEL_COLORS[0]}`}
                   style={{ gridColumn: weekIndex + 2, gridRow: dayIndex + 1 }}
                 />
@@ -133,11 +133,11 @@ export async function GithubContributionsCard() {
         </div>
 
         <div className="flex items-center justify-end gap-1 text-[10px] text-muted-foreground mt-2">
-          <span>Menos</span>
+          <span>{t("less")}</span>
           {LEVEL_COLORS.map((color) => (
             <div key={color} className={`h-3 w-3 rounded-sm ${color}`} />
           ))}
-          <span>Mais</span>
+          <span>{t("more")}</span>
         </div>
       </CardContent>
     </Card>

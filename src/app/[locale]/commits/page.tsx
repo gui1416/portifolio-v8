@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import Link from "next/link"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Github } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -35,22 +36,26 @@ async function CommitsPageContent() {
   return <CommitsTabs repos={repos} commits={commits} />
 }
 
-export default function Atualizacoes() {
+export default async function Atualizacoes({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations("commits")
+
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-3xl sm:text-4xl font-bold mb-2">Atualizações</h1>
-      <p className="text-muted-foreground mb-8 text-sm sm:text-base">
-        Explore meus repositórios públicos ou acompanhe minhas contribuições mais recentes no GitHub.
-      </p>
+      <h1 className="text-3xl sm:text-4xl font-bold mb-2">{t("title")}</h1>
+      <p className="text-muted-foreground mb-8 text-sm sm:text-base">{t("subtitle")}</p>
 
       <Suspense fallback={<CommitsPageSkeleton />}>
         <CommitsPageContent />
       </Suspense>
 
       <div className="mt-8 text-center">
-        <p className="text-muted-foreground mb-4">
-          Quer ver mais do meu trabalho? Visite meu perfil completo no GitHub.
-        </p>
+        <p className="text-muted-foreground mb-4">{t("moreWork")}</p>
         <Link
           href="https://github.com/gui1416"
           target="_blank"

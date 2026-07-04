@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { FolderGit2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { RepoItem } from "@/components/commits/repo-item"
@@ -7,15 +8,14 @@ import type { ViewMode } from "@/components/commits/view-mode-switcher"
 import type { GithubRepo } from "@/lib/github"
 
 export function RepoGrid({ repos, viewMode }: { repos: GithubRepo[]; viewMode: ViewMode }) {
+  const t = useTranslations("commits")
   if (repos.length === 0) {
     return (
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-10">
           <FolderGit2 className="h-16 w-16 text-muted-foreground mb-4" />
-          <h3 className="text-xl font-medium mb-2">Nenhum repositório encontrado</h3>
-          <p className="text-muted-foreground text-center">
-            Não foi possível carregar os repositórios públicos agora.
-          </p>
+          <h3 className="text-xl font-medium mb-2">{t("noReposTitle")}</h3>
+          <p className="text-muted-foreground text-center">{t("noReposDesc")}</p>
         </CardContent>
       </Card>
     )

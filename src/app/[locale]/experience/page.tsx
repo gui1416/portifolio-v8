@@ -1,17 +1,25 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, MapPin, Briefcase } from "lucide-react"
-import { getExperiencias } from "@/lib/experiences"
+import { getTranslations, setRequestLocale } from "next-intl/server"
+import { getExperiencias, type Locale } from "@/lib/experiences"
 
 
 export const revalidate = 3600
 
-export default async function ExperienciaPage() {
-  const experiencias = await getExperiencias();
+export default async function ExperienciaPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations("experience")
+  const experiencias = await getExperiencias(locale as Locale);
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-8">Experiência Profissional</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <div className="space-y-8">
         {experiencias.map((exp) => (
@@ -37,7 +45,7 @@ export default async function ExperienciaPage() {
               <p>{exp.descricao}</p>
 
               <div>
-                <h4 className="text-sm font-medium mb-2">Principais Responsabilidades:</h4>
+                <h4 className="text-sm font-medium mb-2">{t("responsibilities")}</h4>
                 <ul className="space-y-1 text-muted-foreground">
                   {exp.responsabilidades.map((resp, i) => (
                     <li key={i} className="flex items-start">
@@ -50,7 +58,7 @@ export default async function ExperienciaPage() {
 
               {exp.tecnologias && exp.tecnologias.length > 0 && (
                 <div>
-                  <h4 className="text-sm font-medium mb-2">Tecnologias Utilizadas:</h4>
+                  <h4 className="text-sm font-medium mb-2">{t("technologiesUsed")}</h4>
                   <div className="flex flex-wrap gap-2">
                     {exp.tecnologias.map((tech, i) => (
                       tech && <Badge key={i} variant="secondary">{tech}</Badge>
@@ -64,17 +72,15 @@ export default async function ExperienciaPage() {
       </div>
 
       <div className="mt-12">
-        <h2 className="text-2xl font-semibold mb-6">Projetos Destacados</h2>
+        <h2 className="text-2xl font-semibold mb-6">{t("featuredProjects")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-3">
                 <Briefcase className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-medium">Sistema de capitação</h3>
+                <h3 className="text-lg font-medium">{t("proj1Title")}</h3>
               </div>
-              <p className="text-muted-foreground mb-3">
-                Desenvolvimento de um sistema para capitação de licitações publicas.
-              </p>
+              <p className="text-muted-foreground mb-3">{t("proj1Desc")}</p>
               <div className="flex flex-wrap gap-1">
                 <Badge variant="outline">Node.js</Badge>
                 <Badge variant="outline">ConLicitação API</Badge>
@@ -87,11 +93,9 @@ export default async function ExperienciaPage() {
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-3">
                 <Briefcase className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-medium">Linktree Clone</h3>
+                <h3 className="text-lg font-medium">{t("proj2Title")}</h3>
               </div>
-              <p className="text-muted-foreground mb-3">
-                Clone do linktree feito como treino e para uso pessoal.
-              </p>
+              <p className="text-muted-foreground mb-3">{t("proj2Desc")}</p>
               <div className="flex flex-wrap gap-1">
                 <Badge variant="outline">Next.js 14</Badge>
                 <Badge variant="outline">TypeScript</Badge>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useTranslations } from "next-intl"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CommitsFeed } from "@/components/commits/commits-feed"
 import { RepoGrid } from "@/components/commits/repo-grid"
@@ -12,6 +13,7 @@ const ACTIVE_TAB_STORAGE_KEY = "commits:active-tab"
 type TabValue = "repos" | "commits"
 
 export function CommitsTabs({ repos, commits }: { repos: GithubRepo[]; commits: Commit[] }) {
+  const t = useTranslations("commits")
   const [activeTab, setActiveTab] = useState<TabValue>("repos")
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
 
@@ -38,8 +40,8 @@ export function CommitsTabs({ repos, commits }: { repos: GithubRepo[]; commits: 
     <Tabs value={activeTab} onValueChange={handleTabChange}>
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <TabsList>
-          <TabsTrigger value="repos">Repositórios</TabsTrigger>
-          <TabsTrigger value="commits">Commits</TabsTrigger>
+          <TabsTrigger value="repos">{t("tabRepos")}</TabsTrigger>
+          <TabsTrigger value="commits">{t("tabCommits")}</TabsTrigger>
         </TabsList>
         <ViewModeSwitcher value={viewMode} onChange={handleViewModeChange} />
       </div>

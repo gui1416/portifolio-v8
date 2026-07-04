@@ -1,36 +1,41 @@
 import Image from "next/image"
-import Link from "next/link"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { ArrowLeft, ExternalLink, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getAllProjects, getProjectBySlug, getRelatedProjects } from "@/lib/projects"
+import { getAllProjects, getProjectBySlug, getRelatedProjects, type Locale } from "@/lib/projects"
 import { notFound } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
+import { Link } from "@/i18n/navigation"
+import { routing } from "@/i18n/routing"
 
 
 interface ProjectPageProps {
- params: {
+ params: Promise<{
+  locale: string
   slug: string
- }
+ }>
 }
 
 export async function generateStaticParams() {
  const projects = await getAllProjects();
- return projects.map((project) => ({
-  slug: project.slug,
- }));
+ return routing.locales.flatMap((locale) =>
+  projects.map((project) => ({ locale, slug: project.slug }))
+ );
 }
 
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
- const { slug } = await params
- const project = await getProjectBySlug(slug)
+ const { locale, slug } = await params
+ setRequestLocale(locale)
+ const t = await getTranslations("projectDetail")
+ const project = await getProjectBySlug(slug, locale as Locale)
 
  if (!project) {
   notFound()
  }
 
- const relatedProjects = await getRelatedProjects(slug, 2)
+ const relatedProjects = await getRelatedProjects(slug, locale as Locale, 2)
 
  return (
   <main className="min-h-screen text-white">
@@ -41,7 +46,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
      className="inline-flex items-center text-xs sm:text-sm text-zinc-400 hover:text-white mb-4 sm:mb-6 transition-colors"
     >
      <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-     Voltar para Projetos
+     {t("back")}
     </Link>
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
      <div className="lg:col-span-3">
@@ -65,19 +70,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
      <div className="lg:col-span-2 space-y-4 sm:space-y-6">
       <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
        <CardContent className="p-4 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Visão Geral</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{t("overview")}</h2>
         <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-zinc-300">
          {project.description.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
          ))}
         </div>
-        <h3 className="text-base sm:text-lg font-bold mt-6 sm:mt-8 mb-2 sm:mb-3">Principais Funcionalidades</h3>
+        <h3 className="text-base sm:text-lg font-bold mt-6 sm:mt-8 mb-2 sm:mb-3">{t("keyFeatures")}</h3>
         <ul className="list-disc pl-5 space-y-1 sm:space-y-2 text-sm sm:text-base text-zinc-300">
          {project.features.map((feature, index) => (
           <li key={index}>{feature}</li>
          ))}
         </ul>
-        <h3 className="text-base sm:text-lg font-bold mt-6 sm:mt-8 mb-2 sm:mb-3">Tecnologias Utilizadas</h3>
+        <h3 className="text-base sm:text-lg font-bold mt-6 sm:mt-8 mb-2 sm:mb-3">{t("technologiesUsed")}</h3>
         <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
          {project.technologies.map((tech, index) => (
           <Badge key={index} variant="secondary">{tech}</Badge>
@@ -92,7 +97,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           >
            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
             <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-            Ver Projeto Online
+            {t("viewLive")}
            </a>
           </Button>
          )}
@@ -100,7 +105,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <Button asChild variant="outline" size="sm" className="text-xs sm:text-sm">
            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
             <Github className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-            Ver Código Fonte
+            {t("viewSource")}
            </a>
           </Button>
          )}
@@ -110,7 +115,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {project.gallery && project.gallery.length > 0 && (
        <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
         <CardContent className="p-4 sm:p-6">
-         <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Galeria do Projeto</h2>
+         <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{t("gallery")}</h2>
          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {project.gallery.map((image, index) => (
            <div key={index} className="relative h-40 sm:h-48 rounded-lg overflow-hidden border border-zinc-800">
@@ -130,18 +135,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
      <div className="space-y-4 sm:space-y-6">
       <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
        <CardContent className="p-4 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Detalhes do Projeto</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{t("details")}</h2>
         <div className="space-y-3 sm:space-y-4">
          <div>
-          <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Cliente</h3>
-          <p className="text-sm sm:text-base">{project.client || "Projeto Pessoal"}</p>
+          <h3 className="text-xs sm:text-sm font-medium text-zinc-400">{t("client")}</h3>
+          <p className="text-sm sm:text-base">{project.client || t("personalProject")}</p>
          </div>
          <div>
-          <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Período</h3>
+          <h3 className="text-xs sm:text-sm font-medium text-zinc-400">{t("period")}</h3>
           <p className="text-sm sm:text-base">{project.timeline}</p>
          </div>
          <div>
-          <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Papel</h3>
+          <h3 className="text-xs sm:text-sm font-medium text-zinc-400">{t("role")}</h3>
           <p className="text-sm sm:text-base">{project.role}</p>
          </div>
         </div>
@@ -150,7 +155,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {relatedProjects && relatedProjects.length > 0 && (
        <Card className="bg-zinc-900/70 border-zinc-800 backdrop-blur-sm">
         <CardContent className="p-4 sm:p-6">
-         <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Mais Projetos</h2>
+         <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{t("moreProjects")}</h2>
          <div className="space-y-3 sm:space-y-4">
           {relatedProjects.map((related, index) => (
            <Link key={index} href={`/projects/${related.slug}`} className="block group">

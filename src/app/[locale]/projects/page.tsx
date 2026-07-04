@@ -1,19 +1,40 @@
 import Image from "next/image"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ExternalLink, Github, Calendar } from "lucide-react"
-import { getAllProjects } from "@/lib/projects"
-import Link from "next/link"
+import { getAllProjects, type Locale } from "@/lib/projects"
+import { Link } from "@/i18n/navigation"
 
-export default async function Projetos() {
-  const projetos = (await getAllProjects()).map((proj) => ({
+type ProjetoCardData = {
+  slug: string
+  titulo: string
+  descricao: string
+  imagem: string
+  categoria: string
+  tecnologias: string[]
+  links: { demo: string; github: string }
+  data: string
+}
+
+export default async function Projetos({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations("projects")
+
+  const projetos = (await getAllProjects(locale as Locale)).map((proj) => ({
     slug: proj.slug,
     titulo: proj.title,
     descricao: proj.shortDescription || "",
     imagem: proj.coverImage,
-    categoria: proj.category,
+    // Canonical category so the tabs keep filtering correctly in any language.
+    categoria: proj.categoryKey ?? proj.category,
     tecnologias: proj.technologies || [],
     links: {
       demo: proj.liveUrl || "",
@@ -22,21 +43,26 @@ export default async function Projetos() {
     data: proj.timeline,
   }));
 
+  const labels = {
+    code: t("code"),
+    demo: t("demo"),
+  }
+
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-8">Projetos</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <Tabs defaultValue="all" className="mb-8">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="all">Todos</TabsTrigger>
-          <TabsTrigger value="Web Application">Web</TabsTrigger>
-          <TabsTrigger value="Mobile App">Mobile</TabsTrigger>
+          <TabsTrigger value="all">{t("tabAll")}</TabsTrigger>
+          <TabsTrigger value="Web Application">{t("tabWeb")}</TabsTrigger>
+          <TabsTrigger value="Mobile App">{t("tabMobile")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projetos.map((projeto) => (
-              <ProjetoCard key={projeto.titulo} projeto={projeto} />
+              <ProjetoCard key={projeto.slug} projeto={projeto} labels={labels} />
             ))}
           </div>
         </TabsContent>
@@ -46,7 +72,7 @@ export default async function Projetos() {
             {projetos
               .filter((projeto) => projeto.categoria === "Web Application")
               .map((projeto) => (
-                <ProjetoCard key={projeto.titulo} projeto={projeto} />
+                <ProjetoCard key={projeto.slug} projeto={projeto} labels={labels} />
               ))}
           </div>
         </TabsContent>
@@ -56,21 +82,19 @@ export default async function Projetos() {
             {projetos
               .filter((projeto) => projeto.categoria === "Mobile App")
               .map((projeto) => (
-                <ProjetoCard key={projeto.titulo} projeto={projeto} />
+                <ProjetoCard key={projeto.slug} projeto={projeto} labels={labels} />
               ))}
           </div>
         </TabsContent>
       </Tabs>
 
       <div className="mt-12 text-center">
-        <h2 className="text-2xl font-semibold mb-4">Interessado em mais projetos?</h2>
-        <p className="text-muted-foreground mb-6">
-          Visite meu GitHub para ver mais projetos e contribuições para a comunidade open source.
-        </p>
+        <h2 className="text-2xl font-semibold mb-4">{t("moreTitle")}</h2>
+        <p className="text-muted-foreground mb-6">{t("moreDesc")}</p>
         <Button className="gap-2" asChild>
           <a href="https://github.com/gui1416" target="_blank" rel="noopener noreferrer">
             <Github className="h-4 w-4" />
-            Ver GitHub
+            {t("viewGithub")}
           </a>
         </Button>
       </div>
@@ -78,7 +102,13 @@ export default async function Projetos() {
   )
 }
 
-function ProjetoCard({ projeto }) {
+function ProjetoCard({
+  projeto,
+  labels,
+}: {
+  projeto: ProjetoCardData
+  labels: { code: string; demo: string }
+}) {
   return (
     <Card className="overflow-hidden flex flex-col h-full">
       <Link href={`/projects/${projeto.slug}`} className="block">
@@ -111,14 +141,14 @@ function ProjetoCard({ projeto }) {
         <Button variant="outline" size="sm" asChild>
           <a href={projeto.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
             <Github className="h-4 w-4" />
-            Código
+            {labels.code}
           </a>
         </Button>
         {projeto.links.demo && (
           <Button size="sm" asChild>
             <a href={projeto.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
               <ExternalLink className="h-4 w-4" />
-              Demo
+              {labels.demo}
             </a>
           </Button>
         )}

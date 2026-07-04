@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import Fuse from "fuse.js";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, MapPin, Award, Search } from "lucide-react";
@@ -28,12 +29,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { getEducation, Education } from "@/lib/education";
+import { getEducation, Education, type Locale } from "@/lib/education";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const ITEMS_PER_PAGE = 5;
 
 export default function Educacao() {
+  const t = useTranslations("education");
+  const locale = useLocale() as Locale;
   const [educacaoItems, setEducacaoItems] = useState<Education[]>([]);
   const [loading, setLoading] = useState(true);
   const [certificateUrl, setCertificateUrl] = useState<string | null>(null);
@@ -44,7 +47,7 @@ export default function Educacao() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getEducation();
+        const data = await getEducation(locale);
         setEducacaoItems(data);
       } catch (error) {
         console.error("Falha ao buscar dados de educação:", error);
@@ -53,7 +56,7 @@ export default function Educacao() {
       }
     };
     fetchData();
-  }, []);
+  }, [locale]);
 
   const fuse = useMemo(() => {
     if (educacaoItems.length === 0) return null;
@@ -110,14 +113,14 @@ export default function Educacao() {
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-4">Educação</h1>
+      <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
 
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="relative flex-grow">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Pesquisar por curso, instituição..."
+            placeholder={t("searchPlaceholder")}
             className="pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -126,14 +129,14 @@ export default function Educacao() {
         </div>
         <Select value={sortBy} onValueChange={setSortBy} disabled={loading}>
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Ordenar por" />
+            <SelectValue placeholder={t("sortPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="id">Padrão (ID)</SelectItem>
-            <SelectItem value="curso">Curso</SelectItem>
-            <SelectItem value="duração">Duração</SelectItem>
-            <SelectItem value="local">Local</SelectItem>
-            <SelectItem value="instituicao">Instituição</SelectItem>
+            <SelectItem value="id">{t("sortDefault")}</SelectItem>
+            <SelectItem value="curso">{t("sortCourse")}</SelectItem>
+            <SelectItem value="duração">{t("sortDuration")}</SelectItem>
+            <SelectItem value="local">{t("sortLocation")}</SelectItem>
+            <SelectItem value="instituicao">{t("sortInstitution")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -177,7 +180,7 @@ export default function Educacao() {
                 <div>
                   <h4 className="text-sm font-medium flex items-center mb-2">
                     <Award className="h-4 w-4 mr-1" />
-                    Certificações
+                    {t("certifications")}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {item.certificacoes.map((cert, i) => (
@@ -192,7 +195,7 @@ export default function Educacao() {
                     onClick={() => handleOpenCertificate(item.link)}
                   >
                     <Award className="h-4 w-4" />
-                    Ver Certificado
+                    {t("viewCertificate")}
                   </Button>
                 )}
               </CardContent>
@@ -247,14 +250,14 @@ export default function Educacao() {
       >
         <DialogContent className="p-0 w-[90vw] max-w-[1200px] flex flex-col">
           <DialogHeader className="p-6 pb-2">
-            <DialogTitle>Visualizador de Certificado</DialogTitle>
+            <DialogTitle>{t("certificateViewer")}</DialogTitle>
           </DialogHeader>
           <div className="w-full p-2 pt-0">
             {certificateUrl && (
               <iframe
                 src={certificateUrl.replace("/view?usp=sharing", "/preview")}
                 className="w-full aspect-video border-0 rounded-md"
-                title="Certificado"
+                title={t("certificateAlt")}
               ></iframe>
             )}
           </div>

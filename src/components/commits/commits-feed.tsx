@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useTranslations } from "next-intl"
 import { Github } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { CommitItem } from "@/components/commits/commit-item"
@@ -10,8 +11,8 @@ import type { Commit } from "@/lib/github"
 export function CommitsFeed({
   commits,
   showRepo = true,
-  emptyTitle = "Nenhum commit encontrado",
-  emptyDescription = "Não foi possível encontrar commits nos repositórios públicos ou ocorreu um erro ao buscar os dados.",
+  emptyTitle,
+  emptyDescription,
   viewMode: viewModeProp,
   onViewModeChange,
 }: {
@@ -22,6 +23,9 @@ export function CommitsFeed({
   viewMode?: ViewMode
   onViewModeChange?: (mode: ViewMode) => void
 }) {
+  const t = useTranslations("commits")
+  const resolvedEmptyTitle = emptyTitle ?? t("noCommitsTitle")
+  const resolvedEmptyDescription = emptyDescription ?? t("noCommitsDesc")
   const isControlled = viewModeProp !== undefined
   const [internalViewMode, setInternalViewMode] = useState<ViewMode>("list")
 
@@ -47,8 +51,8 @@ export function CommitsFeed({
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-10">
           <Github className="h-16 w-16 text-muted-foreground mb-4" />
-          <h3 className="text-xl font-medium mb-2">{emptyTitle}</h3>
-          <p className="text-muted-foreground text-center">{emptyDescription}</p>
+          <h3 className="text-xl font-medium mb-2">{resolvedEmptyTitle}</h3>
+          <p className="text-muted-foreground text-center">{resolvedEmptyDescription}</p>
         </CardContent>
       </Card>
     )

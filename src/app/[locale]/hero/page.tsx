@@ -1,23 +1,32 @@
 import { Suspense } from "react"
 import Image from "next/image"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Download, Mail, MessageSquare, Cpu, Database, Globe, Layout, Smartphone, Server } from "lucide-react"
 import { GithubContributionsCard, GithubContributionsCardSkeleton } from "@/components/github-contributions-card"
 
-export default function SobreMim() {
+export default async function SobreMim({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations("hero")
+
   const technologies = [
-    { name: "Frontend", icon: Layout },
-    { name: "Backend", icon: Server },
-    { name: "Mobile", icon: Smartphone },
-    { name: "Databases", icon: Database },
-    { name: "Web", icon: Globe },
-    { name: "Hardware", icon: Cpu },
+    { name: t("techFrontend"), icon: Layout },
+    { name: t("techBackend"), icon: Server },
+    { name: t("techMobile"), icon: Smartphone },
+    { name: t("techDatabases"), icon: Database },
+    { name: t("techWeb"), icon: Globe },
+    { name: t("techHardware"), icon: Cpu },
   ]
 
   return (
     <div className="container mx-auto max-w-4xl animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-8">Sobre Mim</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <div className="flex justify-center md:justify-start">
@@ -28,28 +37,24 @@ export default function SobreMim() {
 
         <div className="md:col-span-2 flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-2">Guilherme Machado</h2>
-          <p className="text-xl text-primary mb-4">Desenvolvedor Web</p>
-          <p className="text-muted-foreground mb-6">
-            Sou um desenvolvedor web apaixonado por criar soluções digitais inovadoras e funcionais. Com experiência em
-            diversas tecnologias, busco sempre aprender e aplicar as melhores práticas para entregar projetos de alta
-            qualidade.
-          </p>
+          <p className="text-xl text-primary mb-4">{t("role")}</p>
+          <p className="text-muted-foreground mb-6">{t("bio")}</p>
 
           <div className="flex flex-wrap gap-3">
             <Button className="gap-2" asChild>
               <a
-                href="https://drive.google.com/file/d/17Zl6Th_r_KCQN9z0tagauV2Ch9y7JDdO/view?usp=sharing"
+                href="https://drive.google.com/file/d/1W_KbMMjRIAEUVAtZTWsxNmSAmyy7QhIU/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Download size={18} />
-                Baixar CV
+                {t("downloadCv")}
               </a>
             </Button>
             <Button variant="outline" className="gap-2" asChild>
               <a href="mailto:guirmdev@gmail.com">
                 <Mail size={18} />
-                E-mail
+                {t("email")}
               </a>
             </Button>
             <Button variant="outline" className="gap-2" asChild>
@@ -59,7 +64,7 @@ export default function SobreMim() {
                 rel="noopener noreferrer"
               >
                 <MessageSquare size={18} />
-                WhatsApp
+                {t("whatsapp")}
               </a>
             </Button>
           </div>
@@ -71,7 +76,7 @@ export default function SobreMim() {
         </Suspense>
       </div>
 
-      <h2 className="text-2xl font-semibold mb-6">Tecnologias</h2>
+      <h2 className="text-2xl font-semibold mb-6">{t("technologies")}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-12">
         {technologies.map((tech) => (
           <Card key={tech.name} className="hover:border-primary/50 transition-colors">
@@ -83,25 +88,19 @@ export default function SobreMim() {
         ))}
       </div>
 
-      <h2 className="text-2xl font-semibold mb-6">Resumo de Habilidades</h2>
+      <h2 className="text-2xl font-semibold mb-6">{t("skillsSummary")}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardContent className="p-6">
-            <h3 className="text-lg font-medium mb-3">Desenvolvimento Frontend</h3>
-            <p className="text-muted-foreground">
-              Experiência com React, Next.js, HTML5, CSS3, Tailwind CSS e outras tecnologias modernas para criar
-              interfaces responsivas e atraentes.
-            </p>
+            <h3 className="text-lg font-medium mb-3">{t("frontendTitle")}</h3>
+            <p className="text-muted-foreground">{t("frontendDesc")}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6">
-            <h3 className="text-lg font-medium mb-3">Desenvolvimento Backend</h3>
-            <p className="text-muted-foreground">
-              Conhecimento em Node.js, Express, APIs RESTful e integração com bancos de dados para criar aplicações
-              robustas e escaláveis.
-            </p>
+            <h3 className="text-lg font-medium mb-3">{t("backendTitle")}</h3>
+            <p className="text-muted-foreground">{t("backendDesc")}</p>
           </CardContent>
         </Card>
       </div>
