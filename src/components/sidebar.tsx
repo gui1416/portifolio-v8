@@ -51,7 +51,7 @@ export function Sidebar() {
 
       <aside
         className={`
-          fixed top-0 left-0 z-50 h-screen bg-card border-r border-border
+          fixed top-0 left-0 z-50 h-screen supports-[height:100dvh]:h-[100dvh] bg-card border-r border-border
           transition-all duration-300 ease-in-out
           ${isOpen ? "w-64" : "w-0 lg:w-20"}
         `}
