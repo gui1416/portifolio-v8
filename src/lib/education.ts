@@ -7,6 +7,7 @@ export type EducationTranslation = {
  local?: string;
  descricao?: string;
  certificacoes?: string[];
+ periodo?: string;
 };
 
 export type Education = {
@@ -18,6 +19,11 @@ export type Education = {
  descricao: string;
  certificacoes: string[];
  link: string;
+ // Campos opcionais usados pelo CV (aditivos; ausentes em registros antigos).
+ tipo?: "graduacao" | "certificacao";
+ periodo?: string;
+ data?: string;
+ destaque?: boolean;
  i18n?: {
   en?: EducationTranslation;
   es?: EducationTranslation;
@@ -33,6 +39,7 @@ function localizeEducation(item: Education, locale: Locale): Education {
   local: overlay.local ?? item.local,
   descricao: overlay.descricao ?? item.descricao,
   certificacoes: overlay.certificacoes ?? item.certificacoes,
+  periodo: overlay.periodo ?? item.periodo,
  };
 }
 

@@ -44,6 +44,8 @@
     "role": "Web Developer",
     "bio": "I'm a web developer passionate about building innovative and functional digital solutions. With experience across a range of technologies, I'm always eager to learn and apply best practices to deliver high-quality projects.",
     "downloadCv": "Download CV",
+    "cvCompact": "Compact version (essentials)",
+    "cvFull": "Full version",
     "email": "Email",
     "whatsapp": "WhatsApp",
     "technologies": "Technologies",

@@ -7,6 +7,8 @@ export type ExperienciaTranslation = {
  local?: string;
  descricao?: string;
  responsabilidades?: string[];
+ modalidade?: string;
+ regime?: string;
 };
 
 export type Experiencia = {
@@ -18,6 +20,9 @@ export type Experiencia = {
  descricao: string;
  responsabilidades: string[];
  tecnologias: (string | null)[];
+ // Campos opcionais usados pelo CV (aditivos; ausentes em registros antigos).
+ modalidade?: string;
+ regime?: string;
  i18n?: {
   en?: ExperienciaTranslation;
   es?: ExperienciaTranslation;
@@ -33,6 +38,8 @@ function localizeExperiencia(exp: Experiencia, locale: Locale): Experiencia {
   local: overlay.local ?? exp.local,
   descricao: overlay.descricao ?? exp.descricao,
   responsabilidades: overlay.responsabilidades ?? exp.responsabilidades,
+  modalidade: overlay.modalidade ?? exp.modalidade,
+  regime: overlay.regime ?? exp.regime,
  };
 }
 

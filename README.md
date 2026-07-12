@@ -2,44 +2,86 @@
 
 [![Imagem do Portfólio](/public/screenshot.png)](https://portifolio-v8.vercel.app/hero)
 
-Bem-vindo(a) ao meu portfólio! Este site foi desenvolvido para apresentar minha jornada como Desenvolvedor Web, destacando minhas habilidades, experiência e os projetos em que trabalhei.
+Portfólio pessoal de **Guilherme Rabelo Machado**, apresentando trajetória, habilidades, experiência e projetos. Multilíngue (🇧🇷 PT · 🇺🇸 EN · 🇪🇸 ES) e com **geração de currículo em PDF sob demanda** a partir dos mesmos dados que alimentam o site.
 
-## Tecnologias Utilizadas
+## Destaques
 
-Este portfólio foi construído utilizando as seguintes tecnologias:
+- **Conteúdo vindo de API** — projetos, experiências, educação, perfil e competências são buscados da [API do portfólio](https://json-api-portfolio.vercel.app) (não ficam hardcoded).
+- **Internacionalização (next-intl)** — rotas `/`, `/en`, `/es`; textos da UI em `messages/*.json` e traduções de conteúdo via overlay `i18n` da API.
+- **Currículo dinâmico (`/api/cv`)** — o botão **Baixar CV** gera o PDF na hora, no idioma atual, em duas versões (compacta e completa). Ver [Geração de CV](#geração-de-cv).
+- **Formulário de contato** — com rate limit (Upstash Redis) e envio de e-mail (Resend).
+- **Integração com GitHub** — calendário de contribuições e commits recentes.
 
-- **Next.js:** Um framework React para desenvolvimento web com recursos como renderização do lado do servidor (SSR) e geração de sites estáticos (SSG).
-- **React:** Uma biblioteca JavaScript para construir interfaces de usuário dinâmicas e interativas.
-- **@radix-ui/react-\***: Uma coleção de componentes de interface do usuário acessíveis e não estilizados, fornecendo os blocos de construção para criar interfaces personalizadas.
-- **Tailwind CSS:** Um framework CSS utilitário de baixo nível que permite estilizar rapidamente elementos diretamente no HTML com classes pré-definidas.
-- **class-variance-authority:** Uma biblioteca para criar variações de classe condicionais com Tailwind CSS.
-- **clsx:** Uma pequena e útil biblioteca para construir strings de classe dinamicamente.
-- **cmdk:** Um componente de linha de comando para interfaces de usuário.
-- **date-fns:** Uma biblioteca moderna de utilitários de data e hora.
-- **embla-carousel-react:** Uma biblioteca de carrossel responsiva para React.
-- **input-otp:** Um componente para campos de entrada de código de verificação (OTP).
-- **lucide-react:** Uma biblioteca de ícones bonitos e consistentes para React.
-- **next-themes:** Uma maneira fácil de adicionar e alternar temas escuros e claros em aplicativos Next.js.
-- **react-day-picker:** Um componente de calendário acessível e personalizável para React.
-- **react-hook-form:** Uma biblioteca para gerenciamento de formulários em React.
-- **react-resizable-panels:** Uma biblioteca para criar layouts de painéis redimensionáveis.
-- **recharts:** Uma biblioteca de gráficos declarativa para React construída com SVG.
-- **sonner:** Uma biblioteca para notificações e toasts elegantes.
-- **tailwind-merge:** Uma função para mesclar classes Tailwind CSS sem conflitos.
-- **tailwindcss-animate:** Um plugin Tailwind CSS para adicionar animações pré-configuradas.
-- **vaul:** Uma biblioteca para criar diálogos e menus acessíveis.
-- **zod:** Uma biblioteca de declaração e validação de esquemas TypeScript com inferência.
+## Tecnologias
 
-## O Que Você Pode Encontrar Aqui
+- **Next.js 15** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS v4** + **shadcn/ui** (primitivas Radix UI)
+- **next-intl** — internacionalização (PT/EN/ES)
+- **@react-pdf/renderer** — geração do currículo em PDF no servidor
+- **Upstash Redis** (`@upstash/ratelimit`) + **Resend** — formulário de contato
+- **lucide-react**, **recharts**, **embla-carousel**, **react-hook-form**, **zod**, **sonner**, **cmdk**, **next-themes**
 
-Ao navegar pelo meu portfólio, você poderá explorar as seguintes seções:
+## Estrutura de conteúdo
 
-- **Sobre Mim:** Conheça um pouco mais sobre minha trajetória, paixões e objetivos como Desenvolvedor Web.
-- **Educação:** Veja minha formação acadêmica e cursos relevantes para minha carreira.
-- **Habilidades:** Descubra minhas competências técnicas e conhecimentos em diversas tecnologias e áreas do desenvolvimento.
-- **Experiência:** Saiba mais sobre minha experiência profissional, incluindo cargos e responsabilidades em projetos anteriores.
-- **Projetos:** Visualize os projetos em que trabalhei, com descrições detalhadas e links para demonstrações e/ou repositórios de código.
-- **Atualizações:** Fique por dentro das minhas contribuições mais recentes em projetos de código aberto no GitHub.
-- **Contato:** Encontre minhas informações de contato para que você possa me enviar mensagens ou propostas.
+O conteúdo é buscado por módulos em `src/lib/`, cada um com sua fonte e cache:
 
-Espero que você goste de explorar meu trabalho! Se tiver alguma dúvida ou feedback, sinta-se à vontade para entrar em contato.
+| Módulo | Coleção da API | Consumido por |
+| :--- | :--- | :--- |
+| `projects.ts` | `/projetos` | páginas de projetos + CV |
+| `experiences.ts` | `/experiencias` | página de experiência + CV |
+| `education.ts` | `/educacao` | página de educação + CV |
+| `perfil.ts` | `/perfil` | CV (cabeçalho, resumo, diferenciais, idiomas) |
+| `competencias.ts` | `/competencias` | CV (competências técnicas) |
+
+Cada módulo aplica o overlay de idioma (`pt` base, `en`/`es` sobrepostos).
+
+## Geração de CV
+
+- **Rota:** `GET /api/cv?lang=pt|en|es&format=full` (`src/app/api/cv/route.tsx`, runtime Node).
+- **Layout:** `src/components/cv/cv-document.tsx` (componentes `@react-pdf/renderer`) — banner, resumo, diferenciais, competências, experiência, formação e certificações (tabelas), projetos e idiomas/disponibilidade.
+- **Dois modos:** *compacta* (essencial, ~2 págs — oculta diferenciais/certificações/idiomas) e *completa* (~3 págs, tudo). O dropdown fica em `src/components/cv-download-button.tsx`.
+- **Fonte da verdade:** atualizou o `db.json` da API → o CV reflete automaticamente. Onde cada informação aparece é definido em `cv-document.tsx`; o que entra em cada modo, em `route.tsx`.
+
+## Rodando localmente
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
+
+### Variáveis de ambiente (`.env`)
+
+```bash
+# Fontes de dados (produção: json-api-portfolio.vercel.app; local: http://localhost:3001)
+PROJECTS_API_URL=https://json-api-portfolio.vercel.app/projetos
+EXPERIENCES_API_URL=https://json-api-portfolio.vercel.app/experiencias
+NEXT_PUBLIC_EDUCATION_API_URL=https://json-api-portfolio.vercel.app/educacao
+PERFIL_API_URL=https://json-api-portfolio.vercel.app/perfil
+COMPETENCIAS_API_URL=https://json-api-portfolio.vercel.app/competencias
+
+# Formulário de contato
+RESEND_API_KEY=...
+UPSTASH_REDIS_REST_URL=...
+UPSTASH_REDIS_REST_TOKEN=...
+```
+
+Para desenvolver contra a **API local** (`json-api-portfolio` rodando em `:3001`), troque as cinco `*_API_URL` para `http://localhost:3001/<coleção>`.
+
+## Seções do site
+
+- **Sobre Mim** · **Educação** · **Habilidades** · **Experiência** · **Projetos** · **Atualizações** (GitHub) · **Contato**
+
+## Scripts
+
+```bash
+npm run dev      # servidor de desenvolvimento
+npm run build    # build de produção
+npm run start    # serve o build
+npm run lint     # ESLint
+```
+
+> Nota: `next.config.ts` usa `eslint.ignoreDuringBuilds` e `typescript.ignoreBuildErrors`, então o `build` passa mesmo com erros de lint/tipo. Rode `npm run lint` e `tsc --noEmit` explicitamente ao validar.
+
+---
+
+Dúvidas ou feedback? Fique à vontade para entrar em contato pelo site.

@@ -3,8 +3,9 @@ import Image from "next/image"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Download, Mail, MessageSquare, Cpu, Database, Globe, Layout, Smartphone, Server } from "lucide-react"
+import { Mail, MessageSquare, Cpu, Database, Globe, Layout, Smartphone, Server } from "lucide-react"
 import { GithubContributionsCard, GithubContributionsCardSkeleton } from "@/components/github-contributions-card"
+import { CvDownloadButton } from "@/components/cv-download-button"
 
 export default async function SobreMim({
   params,
@@ -41,16 +42,12 @@ export default async function SobreMim({
           <p className="text-muted-foreground mb-6">{t("bio")}</p>
 
           <div className="flex flex-wrap gap-3">
-            <Button className="gap-2" asChild>
-              <a
-                href="https://drive.google.com/file/d/1W_KbMMjRIAEUVAtZTWsxNmSAmyy7QhIU/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Download size={18} />
-                {t("downloadCv")}
-              </a>
-            </Button>
+            <CvDownloadButton
+              locale={locale}
+              label={t("downloadCv")}
+              compactLabel={t("cvCompact")}
+              fullLabel={t("cvFull")}
+            />
             <Button variant="outline" className="gap-2" asChild>
               <a href="mailto:guirmdev@gmail.com">
                 <Mail size={18} />
