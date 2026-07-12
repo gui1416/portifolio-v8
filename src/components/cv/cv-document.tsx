@@ -40,6 +40,9 @@ const LABELS: Record<Locale, Record<string, string>> = {
     colCourse: "Curso",
     colInstitution: "Instituição",
     colPeriod: "Período",
+    colStatus: "Status",
+    concluido: "Concluído",
+    cursando: "Cursando",
     colCertification: "Certificação",
     colDate: "Data",
     code: "Código",
@@ -60,6 +63,9 @@ const LABELS: Record<Locale, Record<string, string>> = {
     colCourse: "Course",
     colInstitution: "Institution",
     colPeriod: "Period",
+    colStatus: "Status",
+    concluido: "Completed",
+    cursando: "In progress",
     colCertification: "Certification",
     colDate: "Date",
     code: "Code",
@@ -80,6 +86,9 @@ const LABELS: Record<Locale, Record<string, string>> = {
     colCourse: "Curso",
     colInstitution: "Institución",
     colPeriod: "Período",
+    colStatus: "Estado",
+    concluido: "Concluido",
+    cursando: "En curso",
     colCertification: "Certificación",
     colDate: "Fecha",
     code: "Código",
@@ -295,15 +304,28 @@ export function CvDocument({
               <View style={styles.tableHead}>
                 <Text style={[styles.tableHeadCell, { flex: 3 }]}>{t.colCourse}</Text>
                 <Text style={[styles.tableHeadCell, { flex: 2 }]}>{t.colInstitution}</Text>
-                <Text style={[styles.tableHeadCell, { flex: 2 }]}>{t.colPeriod}</Text>
+                <Text style={[styles.tableHeadCell, { flex: 1.6 }]}>{t.colPeriod}</Text>
+                <Text style={[styles.tableHeadCell, { flex: 1.4 }]}>{t.colStatus}</Text>
               </View>
-              {formacao.map((f) => (
-                <View key={f.id} style={styles.tableRow} wrap={false}>
-                  <Text style={[styles.tableCell, { flex: 3, fontFamily: "Helvetica-Bold" }]}>{f.curso}</Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>{f.instituicao}</Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>{f.periodo ?? f.duracao}</Text>
-                </View>
-              ))}
+              {formacao.map((f) => {
+                // Curso concluído com certificado vira link clicável para o certificado.
+                const isLink = f.status === "concluido" && !!f.link
+                const statusLabel = f.status ? t[f.status] : ""
+                return (
+                  <View key={f.id} style={styles.tableRow} wrap={false}>
+                    {isLink ? (
+                      <Link src={f.link} style={[styles.tableCell, styles.link, { flex: 3, fontFamily: "Helvetica-Bold" }]}>
+                        {f.curso}
+                      </Link>
+                    ) : (
+                      <Text style={[styles.tableCell, { flex: 3, fontFamily: "Helvetica-Bold" }]}>{f.curso}</Text>
+                    )}
+                    <Text style={[styles.tableCell, { flex: 2 }]}>{f.instituicao}</Text>
+                    <Text style={[styles.tableCell, { flex: 1.6 }]}>{f.periodo ?? f.duracao}</Text>
+                    <Text style={[styles.tableCell, { flex: 1.4 }]}>{statusLabel}</Text>
+                  </View>
+                )
+              })}
             </View>
           </View>
         )}

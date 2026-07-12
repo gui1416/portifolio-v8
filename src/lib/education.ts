@@ -24,6 +24,7 @@ export type Education = {
  periodo?: string;
  data?: string;
  destaque?: boolean;
+ status?: "concluido" | "cursando";
  i18n?: {
   en?: EducationTranslation;
   es?: EducationTranslation;
