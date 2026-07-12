@@ -22,8 +22,10 @@ export default async function ExperienciaPage({
       <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <div className="space-y-8">
-        {experiencias.map((exp) => (
-          <Card key={exp.id} className="relative overflow-hidden">
+        {experiencias.map((exp, index) => (
+          // A API pode retornar ids repetidos; combinamos com o índice para garantir
+          // uma key única sem descartar itens (a lista é estática e não reordena).
+          <Card key={`${exp.id}-${index}`} className="relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
             <CardHeader>
               <div className="flex items-start justify-between flex-wrap gap-2">

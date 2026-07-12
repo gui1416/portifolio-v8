@@ -46,7 +46,8 @@ export async function getEducation(locale: Locale = "pt"): Promise<Education[]> 
  }
 
  try {
-  const response = await fetch(apiUrl);
+  // Buscado no servidor (Server Component). Cache de 1h, como projetos/experiências.
+  const response = await fetch(apiUrl, { next: { revalidate: 3600 } });
 
   if (!response.ok) {
    console.error("Falha ao buscar os dados de educação da API.");

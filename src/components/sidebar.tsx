@@ -2,16 +2,10 @@
 import { useEffect, useRef } from "react"
 import { useTranslations } from "next-intl"
 import {
-  User,
-  GraduationCap,
-  Code2,
-  Briefcase,
-  FolderKanban,
-  Mail,
   ChevronLeft,
   ChevronRight,
   Menu,
-  GitCommit,
+  Search,
 } from "lucide-react"
 import { Link, usePathname } from "@/i18n/navigation"
 import { useSidebar } from "@/components/sidebar-provider"
@@ -19,19 +13,11 @@ import { LanguageSwitcher } from "@/components/language-switcher"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-
-const navItems = [
-  { href: "/hero", key: "hero", icon: User },
-  { href: "/education", key: "education", icon: GraduationCap },
-  { href: "/skills", key: "skills", icon: Code2 },
-  { href: "/experience", key: "experience", icon: Briefcase },
-  { href: "/projects", key: "projects", icon: FolderKanban },
-  { href: "/commits", key: "commits", icon: GitCommit },
-  { href: "/contact", key: "contact", icon: Mail },
-] as const
+import { NAV_ITEMS } from "@/config/nav"
 
 export function Sidebar() {
   const t = useTranslations("nav")
+  const tCmd = useTranslations("commandMenu")
   const { isOpen, toggleSidebar, closeSidebar } = useSidebar()
   const pathname = usePathname()
   const previousPathnameRef = useRef(pathname)
@@ -87,9 +73,36 @@ export function Sidebar() {
 
           <Separator />
 
-          <nav aria-label={t("ariaLabel")} className="flex-1 py-4 overflow-y-auto">
+          <div className="px-2 pt-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                closeSidebar()
+                // Contrato com o CommandMenu (OPEN_COMMAND_MENU_EVENT). Usamos o
+                // literal para não acoplar o bundle da sidebar ao do palette.
+                document.dispatchEvent(new Event("command-menu:open"))
+              }}
+              className={`w-full text-muted-foreground ${!isOpen && "lg:justify-center lg:px-0"} justify-start`}
+              aria-label={tCmd("triggerLabel")}
+            >
+              <Search className="h-4 w-4" />
+              {isOpen && (
+                <>
+                  <span className="ml-2">{tCmd("triggerShort")}</span>
+                  <kbd className="ml-auto hidden rounded border bg-muted px-1.5 text-[10px] font-medium sm:inline-block">
+                    ⌘K
+                  </kbd>
+                </>
+              )}
+            </Button>
+          </div>
+
+          <nav
+            aria-label={t("ariaLabel")}
+            className="flex-1 py-4 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
             <ul className="space-y-1 px-2">
-              {navItems.map((item) => {
+              {NAV_ITEMS.map((item) => {
                 const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
                 const Icon = item.icon
 

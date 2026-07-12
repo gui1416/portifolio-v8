@@ -11,6 +11,8 @@ export interface GithubRepo {
   fork: boolean
   default_branch: string
   updated_at: string
+  // Data do último push (proxy do commit mais recente). Vem da API do GitHub.
+  pushed_at: string
 }
 
 interface GithubCommitApi {
@@ -103,6 +105,19 @@ async function fetchRepoCommits(repo: GithubRepo, perPage: number): Promise<Comm
 
 export async function getAllRepos(): Promise<GithubRepo[]> {
   return fetchRepos()
+}
+
+// Normaliza uma URL de repositório para casar projeto (githubUrl) com repo
+// (html_url), ignorando caixa, sufixo .git e barras finais.
+export function normalizeRepoUrl(url: string): string {
+  return url.trim().toLowerCase().replace(/\.git$/, "").replace(/\/+$/, "")
+}
+
+// Mapa `URL normalizada do repo -> data do último push`, para ordenar projetos
+// pelo commit mais recente. Reutiliza a lista de repos (cache de 1h, 1 request).
+export async function getRepoPushedDates(): Promise<Map<string, string>> {
+  const repos = await fetchRepos()
+  return new Map(repos.map((repo) => [normalizeRepoUrl(repo.html_url), repo.pushed_at]))
 }
 
 export async function getRepoByName(name: string): Promise<GithubRepo | undefined> {

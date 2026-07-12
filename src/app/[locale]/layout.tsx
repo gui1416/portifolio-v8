@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SidebarProvider } from "@/components/sidebar-provider"
 import { Sidebar } from "@/components/sidebar"
 import { SonnerProvider } from "@/components/sonner-provider"
+import { CommandMenu } from "@/components/command-menu/command-menu"
+import { getProjectsIndex, type Locale } from "@/lib/projects"
 import { routing } from "@/i18n/routing"
 
 import "../globals.css"
@@ -47,6 +49,8 @@ export default async function LocaleLayout({
   }
   setRequestLocale(locale)
 
+  const projectsIndex = await getProjectsIndex(locale as Locale)
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
@@ -60,6 +64,7 @@ export default async function LocaleLayout({
                 </main>
               </div>
             </SidebarProvider>
+            <CommandMenu projects={projectsIndex} />
             <SonnerProvider />
           </ThemeProvider>
         </NextIntlClientProvider>

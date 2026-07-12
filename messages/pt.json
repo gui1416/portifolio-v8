@@ -23,6 +23,22 @@
     "en": "Inglês",
     "es": "Espanhol"
   },
+  "commandMenu": {
+    "title": "Paleta de comandos",
+    "placeholder": "Digite um comando ou pesquise...",
+    "empty": "Nenhum resultado encontrado.",
+    "groupNavigation": "Navegação",
+    "groupProjects": "Projetos",
+    "groupTheme": "Tema",
+    "groupLanguage": "Idioma",
+    "groupContact": "Contato",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "themeSystem": "Sistema",
+    "openContact": "Entrar em contato",
+    "triggerLabel": "Abrir paleta de comandos",
+    "triggerShort": "Buscar..."
+  },
   "hero": {
     "title": "Sobre Mim",
     "role": "Desenvolvedor Web",

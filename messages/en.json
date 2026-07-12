@@ -23,6 +23,22 @@
     "en": "English",
     "es": "Spanish"
   },
+  "commandMenu": {
+    "title": "Command palette",
+    "placeholder": "Type a command or search...",
+    "empty": "No results found.",
+    "groupNavigation": "Navigation",
+    "groupProjects": "Projects",
+    "groupTheme": "Theme",
+    "groupLanguage": "Language",
+    "groupContact": "Contact",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "openContact": "Get in touch",
+    "triggerLabel": "Open command palette",
+    "triggerShort": "Search..."
+  },
   "hero": {
     "title": "About Me",
     "role": "Web Developer",

@@ -54,6 +54,7 @@ export interface Project {
 }
 
 import { getRepoTimeline } from "./repo-timeline"
+import { getRepoPushedDates, normalizeRepoUrl } from "./github"
 
 export type Locale = "pt" | "en" | "es"
 
@@ -108,9 +109,40 @@ async function withRepoTimeline(project: Project): Promise<Project> {
 
 export async function getAllProjects(locale: Locale = "pt"): Promise<Project[]> {
   const projects = await fetchProjects()
-  return Promise.all(
-    projects.map((project) => withRepoTimeline(localizeProject(project, locale)))
-  )
+  const [enriched, pushedDates] = await Promise.all([
+    Promise.all(projects.map((project) => withRepoTimeline(localizeProject(project, locale)))),
+    getRepoPushedDates(),
+  ])
+
+  // Ordena do commit mais recente ao mais antigo, usando a data de push do repo.
+  // Projetos sem repo/sem correspondência caem para o fim (timestamp 0).
+  const lastActivity = (project: Project): number => {
+    if (!project.githubUrl) return 0
+    const date = pushedDates.get(normalizeRepoUrl(project.githubUrl))
+    return date ? new Date(date).getTime() : 0
+  }
+
+  return enriched.sort((a, b) => lastActivity(b) - lastActivity(a))
+}
+
+// Índice leve de projetos (sem enriquecer com dados do repositório) para o
+// command palette. Rápido e serializável — apenas o necessário para busca/navegação.
+export interface ProjectIndexItem {
+  slug: string
+  title: string
+  category: string
+}
+
+export async function getProjectsIndex(locale: Locale = "pt"): Promise<ProjectIndexItem[]> {
+  const projects = await fetchProjects()
+  return projects.map((project) => {
+    const localized = localizeProject(project, locale)
+    return {
+      slug: localized.slug,
+      title: localized.title,
+      category: localized.category,
+    }
+  })
 }
 
 export async function getProjectBySlug(slug: string, locale: Locale = "pt"): Promise<Project | undefined> {
