@@ -214,10 +214,11 @@ export function CvDocument({
 }: CvDocumentProps) {
   const t = LABELS[locale]
   const maxBullets = compact ? 2 : 4
-  // No compacto (alvo: 1 página) mostramos só as experiências mais recentes e
-  // ocultamos a tabela de certificações.
+  // No compacto mostramos só as experiências mais recentes (Diferenciais e
+  // Idiomas & Disponibilidade seguem ocultos no compacto). A tabela de
+  // Certificações aparece nas duas versões — cabe em 2 páginas no compacto.
   const expList = compact ? experiencias.slice(0, 3) : experiencias
-  const showCerts = !compact && certificacoes.length > 0
+  const showCerts = certificacoes.length > 0
 
   return (
     <Document
@@ -346,7 +347,13 @@ export function CvDocument({
                   style={[styles.tableRow, i % 2 === 1 ? { backgroundColor: COLORS.zebra } : {}]}
                   wrap={false}
                 >
-                  <Text style={[styles.tableCell, { flex: 4, fontFamily: "Helvetica-Bold" }]}>{c.curso}</Text>
+                  {c.link ? (
+                    <Link src={c.link} style={[styles.tableCell, styles.link, { flex: 4, fontFamily: "Helvetica-Bold" }]}>
+                      {c.curso}
+                    </Link>
+                  ) : (
+                    <Text style={[styles.tableCell, { flex: 4, fontFamily: "Helvetica-Bold" }]}>{c.curso}</Text>
+                  )}
                   <Text style={[styles.tableCell, { flex: 3 }]}>{c.instituicao}</Text>
                   <Text style={[styles.tableCell, { flex: 1.4 }]}>{c.data ?? ""}</Text>
                 </View>
